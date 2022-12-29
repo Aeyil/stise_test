@@ -5,7 +5,7 @@ import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 import project_16x16.Constants;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
+import project_16x16.SideScroller.GameScene;
 import project_16x16.ui.Button;
 
 public class MultiplayerMenu extends PScene {
@@ -51,17 +51,17 @@ public class MultiplayerMenu extends PScene {
 	public void update() {
 		pressHost.update();
 		if (pressHost.hover()) {
-			game.swapToScene(GameScenes.HOST_MENU);
+			game.swapToScene(GameScene.HOST_MENU);
 		}
 
 		pressClient.update();
 		if (pressClient.hover()) {
-			game.swapToScene(GameScenes.CLIENT_MENU);
+			game.swapToScene(GameScene.CLIENT_MENU);
 		}
 
 		pressMenu.update();
 		if (pressMenu.hover()) {
-			game.swapToScene(GameScenes.MAIN_MENU);
+			game.swapToScene(GameScene.MAIN_MENU);
 		}
 	}
 

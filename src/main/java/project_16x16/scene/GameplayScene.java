@@ -16,7 +16,7 @@ import project_16x16.Audio;
 import project_16x16.Audio.BGM;
 import project_16x16.Options;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
+import project_16x16.SideScroller.GameScene;
 import project_16x16.Tileset;
 import project_16x16.Utility;
 import project_16x16.components.Tile;
@@ -201,7 +201,7 @@ public class GameplayScene extends PScene {
 	@Override
 	public void switchTo() {
 		super.switchTo();
-		((PauseMenu) GameScenes.PAUSE_MENU.getScene()).switched = false;
+		((PauseMenu) GameScene.PAUSE_MENU.getScene()).switched = false;
 		Audio.play(BGM.TEST1);
 	}
 
@@ -241,7 +241,7 @@ public class GameplayScene extends PScene {
 	 */
 	public void setupMultiplayer(Multiplayer multiplayer) {
 		this.multiplayer = multiplayer;
-		onlinePlayer = new Player(applet, (GameplayScene) GameScenes.GAME.getScene(), true);
+		onlinePlayer = new Player(applet, (GameplayScene) GameScene.GAME.getScene(), true);
 		isSingleplayer = false;
 	}
 
@@ -527,7 +527,7 @@ public class GameplayScene extends PScene {
 	protected void keyReleased(processing.event.KeyEvent e) {
 		switch (e.getKeyCode()) { // Global gameplay hotkeys
 			case PConstants.ESC: // Pause
-				applet.swapToScene(GameScenes.PAUSE_MENU);
+				applet.swapToScene(GameScene.PAUSE_MENU);
 				break;
 			case Options.lifeCapInc:
 				localPlayer.lifeCapacity++;

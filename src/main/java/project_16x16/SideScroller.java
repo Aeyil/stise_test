@@ -65,7 +65,7 @@ public class SideScroller extends PApplet {
 	private static PFont font_pixel;
 
 	// Scenes	
-	private ArrayDeque<GameScenes> sceneHistory;
+	private ArrayDeque<GameScene> sceneHistory;
 	private int sceneSwapTime = 0;
 
 	private static MainMenu menu;
@@ -77,13 +77,13 @@ public class SideScroller extends PApplet {
 	private static MultiplayerClientMenu mClientMenu;
 	private static AudioSettings audioSettings;
 
-	public enum GameScenes {
+	public enum GameScene {
 		MAIN_MENU(menu), GAME(game), PAUSE_MENU(pmenu), SETTINGS_MENU(settings), MULTIPLAYER_MENU(mMenu),
 		HOST_MENU(mHostMenu), CLIENT_MENU(mClientMenu), AUDIO_SETTINGS(audioSettings);
 
 		PScene scene;
 
-		private GameScenes(PScene scene) {
+		private GameScene(PScene scene) {
 			this.scene = scene;
 		}
 
@@ -200,7 +200,7 @@ public class SideScroller extends PApplet {
 		mHostMenu = new MultiplayerHostMenu(this);
 		mClientMenu = new MultiplayerClientMenu(this);
 		audioSettings = new AudioSettings(this);
-		swapToScene(GameScenes.MAIN_MENU);
+		swapToScene(GameScene.MAIN_MENU);
 
 		// Camera
 		camera = new Camera(this);
@@ -228,7 +228,7 @@ public class SideScroller extends PApplet {
 	 * @param newScene
 	 * @see #returnScene()
 	 */
-	public void swapToScene(GameScenes newScene) {
+	public void swapToScene(GameScene newScene) {
 		if (frameCount - sceneSwapTime > 6 || frameCount == 0) {
 			if (!newScene.equals(sceneHistory.peek())) { // if different
 				if (!sceneHistory.isEmpty()) {
@@ -568,9 +568,9 @@ public class SideScroller extends PApplet {
 			if (args[0].equals("host")) {
 				try {
 					m = new Multiplayer(this, true);
-					((GameplayScene) GameScenes.GAME.getScene()).setupMultiplayer(m);
-					swapToScene(GameScenes.GAME);
-					((GameplayScene) GameScenes.GAME.getScene()).changeMode(GameModes.PLAY);
+					((GameplayScene) GameScene.GAME.getScene()).setupMultiplayer(m);
+					swapToScene(GameScene.GAME);
+					((GameplayScene) GameScene.GAME.getScene()).changeMode(GameModes.PLAY);
 					stage.setTitle("host");
 					System.out.println("~HOST~");
 				} catch (Exception e) {
@@ -580,9 +580,9 @@ public class SideScroller extends PApplet {
 				System.out.println("client path");
 				try {
 					m = new Multiplayer(this, false);
-					((GameplayScene) (GameScenes.GAME.getScene())).setupMultiplayer(m);
-					swapToScene(GameScenes.GAME);
-					((GameplayScene) GameScenes.GAME.getScene()).changeMode(GameModes.PLAY);
+					((GameplayScene) (GameScene.GAME.getScene())).setupMultiplayer(m);
+					swapToScene(GameScene.GAME);
+					((GameplayScene) GameScene.GAME.getScene()).changeMode(GameModes.PLAY);
 					stage.setTitle("client");
 					System.out.println("~CLIENT~");
 				} catch (Exception e) {

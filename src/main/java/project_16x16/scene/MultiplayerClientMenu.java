@@ -7,7 +7,7 @@ import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 import project_16x16.Constants;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
+import project_16x16.SideScroller.GameScene;
 import project_16x16.multiplayer.Multiplayer;
 import project_16x16.ui.Button;
 import project_16x16.ui.Notifications;
@@ -62,7 +62,7 @@ public class MultiplayerClientMenu extends PScene {
 	public void update() {
 		pressMenu.update();
 		if (pressMenu.hover()) {
-			game.swapToScene(GameScenes.MAIN_MENU);
+			game.swapToScene(GameScene.MAIN_MENU);
 		}
 
 		pressConnect.update();
@@ -72,8 +72,8 @@ public class MultiplayerClientMenu extends PScene {
 				int port = Integer.valueOf(ipInput.getText().split(":")[1]);
 				try {
 					Multiplayer m = new Multiplayer(game, ip, port, false);
-					((GameplayScene) (GameScenes.GAME.getScene())).setupMultiplayer(m);
-					game.swapToScene(GameScenes.GAME);
+					((GameplayScene) (GameScene.GAME.getScene())).setupMultiplayer(m);
+					game.swapToScene(GameScene.GAME);
 				}
 				catch (Exception e) {
 					Notifications.addNotification("ERROR", "todo"); // TODO

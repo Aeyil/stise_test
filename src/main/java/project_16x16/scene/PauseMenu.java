@@ -8,7 +8,7 @@ import processing.core.PImage;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
+import project_16x16.SideScroller.GameScene;
 import project_16x16.Utility;
 import project_16x16.ui.Button;
 
@@ -77,12 +77,12 @@ public class PauseMenu extends PScene {
 
 		pressSettings.update();
 		if (pressSettings.hover()) {
-			game.swapToScene(GameScenes.SETTINGS_MENU);
+			game.swapToScene(GameScene.SETTINGS_MENU);
 		}
 
 		pressMenu.update();
 		if (pressMenu.hover()) {
-			game.swapToScene(GameScenes.MAIN_MENU);
+			game.swapToScene(GameScene.MAIN_MENU);
 		}
 	}
 

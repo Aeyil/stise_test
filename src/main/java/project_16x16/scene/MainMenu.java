@@ -14,8 +14,7 @@ import project_16x16.Utility;
 import project_16x16.Audio;
 import project_16x16.Audio.BGM;
 import project_16x16.Constants;
-import project_16x16.SideScroller.GameScenes;
-import project_16x16.scene.PScene;
+import project_16x16.SideScroller.GameScene;
 import project_16x16.ui.Button;
 
 /**
@@ -93,18 +92,18 @@ public final class MainMenu extends PScene {
 	private void update() {
 		pressStart.update();
 		if (pressStart.hover()) {
-			((GameplayScene) GameScenes.GAME.getScene()).setSingleplayer(true);
-			game.swapToScene(GameScenes.GAME);
+			((GameplayScene) GameScene.GAME.getScene()).setSingleplayer(true);
+			game.swapToScene(GameScene.GAME);
 		}
 
 		pressMultiplayer.update();
 		if (pressMultiplayer.hover()) {
-			game.swapToScene(GameScenes.MULTIPLAYER_MENU);
+			game.swapToScene(GameScene.MULTIPLAYER_MENU);
 		}
 
 		pressSettings.update();
 		if (pressSettings.hover()) {
-			game.swapToScene(GameScenes.SETTINGS_MENU);
+			game.swapToScene(GameScene.SETTINGS_MENU);
 		}
 
 		pressQuit.update();
