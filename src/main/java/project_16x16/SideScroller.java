@@ -38,20 +38,6 @@ public class SideScroller extends PApplet {
 	// Game Dev
 	public static final String LEVEL = "Storage/Game/Maps/tiledMap.dat";
 
-	public enum DebugType {
-		OFF, ALL, INFO_ONLY;
-
-		private static DebugType[] vals = values();
-
-		public DebugType next() {
-			return vals[(this.ordinal() + 1) % vals.length];
-		}
-
-		public static DebugType get(int value) {
-			return values()[value];
-		}
-	}
-
 	public DebugType debug = DebugType.get(Options.debugMode);
 
 	public static final boolean SNAP = true; // snap objects to grid when moving; TODO move to options

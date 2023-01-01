@@ -3,8 +3,8 @@ package project_16x16.objects;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
+import project_16x16.DebugType;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.DebugType;
 import project_16x16.Tileset;
 import project_16x16.scene.GameplayScene;
 
