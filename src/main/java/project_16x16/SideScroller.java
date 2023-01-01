@@ -177,6 +177,24 @@ public class SideScroller extends PApplet {
 		Audio.assignApplet(this);
 
 		// Create scene
+		createScene();
+		swapToScene(GameScene.MAIN_MENU);
+
+		// Camera
+		configureCamera();
+
+		scaleResolution();
+		launchIntoMultiplayer();
+	}
+
+	private void configureCamera() {
+		camera = new Camera(this);
+		camera.setMouseMask(CONTROL);
+		camera.setMinZoomScale(Constants.CAMERA_ZOOM_MIN);
+		camera.setMaxZoomScale(Constants.CAMERA_ZOOM_MAX);
+	}
+
+	private void createScene() {
 		sceneHistory = new ArrayDeque<>();
 		game = new GameplayScene(this, Constants.DEV_LEVEL);
 		menu = new MainMenu(this);
@@ -186,16 +204,6 @@ public class SideScroller extends PApplet {
 		mHostMenu = new MultiplayerHostMenu(this);
 		mClientMenu = new MultiplayerClientMenu(this);
 		audioSettings = new AudioSettings(this);
-		swapToScene(GameScene.MAIN_MENU);
-
-		// Camera
-		camera = new Camera(this);
-		camera.setMouseMask(CONTROL);
-		camera.setMinZoomScale(Constants.CAMERA_ZOOM_MIN);
-		camera.setMaxZoomScale(Constants.CAMERA_ZOOM_MAX);
-
-		scaleResolution();
-		launchIntoMultiplayer();
 	}
 
 	/**
