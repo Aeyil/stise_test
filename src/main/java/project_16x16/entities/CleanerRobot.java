@@ -48,7 +48,7 @@ public class CleanerRobot extends Enemy {
 		}
 	}
 
-	private double getDistance(PVector a, PVector b) {
+	protected double getDistance(PVector a, PVector b) {
 		return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 	}
 

@@ -106,7 +106,7 @@ public class Enemy extends CollidableObject {
 		return enemyState;
 	}
 
-	private void checkEnemyCollision() {
+	protected void checkEnemyCollision() {
 		for (EditableObject o : gameplayScene.objects) {
 			if (o.equals(this)) {
 				continue;
@@ -161,36 +161,15 @@ public class Enemy extends CollidableObject {
 	 * @param collision The other object
 	 * @return boolean if it has or has not collided with the object.
 	 */
-	private boolean collides(CollidableObject collision) {
-		return (position.x + width / 2 > collision.position.x - collision.width / 2
-				&& position.x - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + height / 2 > collision.position.y - collision.height / 2
-						&& position.y - height / 2 < collision.position.y + collision.height / 2);
-	}
 
-	// TODO: optimize these (unused)
-	private boolean collidesEqual(CollidableObject collision) {
-		return (position.x + width / 2 >= collision.position.x - collision.width / 2
-				&& position.x - width / 2 <= collision.position.x + collision.width / 2)
-				&& (position.y + height / 2 >= collision.position.y - collision.height / 2
-						&& position.y - height / 2 <= collision.position.y + collision.height / 2);
-	}
-
-	private boolean collidesFutur(CollidableObject collision) {
-		return (position.x + velocity.x + width / 2 > collision.position.x - collision.width / 2
-				&& position.x + velocity.x - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + velocity.y + height / 2 > collision.position.y - collision.height / 2
-						&& position.y + velocity.y - height / 2 < collision.position.y + collision.height / 2);
-	}
-
-	private boolean collidesFuturX(CollidableObject collision) {
+	protected boolean collidesFuturX(CollidableObject collision) {
 		return (position.x + velocity.x + width / 2 > collision.position.x - collision.width / 2
 				&& position.x + velocity.x - width / 2 < collision.position.x + collision.width / 2)
 				&& (position.y + 0 + height / 2 > collision.position.y - collision.height / 2
 						&& position.y + 0 - height / 2 < collision.position.y + collision.height / 2);
 	}
 
-	private boolean collidesFuturY(CollidableObject collision) {
+	protected boolean collidesFuturY(CollidableObject collision) {
 		return (position.x + 0 + width / 2 > collision.position.x - collision.width / 2
 				&& position.x + 0 - width / 2 < collision.position.x + collision.width / 2)
 				&& (position.y + velocity.y + height / 2 > collision.position.y - collision.height / 2
