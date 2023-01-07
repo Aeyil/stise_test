@@ -34,7 +34,7 @@ public class MultiplayerTest {
 	public void callingConstructorAsServer_ok() {
 		ConnectException ce = null;
 		try {
-			Multiplayer multiplayer = new Multiplayer(player, false);
+			Multiplayer multiplayer = new MultiplayerServer(player);
 		}
 		catch (ConnectException e) {
 			ce = e;
@@ -47,12 +47,12 @@ public class MultiplayerTest {
 	public void callingConstructorAsClient_ok() {
 		ConnectException ce = null;
 		try {
-			Multiplayer multiplayer = new Multiplayer(player, true);
+			Multiplayer server = new MultiplayerServer(player);
+			Multiplayer client = new MultiplayerClient(player);
 		}
 		catch (ConnectException e) {
 			ce = e;
 		}
-
 		assertNull(ce);
 	}
 
@@ -63,7 +63,7 @@ public class MultiplayerTest {
 			when(mock.active()).thenReturn(false);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, true);
+				Multiplayer multiplayer = new MultiplayerServer(player);
 			}
 			catch (ConnectException e) {
 				ce = e;
@@ -80,7 +80,7 @@ public class MultiplayerTest {
 			when(mock.active()).thenReturn(false);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, false);
+				Multiplayer multiplayer = new MultiplayerClient(player);
 			}
 			catch (ConnectException e) {
 				ce = e;
@@ -99,7 +99,7 @@ public class MultiplayerTest {
 			when(mock.available()).thenReturn(null);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, true);
+				Multiplayer multiplayer = new MultiplayerServer(player);
 				data = multiplayer.readData();
 			}
 			catch (ConnectException e) {
@@ -124,7 +124,7 @@ public class MultiplayerTest {
 			when(mock.available()).thenReturn(client);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, true);
+				Multiplayer multiplayer = new MultiplayerServer(player);
 				data = multiplayer.readData();
 			}
 			catch (ConnectException e) {
@@ -146,7 +146,7 @@ public class MultiplayerTest {
 			when(mock.available()).thenReturn(0);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, false);
+				Multiplayer multiplayer = new MultiplayerClient(player);
 				data = multiplayer.readData();
 			}
 			catch (ConnectException e) {
@@ -168,7 +168,7 @@ public class MultiplayerTest {
 			when(mock.readString()).thenReturn("{}");
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, false);
+				Multiplayer multiplayer = new MultiplayerClient(player);
 				data = multiplayer.readData();
 			}
 			catch (ConnectException e) {
@@ -188,7 +188,7 @@ public class MultiplayerTest {
 			when(mock.active()).thenReturn(true);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, true);
+				Multiplayer multiplayer = new MultiplayerServer(player);
 				multiplayer.writeData("");
 
 				assertFalse(mocked.constructed().isEmpty());
@@ -209,7 +209,7 @@ public class MultiplayerTest {
 			when(mock.active()).thenReturn(true);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, false);
+				Multiplayer multiplayer = new MultiplayerClient(player);
 				multiplayer.writeData("");
 
 				assertFalse(mocked.constructed().isEmpty());
@@ -230,7 +230,7 @@ public class MultiplayerTest {
 			when(mock.active()).thenReturn(true);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, false);
+				Multiplayer multiplayer = new MultiplayerClient(player);
 
 				assertFalse(mocked.constructed().isEmpty());
 				when(mocked.constructed().get(0).active()).thenReturn(false);
@@ -252,7 +252,7 @@ public class MultiplayerTest {
 			when(mock.active()).thenReturn(true);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, true);
+				Multiplayer multiplayer = new MultiplayerServer(player);
 				multiplayer.exit();
 
 				assertFalse(mocked.constructed().isEmpty());
@@ -273,7 +273,7 @@ public class MultiplayerTest {
 			when(mock.active()).thenReturn(true);
 		})) {
 			try {
-				Multiplayer multiplayer = new Multiplayer(player, false);
+				Multiplayer multiplayer = new MultiplayerClient(player);
 				multiplayer.exit();
 
 				assertFalse(mocked.constructed().isEmpty());
