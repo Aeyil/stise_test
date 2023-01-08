@@ -488,19 +488,18 @@ public class SideScroller extends PApplet {
 		textSize(18);
 
 		textAlign(LEFT, TOP);
-		// extract blocks
 		//remove hardcoded number
 		fill(255, 0, 0);
-		displayDebugInfo_Left_Top_Block(lineOffset, yOffset, labelPadding);
+		displayDebugInfo_TextBlock_Left_Top(lineOffset, yOffset, labelPadding);
 
 		fill(55, 155, 255);
-		displayDebugInfo_Left_Bottom_Block(lineOffset, yOffset, labelPadding);
+		displayDebugInfo_TextBlock_Left_Bottom(lineOffset, yOffset, labelPadding);
 
 		fill(255,255,0);
 		textAlign(RIGHT, TOP);
-		displayDebugInfo_Right_Top_Block(lineOffset, yOffset, ip, player, velocity);
+		displayDebugInfo_ValueBlock_Right_Top(lineOffset, yOffset, ip, player, velocity);
 
-		displayDebugInof_Right_Bottom_Block(lineOffset, yOffset, ip);
+		displayDebugInfo_ValueBlock_Right_Bottom(lineOffset, yOffset, ip);
 
 		if (frameRate >= 59.5) {
 			fill(0, 255, 0);
@@ -511,65 +510,72 @@ public class SideScroller extends PApplet {
 		text("[" + round(frameRate) + "]", width - ip, lineOffset * 9 + yOffset);
 	}
 	//CTiSE-Larissa: extract method from long method
-	private void displayDebugInof_Right_Bottom_Block(int lineOffset, int yOffset, int ip) {
-		text("['" + (char) Options.frameRateHigh + "']", width - ip, lineOffset * 12 + yOffset);
-		text("['" + (char) Options.frameRateLow + "']", width - ip, lineOffset * 13 + yOffset);
-		text("['" + (char) Options.toggleDeadzone + "']", width - ip, lineOffset * 14 + yOffset);
-		text("['" + (char) Options.cameraToMouse + "']", width - ip, lineOffset * 15 + yOffset);
-		text("['" + (char) Options.cameraToPlayer + "']", width - ip, lineOffset * 16 + yOffset);
-		text("['" + (char) Options.shake + "']", width - ip, lineOffset * 17 + yOffset);
-		text("['" + (char) Options.notify + "']", width - ip, lineOffset * 18 + yOffset);
-		text("['" + (char) Options.lifeCapInc + "']", width - ip, lineOffset * 19 + yOffset);
-		text("['" + (char) Options.lifeCapDec + "']", width - ip, lineOffset * 20 + yOffset);
-		text("['" + (char) Options.lifeInc + "']", width - ip, lineOffset * 21 + yOffset);
-		text("['" + (char) Options.lifeDec + "']", width - ip, lineOffset * 22 + yOffset);
-		text("['F11']", width - ip, lineOffset * 23 + yOffset);
-		text("['TAB']", width - ip, lineOffset * 24 + yOffset);
+	private void displayDebugInfo_TextBlock_Left_Top(int lineOffset, int yOffset, int labelPadding) {
+		int lineOffsetFactor = 0;
+		text("Player Pos:", width - labelPadding, lineOffset * lineOffsetFactor + yOffset);
+		text("Player Speed:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Anim #:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Anim Frame:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera Pos:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera Zoom:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera Rot:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("World Mouse:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Projectiles:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Framerate:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
 	}
 	//CTiSE-Larissa: extract method from long method
-	private void displayDebugInfo_Right_Top_Block(int lineOffset, int yOffset, int ip, Player player, PVector velocity) {
-		text("[" + round(player.position.x) + ", " + round(player.position.y) + "]", width - ip, lineOffset * 0 + yOffset);
-		text("[" + round(velocity.x) + ", " + round(velocity.y) + "]", width - ip, lineOffset * 1 + yOffset);
-		text("[" + player.animation.name + "]", width - ip, lineOffset * 2 + yOffset);
+	private void displayDebugInfo_TextBlock_Left_Bottom(int lineOffset, int yOffset, int labelPadding) {
+		int lineOffsetFactor = 12;
+		text("Framerate HIGH:", width - labelPadding, lineOffset * lineOffsetFactor + yOffset);
+		text("Framerate LOW:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Toggle Deadzone:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera->Mouse:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera->Player:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Shake Camera:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Notification:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life cap++:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life cap--:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life++:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life--:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Fullscreen:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Toggle Debug:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+	}
+
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_ValueBlock_Right_Top(int lineOffset, int yOffset, int ip, Player player, PVector velocity) {
+		int lineOffsetFactor = 0;
+		text("[" + round(player.position.x) + ", " + round(player.position.y) + "]", width - ip, lineOffset * lineOffsetFactor + yOffset);
+		text("[" + round(velocity.x) + ", " + round(velocity.y) + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + player.animation.name + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
 		text("[" + round(player.animation.getFrameID()) + " / " + player.animation.getAnimLength() + "]", width - ip,
-				lineOffset * 3 + yOffset);
+				lineOffset * ++lineOffsetFactor + yOffset);
 		text("[" + PApplet.round(camera.getPosition().x) + ", " + PApplet.round(camera.getPosition().y) + "]",
-				width - ip, lineOffset * 4 + yOffset);
-		text("[" + String.format("%.2f", camera.getZoomScale()) + "]", width - ip, lineOffset * 5 + yOffset);
-		text("[" + round(degrees(camera.getCameraRotation())) + "]", width - ip, lineOffset * 6 + yOffset);
+				width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + String.format("%.2f", camera.getZoomScale()) + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + round(degrees(camera.getCameraRotation())) + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
 		text("[" + round(camera.getMouseCoord().x) + ", " + round(camera.getMouseCoord().y) + "]", width - ip,
-				lineOffset * 7 + yOffset);
-		text("[" + "?" + "]", width - ip, lineOffset * 8 + yOffset); // TODO expose
+				lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + "?" + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset); // TODO expose
 	}
 	//CTiSE-Larissa: extract method from long method
-	private void displayDebugInfo_Left_Bottom_Block(int lineOffset, int yOffset, int labelPadding) {
-		text("Framerate HIGH:", width - labelPadding, lineOffset * 12 + yOffset);
-		text("Framerate LOW:", width - labelPadding, lineOffset * 13 + yOffset);
-		text("Toggle Deadzone:", width - labelPadding, lineOffset * 14 + yOffset);
-		text("Camera->Mouse:", width - labelPadding, lineOffset * 15 + yOffset);
-		text("Camera->Player:", width - labelPadding, lineOffset * 16 + yOffset);
-		text("Shake Camera:", width - labelPadding, lineOffset * 17 + yOffset);
-		text("Notification:", width - labelPadding, lineOffset * 18 + yOffset);
-		text("Life cap++:", width - labelPadding, lineOffset * 19 + yOffset);
-		text("Life cap--:", width - labelPadding, lineOffset * 20 + yOffset);
-		text("Life++:", width - labelPadding, lineOffset * 21 + yOffset);
-		text("Life--:", width - labelPadding, lineOffset * 22 + yOffset);
-		text("Fullscreen:", width - labelPadding, lineOffset * 23 + yOffset);
-		text("Toggle Debug:", width - labelPadding, lineOffset * 24 + yOffset);
+	private void displayDebugInfo_ValueBlock_Right_Bottom(int lineOffset, int yOffset, int ip) {
+		int lineOffsetFactor = 12;
+		text("['" + (char) Options.frameRateHigh + "']", width - ip, lineOffset * lineOffsetFactor + yOffset);
+		text("['" + (char) Options.frameRateLow + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.toggleDeadzone + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.cameraToMouse + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.cameraToPlayer + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.shake + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.notify + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeCapInc + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeCapDec + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeInc + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeDec + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['F11']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['TAB']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
 	}
-	//CTiSE-Larissa: extract method from long method
-	private void displayDebugInfo_Left_Top_Block(int lineOffset, int yOffset, int labelPadding) {
-		text("Player Pos:", width - labelPadding, lineOffset * 0 + yOffset);
-		text("Player Speed:", width - labelPadding, lineOffset * 1 + yOffset);
-		text("Anim #:", width - labelPadding, lineOffset * 2 + yOffset);
-		text("Anim Frame:", width - labelPadding, lineOffset * 3 + yOffset);
-		text("Camera Pos:", width - labelPadding, lineOffset * 4 + yOffset);
-		text("Camera Zoom:", width - labelPadding, lineOffset * 5 + yOffset);
-		text("Camera Rot:", width - labelPadding, lineOffset * 6 + yOffset);
-		text("World Mouse:", width - labelPadding, lineOffset * 7 + yOffset);
-		text("Projectiles:", width - labelPadding, lineOffset * 8 + yOffset);
-		text("Framerate:", width - labelPadding, lineOffset * 9 + yOffset);
-	}
+
+
 
 	/**
 	 * Launch into multiplayer mode instantly bases upon program args. Used in
