@@ -4,8 +4,8 @@ import processing.core.PConstants;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 import project_16x16.Constants;
+import project_16x16.GameScene;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScene;
 import project_16x16.ui.Button;
 
 public class MultiplayerMenu extends PScene {

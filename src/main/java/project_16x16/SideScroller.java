@@ -56,29 +56,13 @@ public class SideScroller extends PApplet {
 
 	//changed from private to protected because of enum GameScene
 	protected static MainMenu menu;
-	private static GameplayScene game;
-	private static PauseMenu pmenu;
-	private static Settings settings;
-	private static MultiplayerMenu mMenu;
-	//changed from private to protected because of enum GameScene
+	protected static GameplayScene game;
+	protected static PauseMenu pmenu;
+	protected static Settings settings;
+	protected static MultiplayerMenu mMenu;
 	protected static MultiplayerHostMenu mHostMenu;
-	private static MultiplayerClientMenu mClientMenu;
-	private static AudioSettings audioSettings;
-
-	public enum GameScene {
-		MAIN_MENU(menu), GAME(game), PAUSE_MENU(pmenu), SETTINGS_MENU(settings), MULTIPLAYER_MENU(mMenu),
-		HOST_MENU(mHostMenu), CLIENT_MENU(mClientMenu), AUDIO_SETTINGS(audioSettings);
-
-		PScene scene;
-
-		private GameScene(PScene scene) {
-			this.scene = scene;
-		}
-
-		public PScene getScene() {
-			return scene;
-		}
-	}
+	protected static MultiplayerClientMenu mClientMenu;
+	protected static AudioSettings audioSettings;
 
 	// Events
 	private HashSet<Integer> keysDown;
@@ -488,7 +472,6 @@ public class SideScroller extends PApplet {
 		textSize(18);
 
 		textAlign(LEFT, TOP);
-		//remove hardcoded number
 		fill(255, 0, 0);
 		displayDebugInfo_TextBlock_Left_Top(lineOffset, yOffset, labelPadding);
 

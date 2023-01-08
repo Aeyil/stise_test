@@ -14,7 +14,7 @@ import project_16x16.Utility;
 import project_16x16.Audio;
 import project_16x16.Audio.BGM;
 import project_16x16.Constants;
-import project_16x16.SideScroller.GameScene;
+import project_16x16.GameScene;
 import project_16x16.ui.Button;
 
 /**

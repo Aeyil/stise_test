@@ -7,8 +7,8 @@ import processing.core.PConstants;
 import processing.core.PImage;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
+import project_16x16.GameScene;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScene;
 import project_16x16.Utility;
 import project_16x16.ui.Button;
 
