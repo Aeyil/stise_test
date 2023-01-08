@@ -54,7 +54,7 @@ public class SideScroller extends PApplet {
 	private ArrayDeque<GameScene> sceneHistory;
 	private int sceneSwapTime = 0;
 
-	//changed from private to protected because of enum GameScene
+	//CTiSE-Larissa: changed from private to protected because of extraction of enum GameScene
 	protected static MainMenu menu;
 	protected static GameplayScene game;
 	protected static PauseMenu pmenu;
