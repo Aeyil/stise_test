@@ -54,12 +54,14 @@ public class SideScroller extends PApplet {
 	private ArrayDeque<GameScene> sceneHistory;
 	private int sceneSwapTime = 0;
 
-	private static MainMenu menu;
+	//changed from private to protected because of enum GameScene
+	protected static MainMenu menu;
 	private static GameplayScene game;
 	private static PauseMenu pmenu;
 	private static Settings settings;
 	private static MultiplayerMenu mMenu;
-	private static MultiplayerHostMenu mHostMenu;
+	//changed from private to protected because of enum GameScene
+	protected static MultiplayerHostMenu mHostMenu;
 	private static MultiplayerClientMenu mClientMenu;
 	private static AudioSettings audioSettings;
 
@@ -186,14 +188,14 @@ public class SideScroller extends PApplet {
 		scaleResolution();
 		launchIntoMultiplayer();
 	}
-
+	//CTiSE-Larissa: extract configuration of the camera in its own method
 	private void configureCamera() {
 		camera = new Camera(this);
 		camera.setMouseMask(CONTROL);
 		camera.setMinZoomScale(Constants.CAMERA_ZOOM_MIN);
 		camera.setMaxZoomScale(Constants.CAMERA_ZOOM_MAX);
 	}
-
+	//CTiSE-Larissa: extract creation of the game scene in its own method
 	private void createScene() {
 		sceneHistory = new ArrayDeque<>();
 		game = new GameplayScene(this, Constants.DEV_LEVEL);
@@ -486,49 +488,30 @@ public class SideScroller extends PApplet {
 		textSize(18);
 
 		textAlign(LEFT, TOP);
-		
+		// extract blocks
+		//remove hardcoded number
 		fill(255, 0, 0);
-		text("Player Pos:", width - labelPadding, lineOffset * 0 + yOffset);
-		text("Player Speed:", width - labelPadding, lineOffset * 1 + yOffset);
-		text("Anim #:", width - labelPadding, lineOffset * 2 + yOffset);
-		text("Anim Frame:", width - labelPadding, lineOffset * 3 + yOffset);
-		text("Camera Pos:", width - labelPadding, lineOffset * 4 + yOffset);
-		text("Camera Zoom:", width - labelPadding, lineOffset * 5 + yOffset);
-		text("Camera Rot:", width - labelPadding, lineOffset * 6 + yOffset);
-		text("World Mouse:", width - labelPadding, lineOffset * 7 + yOffset);
-		text("Projectiles:", width - labelPadding, lineOffset * 8 + yOffset);
-		text("Framerate:", width - labelPadding, lineOffset * 9 + yOffset);
-		
+		displayDebugInfo_Left_Top_Block(lineOffset, yOffset, labelPadding);
+
 		fill(55, 155, 255);
-		text("Framerate HIGH:", width - labelPadding, lineOffset * 12 + yOffset);
-		text("Framerate LOW:", width - labelPadding, lineOffset * 13 + yOffset);
-		text("Toggle Deadzone:", width - labelPadding, lineOffset * 14 + yOffset);
-		text("Camera->Mouse:", width - labelPadding, lineOffset * 15 + yOffset);
-		text("Camera->Player:", width - labelPadding, lineOffset * 16 + yOffset);
-		text("Shake Camera:", width - labelPadding, lineOffset * 17 + yOffset);
-		text("Notification:", width - labelPadding, lineOffset * 18 + yOffset);
-		text("Life cap++:", width - labelPadding, lineOffset * 19 + yOffset);
-		text("Life cap--:", width - labelPadding, lineOffset * 20 + yOffset);
-		text("Life++:", width - labelPadding, lineOffset * 21 + yOffset);
-		text("Life--:", width - labelPadding, lineOffset * 22 + yOffset);
-		text("Fullscreen:", width - labelPadding, lineOffset * 23 + yOffset);
-		text("Toggle Debug:", width - labelPadding, lineOffset * 24 + yOffset);
+		displayDebugInfo_Left_Bottom_Block(lineOffset, yOffset, labelPadding);
 
 		fill(255,255,0);
 		textAlign(RIGHT, TOP);
-		text("[" + round(player.position.x) + ", " + round(player.position.y) + "]", width - ip, lineOffset * 0 + yOffset);
-		text("[" + round(velocity.x) + ", " + round(velocity.y) + "]", width - ip, lineOffset * 1 + yOffset);
-		text("[" + player.animation.name + "]", width - ip, lineOffset * 2 + yOffset);
-		text("[" + round(player.animation.getFrameID()) + " / " + player.animation.getAnimLength() + "]", width - ip,
-				lineOffset * 3 + yOffset);
-		text("[" + PApplet.round(camera.getPosition().x) + ", " + PApplet.round(camera.getPosition().y) + "]",
-				width - ip, lineOffset * 4 + yOffset);
-		text("[" + String.format("%.2f", camera.getZoomScale()) + "]", width - ip, lineOffset * 5 + yOffset);
-		text("[" + round(degrees(camera.getCameraRotation())) + "]", width - ip, lineOffset * 6 + yOffset);
-		text("[" + round(camera.getMouseCoord().x) + ", " + round(camera.getMouseCoord().y) + "]", width - ip,
-				lineOffset * 7 + yOffset);
-		text("[" + "?" + "]", width - ip, lineOffset * 8 + yOffset); // TODO expose
-		
+		displayDebugInfo_Right_Top_Block(lineOffset, yOffset, ip, player, velocity);
+
+		displayDebugInof_Right_Bottom_Block(lineOffset, yOffset, ip);
+
+		if (frameRate >= 59.5) {
+			fill(0, 255, 0);
+		}
+		else {
+			fill(255, 0, 0);
+		}
+		text("[" + round(frameRate) + "]", width - ip, lineOffset * 9 + yOffset);
+	}
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInof_Right_Bottom_Block(int lineOffset, int yOffset, int ip) {
 		text("['" + (char) Options.frameRateHigh + "']", width - ip, lineOffset * 12 + yOffset);
 		text("['" + (char) Options.frameRateLow + "']", width - ip, lineOffset * 13 + yOffset);
 		text("['" + (char) Options.toggleDeadzone + "']", width - ip, lineOffset * 14 + yOffset);
@@ -542,14 +525,50 @@ public class SideScroller extends PApplet {
 		text("['" + (char) Options.lifeDec + "']", width - ip, lineOffset * 22 + yOffset);
 		text("['F11']", width - ip, lineOffset * 23 + yOffset);
 		text("['TAB']", width - ip, lineOffset * 24 + yOffset);
-
-		if (frameRate >= 59.5) {
-			fill(0, 255, 0);
-		}
-		else {
-			fill(255, 0, 0);
-		}
-		text("[" + round(frameRate) + "]", width - ip, lineOffset * 9 + yOffset);
+	}
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_Right_Top_Block(int lineOffset, int yOffset, int ip, Player player, PVector velocity) {
+		text("[" + round(player.position.x) + ", " + round(player.position.y) + "]", width - ip, lineOffset * 0 + yOffset);
+		text("[" + round(velocity.x) + ", " + round(velocity.y) + "]", width - ip, lineOffset * 1 + yOffset);
+		text("[" + player.animation.name + "]", width - ip, lineOffset * 2 + yOffset);
+		text("[" + round(player.animation.getFrameID()) + " / " + player.animation.getAnimLength() + "]", width - ip,
+				lineOffset * 3 + yOffset);
+		text("[" + PApplet.round(camera.getPosition().x) + ", " + PApplet.round(camera.getPosition().y) + "]",
+				width - ip, lineOffset * 4 + yOffset);
+		text("[" + String.format("%.2f", camera.getZoomScale()) + "]", width - ip, lineOffset * 5 + yOffset);
+		text("[" + round(degrees(camera.getCameraRotation())) + "]", width - ip, lineOffset * 6 + yOffset);
+		text("[" + round(camera.getMouseCoord().x) + ", " + round(camera.getMouseCoord().y) + "]", width - ip,
+				lineOffset * 7 + yOffset);
+		text("[" + "?" + "]", width - ip, lineOffset * 8 + yOffset); // TODO expose
+	}
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_Left_Bottom_Block(int lineOffset, int yOffset, int labelPadding) {
+		text("Framerate HIGH:", width - labelPadding, lineOffset * 12 + yOffset);
+		text("Framerate LOW:", width - labelPadding, lineOffset * 13 + yOffset);
+		text("Toggle Deadzone:", width - labelPadding, lineOffset * 14 + yOffset);
+		text("Camera->Mouse:", width - labelPadding, lineOffset * 15 + yOffset);
+		text("Camera->Player:", width - labelPadding, lineOffset * 16 + yOffset);
+		text("Shake Camera:", width - labelPadding, lineOffset * 17 + yOffset);
+		text("Notification:", width - labelPadding, lineOffset * 18 + yOffset);
+		text("Life cap++:", width - labelPadding, lineOffset * 19 + yOffset);
+		text("Life cap--:", width - labelPadding, lineOffset * 20 + yOffset);
+		text("Life++:", width - labelPadding, lineOffset * 21 + yOffset);
+		text("Life--:", width - labelPadding, lineOffset * 22 + yOffset);
+		text("Fullscreen:", width - labelPadding, lineOffset * 23 + yOffset);
+		text("Toggle Debug:", width - labelPadding, lineOffset * 24 + yOffset);
+	}
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_Left_Top_Block(int lineOffset, int yOffset, int labelPadding) {
+		text("Player Pos:", width - labelPadding, lineOffset * 0 + yOffset);
+		text("Player Speed:", width - labelPadding, lineOffset * 1 + yOffset);
+		text("Anim #:", width - labelPadding, lineOffset * 2 + yOffset);
+		text("Anim Frame:", width - labelPadding, lineOffset * 3 + yOffset);
+		text("Camera Pos:", width - labelPadding, lineOffset * 4 + yOffset);
+		text("Camera Zoom:", width - labelPadding, lineOffset * 5 + yOffset);
+		text("Camera Rot:", width - labelPadding, lineOffset * 6 + yOffset);
+		text("World Mouse:", width - labelPadding, lineOffset * 7 + yOffset);
+		text("Projectiles:", width - labelPadding, lineOffset * 8 + yOffset);
+		text("Framerate:", width - labelPadding, lineOffset * 9 + yOffset);
 	}
 
 	/**
