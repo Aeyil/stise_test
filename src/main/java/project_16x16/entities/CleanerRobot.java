@@ -20,6 +20,8 @@ public class CleanerRobot extends Enemy {
 	private static final int WIDTH = 14*4;
 	private static final int HEIGHT = 10*4;
 	private static final int COLLISION_RANGE = 145;
+
+	private final int turnDistance = 10;
 	private PVector posA, posB;
 	private PVector target;
 
@@ -38,7 +40,7 @@ public class CleanerRobot extends Enemy {
 		super.update();
 
 		velocity.set(velocity.x, velocity.y + gravity);
-		if (getDistance(target, position) < 10) {
+		if (getDistance(target, position) < turnDistance) {
 			if (target == posA) {
 				target = posB;
 			}

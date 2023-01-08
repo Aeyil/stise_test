@@ -88,8 +88,6 @@ public class Enemy extends CollidableObject {
 		if (position.y > 2000) { // out of bounds check
 			// Destroy(gameObject);
 		}
-		if (applet.isKeyDown(KeyEvent.VK_9)) {
-		}
 		if (applet.debug == DebugType.ALL) {
 			applet.noFill();
 			applet.stroke(255, 0, 0);
