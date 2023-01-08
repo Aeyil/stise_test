@@ -37,7 +37,7 @@ public class EnemyTest {
         try(MockedStatic<Tileset> tileset_mocked = Mockito.mockStatic(Tileset.class)){
             tileset_mocked.when(() -> Tileset.getTile(0, 258, 14, 14, 4))
                     .thenReturn(image);
-            enemy = new Enemy(sideScroller,scene);
+            enemy = new Enemy(sideScroller,scene,2,1,7,18,56,40,145);
         }
     }
 

@@ -12,11 +12,19 @@ import project_16x16.scene.GameplayScene;
  * </p>
  */
 public class CleanerRobot extends Enemy {
+
+	private static final int HEALTH = 2;
+	private static final float GRAVITY = 1;
+	private static final int SPEED_WALK = 7;
+	private static final int SPEED_JUMP = 18;
+	private static final int WIDTH = 14*4;
+	private static final int HEIGHT = 10*4;
+	private static final int COLLISION_RANGE = 145;
 	private PVector posA, posB;
 	private PVector target;
 
 	public CleanerRobot(SideScroller sideScroller, GameplayScene gameplayScene) {
-		super(sideScroller, gameplayScene);
+		super(sideScroller, gameplayScene, HEALTH, GRAVITY, SPEED_WALK, SPEED_JUMP,WIDTH,HEIGHT,COLLISION_RANGE);
 	}
 
 	public CleanerRobot(SideScroller sideScroller, GameplayScene gameplayScene, PVector x1, PVector x2) {

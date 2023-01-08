@@ -22,17 +22,15 @@ import project_16x16.scene.GameplayScene;
 public class Enemy extends CollidableObject {
 
 	private PImage image;
-
-	float gravity;
-
 	final PVector velocity = new PVector(0, 0);
 
-	private static final int collisionRange = 145;
+	public int health;
+	float gravity;
 
 	final int speedWalk;
-	private final int speedJump;
+	final int speedJump;
 
-	public int health;
+	private final int collisionRange;
 
 	EnemyState enemyState;
 
@@ -41,15 +39,17 @@ public class Enemy extends CollidableObject {
 	 * 
 	 * @param sideScroller SideScroller game controller.
 	 */
-	public Enemy(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public Enemy(SideScroller sideScroller, GameplayScene gameplayScene, int health, float gravity, int speedWalk, int speedJump,
+				 int width, int height, int collisionRange) {
 		super(sideScroller, gameplayScene);
-		gravity = 1;
 		image = Tileset.getTile(0, 258, 14, 14, 4);
-		health = 2;
-		speedWalk = 7;
-		speedJump = 18;
-		width = 14 * 4;
-		height = 10 * 4;
+		this.health = health; //2
+		this.gravity = gravity; //1
+		this.speedWalk = speedWalk; //7
+		this.speedJump = speedJump; //18
+		this.width = width;
+		this.height = height;
+		this.collisionRange = collisionRange;
 		enemyState = new EnemyState();
 	}
 
