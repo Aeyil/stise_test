@@ -21,6 +21,8 @@ import project_16x16.scene.GameplayScene;
  */
 public class Enemy extends CollidableObject {
 
+	private static final int OUT_OF_BOUNDS_DISTANCE = 2000;
+
 	private PImage image;
 	final PVector velocity = new PVector(0, 0);
 
@@ -32,7 +34,7 @@ public class Enemy extends CollidableObject {
 
 	private final int collisionRange;
 
-	EnemyState enemyState;
+	EntityState enemyState;
 
 	/**
 	 * Constructor
@@ -50,7 +52,7 @@ public class Enemy extends CollidableObject {
 		this.width = width;
 		this.height = height;
 		this.collisionRange = collisionRange;
-		enemyState = new EnemyState();
+		enemyState = new EntityState();
 	}
 
 	/**
@@ -85,7 +87,7 @@ public class Enemy extends CollidableObject {
 			enemyState.flying = true;
 		}
 		position.add(velocity);
-		if (position.y > 2000) { // out of bounds check
+		if (position.y > OUT_OF_BOUNDS_DISTANCE) { // out of bounds check
 			// Destroy(gameObject);
 		}
 		if (applet.debug == DebugType.ALL) {
@@ -100,7 +102,7 @@ public class Enemy extends CollidableObject {
 		return velocity.copy();
 	}
 
-	public EnemyState getState() {
+	public EntityState getState() {
 		return enemyState;
 	}
 
@@ -172,24 +174,6 @@ public class Enemy extends CollidableObject {
 				&& position.x + 0 - width / 2 < collision.position.x + collision.width / 2)
 				&& (position.y + velocity.y + height / 2 > collision.position.y - collision.height / 2
 						&& position.y + velocity.y - height / 2 < collision.position.y + collision.height / 2);
-	}
-
-	public class EnemyState {
-		public boolean flying;
-		public boolean attacking;
-		public boolean dashing;
-		public int facingDir;
-		public boolean landing;
-		public boolean jumping;
-
-		EnemyState() {
-			flying = false;
-			attacking = false;
-			dashing = false;
-			facingDir = RIGHT;
-			jumping = false;
-			landing = false;
-		}
 	}
 
 	@Override
