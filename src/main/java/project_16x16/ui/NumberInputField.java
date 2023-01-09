@@ -34,13 +34,13 @@ public class NumberInputField extends TextInputField {
 		// Focus Event
 		if (Utility.hoverScreen(x, y, width, height)) {
 			mouseOver = true;
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				focus = true;
 			}
 		}
 		else {
 			mouseOver = false;
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				focus = false;
 			}
 		}
@@ -48,7 +48,7 @@ public class NumberInputField extends TextInputField {
 		// Typing
 		if (focus) {
 			applet.textSize(20);
-			if (applet.keyPressEvent) {
+			if (applet.isKeyPressEvent()) {
 				if (applet.key == '\u0008') { // backspace
 					if (text.length() > 0) {
 						text = text.substring(0, text.length() - 1);

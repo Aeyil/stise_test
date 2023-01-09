@@ -358,7 +358,7 @@ public class GameplayScene extends PScene {
 			if (applet.getMouseCoordScreen().y > 100) {
 				if (applet.getMouseCoordScreen().x > xx - (20 * 4) / 2 && applet.getMouseCoordScreen().x < xx + (20 * 4) / 2 && applet.getMouseCoordScreen().y > yy - (20 * 4) / 2 && applet.getMouseCoordScreen().y < yy + (20 * 4) / 2) {
 					// Grab Item
-					if (applet.mousePressEvent) {
+					if (applet.isMousePressEvent()) {
 						editorItem.focus = true;
 						editorItem.setTile(tile.getName());
 					}
@@ -396,7 +396,7 @@ public class GameplayScene extends PScene {
 			applet.image(img, 20 * 4 / 2 + 10 + i * (20 * 4 + 10), 20 * 4 / 2 + 10, img.width * (float) 0.5, img.height * (float) 0.5);
 
 			// Focus Event
-			if (applet.mouseReleaseEvent) {
+			if (applet.isMouseReleaseEvent()) {
 				float xx = 20 * 4 / 2 + 10 + i * (20 * 4 + 10);
 				float yy = 20 * 4 / 2 + 10;
 				if (editorItem.focus && applet.getMouseCoordScreen().x > xx - (20 * 4) / 2 && applet.getMouseCoordScreen().x < xx + (20 * 4) / 2 && applet.getMouseCoordScreen().y > yy - (20 * 4) / 2 && applet.getMouseCoordScreen().y < yy + (20 * 4) / 2) {
@@ -686,7 +686,7 @@ public class GameplayScene extends PScene {
 
 	public void displayWorldEdit() {
 		displayGrid();
-		if (applet.mousePressEvent && focusedObject != null) {
+		if (applet.isMousePressEvent() && focusedObject != null) {
 			focusedObject.updateEdit(); // enforce one item selected at once
 		}
 	}
@@ -701,7 +701,7 @@ public class GameplayScene extends PScene {
 			applet.image(img, 20 * 4 / 2 + 10 + i * (20 * 4 + 10), 20 * 4 / 2 + 10, img.width * (float) 0.5, img.height * (float) 0.5);
 
 			// Focus Event
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				float x = 20 * 4 / 2 + 10 + i * (20 * 4 + 10);
 				float y = 20 * 4 / 2 + 10;
 				if (applet.getMouseCoordScreen().x > x - (20 * 4) / 2 && applet.getMouseCoordScreen().x < x + (20 * 4) / 2 && applet.getMouseCoordScreen().y > y - (20 * 4) / 2 && applet.getMouseCoordScreen().y < y + (20 * 4) / 2) {

@@ -45,7 +45,7 @@ public class EditorItem extends PClass {
 	public void update() {
 		if (focus) {
 			position = applet.getMouseCoordScreen();
-			if (applet.mouseReleaseEvent) {
+			if (applet.isMouseReleaseEvent()) {
 				focus = false;
 				if (mode.equals("CREATE")) {
 					// transform from screen mouse pos to game pos

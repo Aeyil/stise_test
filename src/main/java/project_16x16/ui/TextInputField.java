@@ -79,13 +79,13 @@ public class TextInputField extends PClass {
 		// Focus Event
 		if (Utility.hoverScreen(x, y, width, height)) {
 			mouseOver = true;
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				focus = true;
 			}
 		}
 		else {
 			mouseOver = false;
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				focus = false;
 			}
 		}
@@ -93,7 +93,7 @@ public class TextInputField extends PClass {
 		// Typing
 		if (focus) {
 			applet.textSize(20);
-			if (applet.keyPressEvent) {
+			if (applet.isKeyPressEvent()) {
 				if (applet.key != '\u0008') {
 					if (applet.textWidth(text) < width - 20) {
 						if (applet.key != '\uFFFF' && applet.key != '\n') {

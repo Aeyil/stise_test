@@ -74,10 +74,10 @@ public class Button extends PClass {
 	 */
 	public void update() {
 		press = false;
-		if (applet.mousePressEvent) {
+		if (applet.isMousePressEvent()) {
 			focus = hover();
 		}
-		if (applet.mouseReleaseEvent) {
+		if (applet.isMouseReleaseEvent()) {
 			if (hover()) {
 				press = true;
 			}
@@ -87,10 +87,10 @@ public class Button extends PClass {
 
 	public void updateOnPress() {
 		press = false;
-		if (applet.mousePressEvent) {
+		if (applet.isMousePressEvent()) {
 			focus = hover();
 		}
-		else if (applet.mouseReleaseEvent && hover()) {
+		else if (applet.isMouseReleaseEvent() && hover()) {
 			press = true;
 		}
 	}

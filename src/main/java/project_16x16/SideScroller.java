@@ -65,11 +65,13 @@ public class SideScroller extends PApplet {
 	protected static AudioSettings audioSettings;
 
 	// Events
-	private HashSet<Integer> keysDown;
-	public boolean keyPressEvent; //     TODO remove -- override keyPressed() instead
-	public boolean keyReleaseEvent; //   TODO remove -- override mouseReleased() instead
-	public boolean mousePressEvent; //   TODO remove -- override mousePressed() instead
-	public boolean mouseReleaseEvent; // TODO remove -- override mouseReleased() instead
+	//CTiSE-Larissa: made boolean variables (keyPressEvent, mousePressEvent, keyReleaseEvent, mouseReleaseEvent) private because of encapsulation.
+	//CTiSE-Larissa: made keysDown protected, because of testing
+	protected HashSet<Integer> keysDown;
+	private boolean keyPressEvent; //     TODO remove -- override keyPressed() instead
+	private boolean keyReleaseEvent; //   TODO remove -- override mouseReleased() instead
+	private boolean mousePressEvent; //   TODO remove -- override mousePressed() instead
+	private boolean mouseReleaseEvent; // TODO remove -- override mouseReleased() instead
 
 	// Camera Variables
 	public Camera camera; // TODO encapsulate in gamePlayScene
@@ -601,5 +603,23 @@ public class SideScroller extends PApplet {
 	// Main
 	public static void main(String args[]) {
 		PApplet.main(SideScroller.class, args);
+	}
+
+	//CTiSE-Larissa: made boolean variables (keyPressEvent, mousePressEvent, keyReleaseEvent, mouseReleaseEvent) private because of encapsulation.
+	// Added Getter Methods for accessing value in other classes.
+	public boolean isKeyPressEvent() {
+		return keyPressEvent;
+	}
+
+	public void setKeyPressEvent(boolean keyPressEvent) {
+		this.keyPressEvent = keyPressEvent;
+	}
+
+	public boolean isMousePressEvent() {
+		return mousePressEvent;
+	}
+
+	public boolean isMouseReleaseEvent() {
+		return mouseReleaseEvent;
 	}
 }

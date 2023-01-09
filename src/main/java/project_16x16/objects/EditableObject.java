@@ -78,13 +78,13 @@ public abstract class EditableObject extends PClass {
 		if (child) {
 			return;
 		}
-		if (applet.mouseReleaseEvent && applet.mouseButton == LEFT) {
+		if (applet.isMouseReleaseEvent() && applet.mouseButton == LEFT) {
 			focus = false;
 			return;
 		}
 
 		// Focus Event
-		if (applet.mousePressEvent && applet.mouseButton == LEFT && !focus) {
+		if (applet.isMousePressEvent() && applet.mouseButton == LEFT && !focus) {
 			if (mouseHover()) { // Focus Enable
 				if (gameplayScene.focusedObject == null) {
 					focus = true;
@@ -99,7 +99,7 @@ public abstract class EditableObject extends PClass {
 			}
 		}
 		if (focus) { // When Focused
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				if (mouseHover()) {
 					focus = true;
 					editOffset = PVector.sub(position, applet.getMouseCoordGame());
@@ -107,7 +107,7 @@ public abstract class EditableObject extends PClass {
 			}
 
 			// Duplicate Object Shift
-			if (applet.keyPressEvent && applet.isKeyDown(SideScroller.SHIFT)) {
+			if (applet.isKeyPressEvent() && applet.isKeyDown(SideScroller.SHIFT)) {
 				EditableObject copy; // Duplicate Instance
 				switch (type) {
 					case COLLISION:
@@ -140,7 +140,7 @@ public abstract class EditableObject extends PClass {
 					default:
 						break;
 				}
-				applet.keyPressEvent = false;
+				applet.setKeyPressEvent(false);
 				focus = false;
 			}
 			if (focus && applet.mousePressed && applet.mouseButton == LEFT) {
