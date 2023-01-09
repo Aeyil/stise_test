@@ -2,6 +2,7 @@ package project_16x16.entities;
 
 import processing.core.PVector;
 import project_16x16.SideScroller;
+import project_16x16.Utility;
 import project_16x16.scene.GameplayScene;
 
 /**
@@ -40,7 +41,7 @@ public class CleanerRobot extends Enemy {
 		super.update();
 
 		velocity.set(velocity.x, velocity.y + gravity);
-		if (getDistance(target, position) < turnDistance) {
+		if (Utility.fastInRange(target, position,turnDistance)) {
 			if (target == posA) {
 				target = posB;
 			}
