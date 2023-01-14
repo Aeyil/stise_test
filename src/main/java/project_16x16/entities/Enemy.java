@@ -66,7 +66,7 @@ public class Enemy extends CollidableObject {
 		applet.image(image, 0, 0);
 		applet.noTint();
 		applet.popMatrix();
-		if (applet.debug == DebugType.ALL) {
+		if (applet.getDebug() == DebugType.ALL) {
 			applet.strokeWeight(1);
 			applet.stroke(0, 255, 200);
 			applet.noFill();
@@ -90,7 +90,7 @@ public class Enemy extends CollidableObject {
 		}
 		if (applet.isKeyDown(KeyEvent.VK_9)) {
 		}
-		if (applet.debug == DebugType.ALL) {
+		if (applet.getDebug() == DebugType.ALL) {
 			applet.noFill();
 			applet.stroke(255, 0, 0);
 			applet.strokeWeight(1);
@@ -114,7 +114,7 @@ public class Enemy extends CollidableObject {
 			if (o instanceof CollidableObject) {
 				CollidableObject collision = (CollidableObject) o;
 				if (Utility.fastInRange(position, collision.position, collisionRange)) { // In Player Range
-					if (applet.debug == DebugType.ALL) {
+					if (applet.getDebug() == DebugType.ALL) {
 						applet.strokeWeight(2);
 						applet.rect(collision.position.x, collision.position.y, collision.width, collision.height);
 						applet.fill(255, 0, 0);

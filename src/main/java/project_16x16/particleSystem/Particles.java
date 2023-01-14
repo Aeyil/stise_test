@@ -2,6 +2,7 @@ package project_16x16.particleSystem;
 
 import java.util.ArrayList;
 
+import project_16x16.ISideScroller;
 import project_16x16.SideScroller;
 
 /**
@@ -14,13 +15,13 @@ import project_16x16.SideScroller;
  */
 public class Particles {
 
-	private SideScroller applet;
+	private ISideScroller applet;
 	private ParticleSystem particleSystem;
 
 	public ArrayList<Particle> activeParticles;
 	public ArrayList<Particle> inactiveParticles;
 
-	public Particles(ParticleSystem particleSystem, SideScroller applet) {
+	public Particles(ParticleSystem particleSystem, ISideScroller applet) {
 		this.applet = applet;
 		this.particleSystem = particleSystem;
 
@@ -93,6 +94,6 @@ public class Particles {
 	}
 
 	private boolean nextTick() {
-		return particleSystem.spawn && applet.frameCount % (ParticleSystem.FRAMERATE / particleSystem.spawnRate) == 0;
+		return particleSystem.spawn && applet.getFrameCount() % (ParticleSystem.FRAMERATE / particleSystem.spawnRate) == 0;
 	}
 }

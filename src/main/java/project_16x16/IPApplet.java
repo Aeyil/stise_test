@@ -95,6 +95,7 @@ public interface IPApplet extends PConstants {
     public PGraphics createGraphics(int w, int h, String renderer, String path);
 
     public String[] loadStrings(String filename);
+    public int millis();
 
     public void scale(float s);
     public void scale(float x, float y);

@@ -36,16 +36,16 @@ public class MultiplayerClientMenu extends PScene {
 		pressConnect = new Button(sideScroller);
 		ipInput = new TextInputField(sideScroller);
 
-		ipInput.setPosition(applet.width / 2, applet.height / 2 - 240);
+		ipInput.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 240);
 		ipInput.setWidth(300);
 
 		pressConnect.setText("Connect");
-		pressConnect.setPosition(applet.width / 2, applet.height / 2 - 80);
+		pressConnect.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 80);
 		pressConnect.setTextSize(40);
 		pressConnect.setSize(300, 100);
 
 		pressMenu.setText("Back to menu");
-		pressMenu.setPosition(applet.width / 2, applet.height / 2 + 240);
+		pressMenu.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 + 240);
 		pressMenu.setTextSize(40);
 		pressMenu.setSize(300, 100);
 	}
