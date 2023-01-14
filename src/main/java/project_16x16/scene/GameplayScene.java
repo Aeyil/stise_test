@@ -257,7 +257,6 @@ public class GameplayScene extends PScene {
 			data.setString("animSequence", localPlayer.animation.name);
 			data.setInt("animFrame", localPlayer.animation.getFrameID());
 			multiplayer.writeData(data.toString()); // write data to server
-
 			JSONObject other = multiplayer.readData(); // read from server & display other player
 			if (other != null) {
 				onlinePlayer.position.x = other.getFloat("x");

@@ -9,6 +9,7 @@ import project_16x16.Constants;
 import project_16x16.GameScene;
 import project_16x16.SideScroller;
 import project_16x16.multiplayer.Multiplayer;
+import project_16x16.multiplayer.MultiplayerServer;
 import project_16x16.ui.Button;
 import project_16x16.ui.Notifications;
 import project_16x16.ui.TextInputField;
@@ -75,7 +76,7 @@ public class MultiplayerHostMenu extends PScene {
 				String ip = ipInput.getText().split(":")[0]; // TODO does host need to give IP?
 				int port = Integer.valueOf(ipInput.getText().split(":")[1]);
 				try {
-					Multiplayer m = new Multiplayer(game, ip, port, true);
+					Multiplayer m = new MultiplayerServer(game, port);
 					((GameplayScene) GameScene.GAME.getScene()).setupMultiplayer(m);
 					game.swapToScene(GameScene.GAME);
 				}

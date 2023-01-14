@@ -22,6 +22,8 @@ import project_16x16.Options.Option;
 import project_16x16.components.AnimationComponent;
 import project_16x16.entities.Player;
 import project_16x16.multiplayer.Multiplayer;
+import project_16x16.multiplayer.MultiplayerClient;
+import project_16x16.multiplayer.MultiplayerServer;
 import project_16x16.scene.*;
 import project_16x16.scene.GameplayScene.GameModes;
 import project_16x16.ui.Notifications;
@@ -474,6 +476,7 @@ public class SideScroller extends PApplet implements ISideScroller {
 		textSize(18);
 
 		textAlign(LEFT, TOP);
+		
 		fill(255, 0, 0);
 		displayDebugInfo_TextBlock_Left_Top(lineOffset, yOffset, labelPadding);
 
@@ -571,7 +574,7 @@ public class SideScroller extends PApplet implements ISideScroller {
 			Multiplayer m;
 			if (args[0].equals("host")) {
 				try {
-					m = new Multiplayer(this, true);
+					m = new MultiplayerServer(this);
 					((GameplayScene) GameScene.GAME.getScene()).setupMultiplayer(m);
 					swapToScene(GameScene.GAME);
 					((GameplayScene) GameScene.GAME.getScene()).changeMode(GameModes.PLAY);
@@ -583,7 +586,7 @@ public class SideScroller extends PApplet implements ISideScroller {
 			if (args[0].equals("client")) {
 				System.out.println("client path");
 				try {
-					m = new Multiplayer(this, false);
+					m = new MultiplayerClient(this);
 					((GameplayScene) (GameScene.GAME.getScene())).setupMultiplayer(m);
 					swapToScene(GameScene.GAME);
 					((GameplayScene) GameScene.GAME.getScene()).changeMode(GameModes.PLAY);
