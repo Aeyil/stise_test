@@ -9,12 +9,8 @@ import processing.core.PGraphics;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 
-import project_16x16.SideScroller;
-import project_16x16.Utility;
-import project_16x16.Audio;
+import project_16x16.*;
 import project_16x16.Audio.BGM;
-import project_16x16.Constants;
-import project_16x16.GameScene;
 import project_16x16.ui.Button;
 
 /**
@@ -29,15 +25,15 @@ public final class MainMenu extends PScene {
 	public Button pressSettings; // TODO add settings menu
 	public Button pressMultiplayer;
 
-	private SideScroller game;
+	private ISideScroller game;
 
 	private PGraphics background;
 
-	public MainMenu(SideScroller a) {
+	public MainMenu(ISideScroller a) {
 		super(a);
 		game = a;
 
-		background = game.createGraphics((int) game.gameResolution.x, (int) game.gameResolution.x);
+		background = game.createGraphics((int) game.getGameResolution().x, (int) game.getGameResolution().x);
 		background.noSmooth();
 		Particles.assignApplet(a);
 		Particles.populate(1000);
@@ -48,22 +44,26 @@ public final class MainMenu extends PScene {
 		pressSettings = new Button(a);
 
 		pressStart.setText("Start Game");
-		pressStart.setPosition(applet.width / 2, applet.height / 2 - 240);
+//		pressStart.setPosition(applet.width / 2, applet.height / 2 - 240);
+		pressStart.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 240);
 		pressStart.setSize(300, 100);
 		pressStart.setTextSize(40);
 
 		pressMultiplayer.setText("Multiplayer");
-		pressMultiplayer.setPosition(applet.width / 2, applet.height / 2 - 80);
+//		pressMultiplayer.setPosition(applet.width / 2, applet.height / 2 - 80);
+		pressMultiplayer.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 80);
 		pressMultiplayer.setSize(300, 100);
 		pressMultiplayer.setTextSize(40);
 
 		pressSettings.setText("Settings");
-		pressSettings.setPosition(applet.width / 2, applet.height / 2 + 80);
+//		pressSettings.setPosition(applet.width / 2, applet.height / 2 + 80);
+		pressSettings.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 + 80);
 		pressSettings.setSize(300, 100);
 		pressSettings.setTextSize(40);
 
 		pressQuit.setText("Quit Game");
-		pressQuit.setPosition(applet.width / 2, applet.height / 2 + 240);
+//		pressQuit.setPosition(applet.width / 2, applet.height / 2 + 240);
+		pressQuit.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 + 240);
 		pressQuit.setSize(300, 100);
 		pressQuit.setTextSize(40);
 	}
@@ -79,7 +79,7 @@ public final class MainMenu extends PScene {
 		game.fill(Constants.Colors.MENU_GREY, 40);
 		game.rectMode(CORNER);
 		game.noStroke();
-		game.rect(0, 0, game.gameResolution.x, game.gameResolution.y);
+		game.rect(0, 0, game.getGameResolution().x, game.getGameResolution().y);
 		Particles.run();
 		game.rectMode(CENTER);
 
@@ -137,7 +137,7 @@ public final class MainMenu extends PScene {
 	 */
 	private static class Particles {
 
-		private static SideScroller game;
+		private static ISideScroller game;
 
 		private static ArrayList<Particle> particles;
 
@@ -148,26 +148,26 @@ public final class MainMenu extends PScene {
 		private static final float STEP = 0.05f;
 		private static final int TRANSITION_TIME = 360;
 
-		static void assignApplet(SideScroller s) {
+		static void assignApplet(ISideScroller s) {
 			particles = new ArrayList<>();
 			game = s;
-			centerX = (int) (game.gameResolution.x / 2);
-			centerY = (int) (game.gameResolution.y / 2);
-			scaleX = (int) (game.gameResolution.x / 20);
-			scaleY = (int) (game.gameResolution.y / 20 * (game.gameResolution.x / game.gameResolution.y));
+			centerX = (int) (game.getGameResolution().x / 2);
+			centerY = (int) (game.getGameResolution().y / 2);
+			scaleX = (int) (game.getGameResolution().x / 20);
+			scaleY = (int) (game.getGameResolution().y / 20 * (game.getGameResolution().x / game.getGameResolution().y));
 		}
 
 		static void populate(int n) {
 			for (int i = 0; i < n; i++) {
-				particles.add(new Particle(getXPos(game.random(0, game.gameResolution.x)),
-						getYPos(game.random(0, game.gameResolution.y)), (int) game.random(2, 8), Utility.colorToRGB(
+				particles.add(new Particle(getXPos(game.random(0, game.getGameResolution().x)),
+						getYPos(game.random(0, game.getGameResolution().y)), (int) game.random(2, 8), Utility.colorToRGB(
 								(int) game.random(0, 50), (int) game.random(150, 255), (int) game.random(150, 255))));
 			}
 		}
 
 		static void run() {
 
-			if (game.frameCount % TRANSITION_TIME == 0) {
+			if (game.getFrameCount() % TRANSITION_TIME == 0) {
 				function++;
 				function %= 12;
 			}
@@ -183,15 +183,15 @@ public final class MainMenu extends PScene {
 				x = getXPrint(p.x);
 				y = getYPrint(p.y);
 
-				if (game.frameCount - p.start > 1) {
+				if (game.getFrameCount() - p.start > 1) {
 					game.stroke(p.color);
 					game.strokeWeight(p.size);
 					game.line(PApplet.lerp(x, p.lastX, 0.15f), PApplet.lerp(y, p.lastY, 0.15f), p.lastX, p.lastY);
 				}
 				p.lastX = x;
 				p.lastY = y;
-				if (!Utility.withinRegion(p.lastX, p.lastY, -100, -100, game.gameResolution.x + 100,
-						game.gameResolution.y + 100)) {
+				if (!Utility.withinRegion(p.lastX, p.lastY, -100, -100, game.getGameResolution().x + 100,
+						game.getGameResolution().y + 100)) {
 					iterator.remove();
 					repopulate++;
 				}
@@ -272,7 +272,7 @@ public final class MainMenu extends PScene {
 				this.lastX = x;
 				this.lastY = y;
 				this.direction = (game.random(0.1f, 1) * (game.random(1) > 0.5f ? 1 : -1));
-				start = game.frameCount;
+				start = game.getFrameCount();
 			}
 		}
 	}

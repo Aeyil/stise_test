@@ -33,7 +33,7 @@ import project_16x16.ui.Notifications;
  * and is the heart of the game.
  * </p>
  */
-public class SideScroller extends PApplet {
+public class SideScroller extends PApplet implements ISideScroller {
 
 	// Game Dev
 	public static final String LEVEL = "Storage/Game/Maps/tiledMap.dat";
@@ -621,5 +621,49 @@ public class SideScroller extends PApplet {
 
 	public boolean isMouseReleaseEvent() {
 		return mouseReleaseEvent;
+	}
+	//CTiSE-Larissa: because of problems in MultiplayerMenu (instead of applet.width --> applet.getWidth?
+	public int getWidth(){
+		return width;
+	}
+	//CTiSE-Larissa: because of problems in MultiplayerMenu (instead of applet.height --> applet.getHeight?
+	public int getHeight(){
+		return height;
+	}
+	//CTiSE-Larissa: because of problems in Slider (instead of applet.mouseX --> applet.getMouseX() )
+	public int getMouseX(){
+		return mouseX;
+	}
+	//CTiSE-Larissa: because of problems in Slider (instead of applet.mouseY --> applet.getMouseY() )
+	public int getMouseY(){
+		return mouseY;
+	}
+	//CTiSE-Larissa: because of problems in Settings (instead of applet.gameResolution --> applet.getGameResolution)
+	public PVector getGameResolution() {
+		return gameResolution;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField (instead of applet.frameCount --> applet.getFrameCount)
+	public int getFrameCount(){
+		return frameCount;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.key --> applet.getKey)
+	public char getKey(){
+		return key;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.camera --> applet.getCamera)
+	public Camera getCamera() {
+		return camera;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.debug --> applet.getDebug)
+	public DebugType getDebug() {
+		return debug;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.mouseButton --> applet.getMouseButton)
+	public int getMouseButton(){
+		return mouseButton;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.mousePressed --> applet.getMousePressed)
+	public boolean getMousePressed(){
+		return mousePressed;
 	}
 }

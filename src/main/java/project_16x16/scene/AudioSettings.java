@@ -8,7 +8,7 @@ import project_16x16.Audio;
 import project_16x16.Constants;
 import project_16x16.Options;
 import project_16x16.Options.Option;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 import project_16x16.ui.Button;
 import project_16x16.ui.Notifications;
 import project_16x16.ui.Slider;
@@ -20,7 +20,7 @@ import project_16x16.ui.Slider;
  */
 public final class AudioSettings extends PScene {
 
-	private SideScroller game;
+	private ISideScroller game;
 
 	private Button quit;
 	private Button apply;
@@ -30,27 +30,30 @@ public final class AudioSettings extends PScene {
 	private float originalVolumeBGM;
 	private float originalVolumeSFX;
 
-	public AudioSettings(SideScroller a) {
+	public AudioSettings(ISideScroller a) {
 		super(a);
 
 		game = a;
 
 		apply = new Button(applet);
 		apply.setText("Apply");
-		apply.setPosition(a.width / 2, 500);
+//		apply.setPosition(a.width / 2, 500);
+		apply.setPosition(a.getWidth() / 2, 500);
 
 		quit = new Button(a);
 		quit.setText("Quit");
-		quit.setPosition(a.width / 2, 600);
+//		quit.setPosition(a.width / 2, 600);
+		quit.setPosition(a.getWidth() / 2, 600);
 
 		volumeBGM = new Slider(game, 0.75f);
 		volumeBGM.setText("BGM");
-		volumeBGM.setPosition(a.width / 2, 300);
+//		volumeBGM.setPosition(a.width / 2, 300);
+		volumeBGM.setPosition(a.getWidth() / 2, 300);
 
 		volumeSFX = new Slider(game, 0.75f);
 		volumeSFX.setText("SFX");
-		volumeSFX.setPosition(a.width / 2, 350);
-		
+//		volumeSFX.setPosition(a.width / 2, 350);
+		volumeSFX.setPosition(a.getWidth() / 2, 350);
 	}
 
 	@Override

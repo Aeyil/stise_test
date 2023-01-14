@@ -1,7 +1,7 @@
 package project_16x16.ui;
 
 import processing.core.PApplet;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 
 /**
  * Horizontal slider. Used for options.
@@ -12,13 +12,13 @@ public final class Slider extends Button {
 	private float tmpValue;
 	private static final int thumbSize = 10;
 
-	public Slider(SideScroller sideScroller, float defaultValue) {
+	public Slider(ISideScroller sideScroller, float defaultValue) {
 		super(sideScroller);
 		this.value = defaultValue;
 		tmpValue = this.value;
 	}
 
-	public Slider(SideScroller sideScroller) {
+	public Slider(ISideScroller sideScroller) {
 		super(sideScroller);
 		this.value = 0.5f;
 		this.tmpValue = this.value;
@@ -29,7 +29,8 @@ public final class Slider extends Button {
 	 */
 	@Override
 	public void update() {
-		tmpValue = PApplet.map(applet.mouseX - getX() + (float) super.getW() / 2, 0, getW(), 0.0f, 1.0f);
+//		tmpValue = PApplet.map(applet.mouseX - getX() + (float) super.getW() / 2, 0, getW(), 0.0f, 1.0f);
+		tmpValue = PApplet.map(applet.getMouseX() - getX() + (float) super.getW() / 2, 0, getW(), 0.0f, 1.0f);
 		if (hover()) {
 			value = tmpValue;
 		}

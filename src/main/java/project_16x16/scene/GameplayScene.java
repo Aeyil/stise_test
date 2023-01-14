@@ -12,13 +12,8 @@ import processing.core.PVector;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 import processing.event.MouseEvent;
-import project_16x16.Audio;
+import project_16x16.*;
 import project_16x16.Audio.BGM;
-import project_16x16.Options;
-import project_16x16.SideScroller;
-import project_16x16.GameScene;
-import project_16x16.Tileset;
-import project_16x16.Utility;
 import project_16x16.components.Tile;
 import project_16x16.components.Tile.TileType;
 import project_16x16.entities.Player;
@@ -124,7 +119,7 @@ public class GameplayScene extends PScene {
 
 	private SelectionBox selectionBox;
 
-	public GameplayScene(SideScroller sideScroller, String levelString) {
+	public GameplayScene(ISideScroller sideScroller, String levelString) {
 		super(sideScroller);
 		this.levelString = levelString;
 		setup();
@@ -221,7 +216,7 @@ public class GameplayScene extends PScene {
 		Iterator<ProjectileObject> i = projectileObjects.iterator();
 		while (i.hasNext()) {
 			ProjectileObject o = i.next();
-			if (applet.frameCount - o.spawnTime > 600) {
+			if (applet.getFrameCount() - o.spawnTime > 600) {
 				i.remove(); // kill projectile after 10s
 			}
 			else {
@@ -327,7 +322,7 @@ public class GameplayScene extends PScene {
 		// Display Background
 		applet.stroke(50);
 		applet.fill(0, 100);
-		applet.rect(applet.width / 2, applet.height / 2, applet.width, applet.height);
+		applet.rect(applet.getWidth() / 2, applet.getHeight() / 2, applet.getWidth(), applet.getHeight());
 
 		// Display Editor Mode Items
 		int x = 0;
@@ -365,7 +360,7 @@ public class GameplayScene extends PScene {
 					// Display item name
 					applet.textSize(20);
 					applet.fill(255);
-					applet.text(tile.getName(), applet.mouseX, applet.mouseY);
+					applet.text(tile.getName(), applet.getMouseX(), applet.getMouseY());
 				}
 			}
 			index++;
@@ -374,7 +369,7 @@ public class GameplayScene extends PScene {
 		// Display ScrollBar
 		scrollBar.display();
 		scrollBar.update();
-		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.height - 8, 0);
+		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.getHeight() - 8, 0);
 
 		// Display Top Bar TODO
 //		applet.noStroke();
@@ -384,7 +379,7 @@ public class GameplayScene extends PScene {
 		// Display Line Separator
 		applet.strokeWeight(4);
 		applet.stroke(74, 81, 99);
-		applet.line(0, 100, applet.width, 100);
+		applet.line(0, 100, applet.getWidth(), 100);
 
 		// Display Inventory Slots
 		for (int i = 0; i < 6; i++) {
@@ -467,7 +462,7 @@ public class GameplayScene extends PScene {
 
 	@Override
 	void mousePressed(MouseEvent e) {
-		origPos = applet.camera.getPosition(); // used for camera panning
+		origPos = applet.getCamera().getPosition(); // used for camera panning
 		mouseDown = applet.getMouseCoordScreen();
 		switch (e.getButton()) {
 			case LEFT:
@@ -561,7 +556,7 @@ public class GameplayScene extends PScene {
 				break;
 			case 51: // 3
 				changeMode(GameModes.PLAY);
-				applet.camera.setFollowObject(localPlayer);
+				applet.getCamera().setFollowObject(localPlayer);
 				break;
 			case 52: // 4
 				changeMode(GameModes.SAVE);
@@ -740,7 +735,7 @@ public class GameplayScene extends PScene {
 
 	public void scrollInventoryBar(MouseEvent event) {
 		scrollBar.mouseWheel(event);
-		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.height - 8, 0);
+		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.getHeight() - 8, 0);
 	}
 
 	/**
@@ -754,7 +749,7 @@ public class GameplayScene extends PScene {
 
 		private SelectionBox(PVector startPos) {
 			startPosScreen = startPos;
-			startPosGame = applet.camera.getDispToCoord(startPosScreen);
+			startPosGame = applet.getCamera().getDispToCoord(startPosScreen);
 		}
 
 		private void draw() {

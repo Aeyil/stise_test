@@ -1,7 +1,7 @@
 package project_16x16.ui;
 
 import project_16x16.PClass;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 import project_16x16.Utility;
 
 /**
@@ -28,7 +28,7 @@ public class Button extends PClass {
 	 * 
 	 * @param a Reference to Game
 	 */
-	public Button(SideScroller sideScroller) {
+	public Button(ISideScroller sideScroller) {
 		super(sideScroller);
 		text = "Press me";
 		width = 0;

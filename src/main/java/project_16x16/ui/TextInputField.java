@@ -2,7 +2,7 @@ package project_16x16.ui;
 
 import processing.core.PApplet;
 import project_16x16.PClass;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 import project_16x16.Utility;
 
 /**
@@ -25,7 +25,7 @@ public class TextInputField extends PClass {
 	 * @param a This a reference to the game //TODO: having variable names that are
 	 *          just letters can be confusing to new contributors
 	 */
-	public TextInputField(SideScroller sideScroller) {
+	public TextInputField(ISideScroller sideScroller) {
 		super(sideScroller);
 
 		width = 200;
@@ -67,7 +67,7 @@ public class TextInputField extends PClass {
 
 		// Display Cursor
 		if (focus) {
-			applet.fill(255, PApplet.map(PApplet.sin(applet.frameCount * (float) 0.1), 0, 1, 100, 255));
+			applet.fill(255, PApplet.map(PApplet.sin(applet.getFrameCount() * (float) 0.1), 0, 1, 100, 255));
 			applet.text("_", x - width / 2 + 8 + applet.textWidth(text), y);
 		}
 	}
@@ -94,10 +94,10 @@ public class TextInputField extends PClass {
 		if (focus) {
 			applet.textSize(20);
 			if (applet.isKeyPressEvent()) {
-				if (applet.key != '\u0008') {
+				if (applet.getKey() != '\u0008') {
 					if (applet.textWidth(text) < width - 20) {
-						if (applet.key != '\uFFFF' && applet.key != '\n') {
-							text += applet.key;
+						if (applet.getKey() != '\uFFFF' && applet.getKey() != '\n') {
+							text += applet.getKey();
 						}
 					}
 				}

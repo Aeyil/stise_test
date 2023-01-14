@@ -35,16 +35,19 @@ public class MultiplayerHostMenu extends PScene {
 		ipInput = new TextInputField(sideScroller);
 		pressHost = new Button(sideScroller);
 
-		ipInput.setPosition(applet.width / 2, applet.height / 2 - 240);
+//		ipInput.setPosition(applet.width / 2, applet.height / 2 - 240);
+		ipInput.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 240);
 		ipInput.setWidth(300);
 
 		pressHost.setText("Host");
-		pressHost.setPosition(applet.width / 2, applet.height / 2 - 80);
+//		pressHost.setPosition(applet.width / 2, applet.height / 2 - 80);
+		pressHost.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 80);
 		pressHost.setTextSize(40);
 		pressHost.setSize(300, 100);
 
 		pressMenu.setText("Back to menu");
-		pressMenu.setPosition(applet.width / 2, applet.height / 2 + 240);
+//		pressMenu.setPosition(applet.width / 2, applet.height / 2 + 240);
+		pressMenu.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 + 240);
 		pressMenu.setTextSize(40);
 		pressMenu.setSize(300, 100);
 	}

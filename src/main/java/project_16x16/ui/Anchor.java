@@ -1,6 +1,7 @@
 package project_16x16.ui;
 
 import processing.core.PApplet;
+import project_16x16.ISideScroller;
 import project_16x16.SideScroller;
 
 public class Anchor {
@@ -27,7 +28,7 @@ public class Anchor {
 	public AnchorOrigin anchorOrigin = AnchorOrigin.TopLeft;
 	public Stretch stretch = Stretch.None;
 	
-	private SideScroller applet;
+	private ISideScroller applet;
 	private Anchor frame = null;
 	
 	//TODO: add rectmode support
@@ -37,7 +38,7 @@ public class Anchor {
 		this.frame = anchor;
 	}
 	
-	public Anchor(SideScroller applet, int x, int y, int width, int height) {
+	public Anchor(ISideScroller applet, int x, int y, int width, int height) {
 		this.applet = applet;
 		this.localX = x;
 		this.localY = y;
@@ -53,7 +54,7 @@ public class Anchor {
 	
 	// PApplet
 	
-	public SideScroller getPApplet(){
+	public ISideScroller getPApplet(){
 		if (hasContainer())	return frame.getPApplet();
 		else				return applet;
 	}
@@ -185,18 +186,18 @@ public class Anchor {
 	
 	public int frameGlobalWidth() {
 		if (hasContainer()) return frame.Width();
-		else 				return applet.width;
+		else 				return applet.getWidth();
 	}
 	
 	public int frameGlobalHeight() {
 		if (hasContainer()) return frame.Height();
-		else				return applet.height;
+		else				return applet.getHeight();
 	}
 	
 	// is mouse over anchor
 	public boolean hover() {
-		return(applet.mouseX > X() && applet.mouseX < X() + Width() 
-		    && applet.mouseY > Y() && applet.mouseY < Y() + Height());
+		return(applet.getMouseX() > X() && applet.getMouseX() < X() + Width()
+		    && applet.getMouseY() > Y() && applet.getMouseY() < Y() + Height());
 	}
 	
 	public void debugMode() {

@@ -4,10 +4,7 @@ import java.lang.reflect.Constructor;
 
 import processing.core.PVector;
 import processing.data.JSONObject;
-import project_16x16.PClass;
-import project_16x16.SideScroller;
-import project_16x16.Tileset;
-import project_16x16.Utility;
+import project_16x16.*;
 import project_16x16.scene.GameplayScene;
 
 /**
@@ -42,7 +39,7 @@ public abstract class EditableObject extends PClass {
 
 	protected PVector editOffset;
 
-	public EditableObject(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public EditableObject(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller);
 
 		position = new PVector(0, 0);
@@ -78,13 +75,13 @@ public abstract class EditableObject extends PClass {
 		if (child) {
 			return;
 		}
-		if (applet.isMouseReleaseEvent() && applet.mouseButton == LEFT) {
+		if (applet.isMouseReleaseEvent() && applet.getMouseButton() == LEFT) {
 			focus = false;
 			return;
 		}
 
 		// Focus Event
-		if (applet.isMousePressEvent() && applet.mouseButton == LEFT && !focus) {
+		if (applet.isMousePressEvent() && applet.getMouseButton() == LEFT && !focus) {
 			if (mouseHover()) { // Focus Enable
 				if (gameplayScene.focusedObject == null) {
 					focus = true;
@@ -107,7 +104,7 @@ public abstract class EditableObject extends PClass {
 			}
 
 			// Duplicate Object Shift
-			if (applet.isKeyPressEvent() && applet.isKeyDown(SideScroller.SHIFT)) {
+			if (applet.isKeyPressEvent() && applet.isKeyDown(ISideScroller.SHIFT)) {
 				EditableObject copy; // Duplicate Instance
 				switch (type) {
 					case COLLISION:
@@ -143,7 +140,7 @@ public abstract class EditableObject extends PClass {
 				applet.setKeyPressEvent(false);
 				focus = false;
 			}
-			if (focus && applet.mousePressed && applet.mouseButton == LEFT) {
+			if (focus && applet.getMousePressed() && applet.getMouseButton() == LEFT) {
 				position = new PVector(Utility.roundToNearest(applet.getMouseCoordGame().x + editOffset.x, SideScroller.snapSize), Utility.roundToNearest(applet.getMouseCoordGame().y + editOffset.y, SideScroller.snapSize));
 			}
 		}
@@ -163,7 +160,7 @@ public abstract class EditableObject extends PClass {
 	}
 
 	public boolean mouseHover() {
-		if (applet.mouseX < 400 && applet.mouseY < 100) { // Over Inventory Bar -- rough approximation
+		if (applet.getMouseX() < 400 && applet.getMouseY() < 100) { // Over Inventory Bar -- rough approximation
 			return false;
 		}
 		return Utility.hoverGame(position.x, position.y, width, height);
