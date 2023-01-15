@@ -1,33 +1,29 @@
 package project_16x16.scene.gameplaymodes;
 
+import processing.core.PImage;
+import processing.core.PVector;
+import processing.event.KeyEvent;
+import processing.event.MouseEvent;
 import project_16x16.entities.Player;
 import project_16x16.objects.EditableObject;
-import project_16x16.objects.GameObject;
 import project_16x16.scene.GameplayScene;
 import project_16x16.scene.GameplayScene.GameModes;
 
-public class GameplayMode extends GameMode {
+public abstract class GameMode {
 
-	private Player localPlayer;
+	protected GameplayScene scene;
 
-	public GameplayMode(GameplayScene gameplayScene, Player localPlayer) {
-		super(gameplayScene);
-		this.localPlayer = localPlayer;
+	public GameMode(GameplayScene gameplayScene) {
+		this.scene = gameplayScene;
 	}
-	
-	@Override
+
 	public void enter() {
-		scene.setZoomable(true);
 	}
 
-	@Override
-	public GameModes getModeType() {
-		return GameModes.PLAY;
+	public void displayWorldEdit() {
 	}
 
-	@Override
 	public void updateEditableObject(EditableObject object) {
-/* Merge conflict, due to renaming -> belongs to GameMode
 	}
 
 	public void displayDestination() {
@@ -45,26 +41,37 @@ public class GameplayMode extends GameMode {
 			drawGUIButton(activeIcon, xAnchor, 120);
 		}
 		else if (isNotInvalidGUIButtonMode() && isHighlighted) {
-			if (scene.applet.isMousePressEvent()) {
+			if (scene.applet.mousePressEvent) {
 				scene.changeMode(mode);
 			}
 			drawGUIButton(activeIcon, xAnchor, 120);
 		}
 		else {
 			drawGUIButton(inactiveIcon, xAnchor, 120);
-/*
-		if (object instanceof GameObject) {
-			((GameObject) object).update();
 		}
 	}
-	
-	@Override
-	public void updateLocalPlayer(Player localPlayer) {
-		localPlayer.update();
+
+	protected boolean isNotInvalidGUIButtonMode() {
+		return true;
 	}
 
-	@Override
-	public void updateGUI() {
-		localPlayer.displayLife();
+	protected void drawGUIButton(PImage icon, int x, int y) {
+		scene.image(icon, x, y);
 	}
+
+	public abstract GameModes getModeType();
+
+	public void updateGUI() {
+	}
+
+	public void mouseDraggedEvent(MouseEvent event, PVector origPos, PVector mouseDown) {
+	}
+
+	public void mouseWheelEvent(MouseEvent event) {
+	}
+
+	public void keyReleasedEvent(KeyEvent event) {
+		scene.switchModeOnKeyEvent(event);
+	}
+
 }
