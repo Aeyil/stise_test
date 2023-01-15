@@ -19,22 +19,11 @@ import project_16x16.scene.GameplayScene;
  * This class handles the enemy parent behavior.
  * </p>
  */
-public class Enemy extends CollidableObject {
-
-	private static final int OUT_OF_BOUNDS_DISTANCE = 2000;
+public class Enemy extends Entity {
 
 	private PImage image;
-	final PVector velocity = new PVector(0, 0);
 
 	public int health;
-	float gravity;
-
-	final int speedWalk;
-	final int speedJump;
-
-	private final int collisionRange;
-
-	EntityState enemyState;
 
 	/**
 	 * Constructor
@@ -52,7 +41,6 @@ public class Enemy extends CollidableObject {
 		this.width = width;
 		this.height = height;
 		this.collisionRange = collisionRange;
-		enemyState = new EntityState();
 	}
 
 	/**
@@ -62,7 +50,7 @@ public class Enemy extends CollidableObject {
 	public void display() {
 		applet.pushMatrix();
 		applet.translate(position.x, position.y);
-		if (enemyState.facingDir == LEFT) {
+		if (state.facingDir == LEFT) {
 			applet.scale(-1, 1);
 		}
 		applet.image(image, 0, 0);
@@ -82,9 +70,9 @@ public class Enemy extends CollidableObject {
 	public void update() {
 		// velocity.set(0, velocity.y + gravity);
 
-		checkEnemyCollision();
+		checkForCollision();
 		if (velocity.y != 0) {
-			enemyState.flying = true;
+			state.flying = true;
 		}
 		position.add(velocity);
 		if (position.y > OUT_OF_BOUNDS_DISTANCE) { // out of bounds check
@@ -96,84 +84,6 @@ public class Enemy extends CollidableObject {
 			applet.strokeWeight(1);
 			applet.ellipse(position.x, position.y, collisionRange * 2, collisionRange * 2);
 		}
-	}
-
-	public PVector getVelocity() {
-		return velocity.copy();
-	}
-
-	public EntityState getState() {
-		return enemyState;
-	}
-
-	protected void checkEnemyCollision() {
-		for (EditableObject o : gameplayScene.objects) {
-			if (o.equals(this)) {
-				continue;
-			}
-			if (o instanceof CollidableObject) {
-				CollidableObject collision = (CollidableObject) o;
-				if (Utility.fastInRange(position, collision.position, collisionRange)) { // In Player Range
-					if (applet.getDebug() == DebugType.ALL) {
-						applet.strokeWeight(2);
-						applet.rect(collision.position.x, collision.position.y, collision.width, collision.height);
-						applet.fill(255, 0, 0);
-						applet.ellipse(collision.position.x, collision.position.y, 5, 5);
-						applet.noFill();
-					}
-					if (collidesFuturX(collision)) {
-						// enemy left of collision
-						if (position.x < collision.position.x) {
-							position.x = collision.position.x - collision.width / 2 - width / 2;
-							// enemy right of collision
-						}
-						else {
-							position.x = collision.position.x + collision.width / 2 + width / 2;
-						}
-						velocity.x = 0;
-						enemyState.dashing = false;
-					}
-					if (collidesFuturY(collision)) {
-						// enemy above collision
-						if (position.y < collision.position.y) {
-							if (enemyState.flying) {
-								enemyState.landing = true;
-							}
-							position.y = collision.position.y - collision.height / 2 - height / 2;
-							enemyState.flying = false;
-							// enemy below collision
-						}
-						else {
-							position.y = collision.position.y + collision.height / 2 + height / 2;
-							enemyState.jumping = false;
-						}
-						velocity.y = 0;
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * 
-	 * Determines is the character has collided with an object of type Collision.
-	 * 
-	 * @param collision The other object
-	 * @return boolean if it has or has not collided with the object.
-	 */
-
-	protected boolean collidesFuturX(CollidableObject collision) {
-		return (position.x + velocity.x + width / 2 > collision.position.x - collision.width / 2
-				&& position.x + velocity.x - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + 0 + height / 2 > collision.position.y - collision.height / 2
-						&& position.y + 0 - height / 2 < collision.position.y + collision.height / 2);
-	}
-
-	protected boolean collidesFuturY(CollidableObject collision) {
-		return (position.x + 0 + width / 2 > collision.position.x - collision.width / 2
-				&& position.x + 0 - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + velocity.y + height / 2 > collision.position.y - collision.height / 2
-						&& position.y + velocity.y - height / 2 < collision.position.y + collision.height / 2);
 	}
 
 	@Override

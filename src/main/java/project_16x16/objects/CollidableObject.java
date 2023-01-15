@@ -9,7 +9,7 @@ import project_16x16.SideScroller;
 import project_16x16.Tileset;
 import project_16x16.scene.GameplayScene;
 
-public class CollidableObject extends EditableObject {
+public class CollidableObject extends EditableObject implements Collidable{
 
 	private PImage image;
 
@@ -102,4 +102,18 @@ public class CollidableObject extends EditableObject {
 		return item;
 	}
 
+	@Override
+	public PVector getPosition() {
+		return position;
+	}
+
+	@Override
+	public int getWidth() {
+		return width;
+	}
+
+	@Override
+	public int getHeight() {
+		return height;
+	}
 }

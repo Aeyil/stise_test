@@ -1,6 +1,7 @@
 package project_16x16.entities;
 
 import junit.framework.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -54,28 +55,28 @@ public class EnemyTest {
     @Test
     public void updateTestNoStateChange(){
         enemy.update();
-        Assert.assertFalse(enemy.enemyState.flying);
+        Assert.assertFalse(enemy.state.flying);
     }
 
     @Test
     public void updateTestStateChangeFlying(){
         enemy.velocity.y = 1;
         enemy.update();
-        Assert.assertTrue(enemy.enemyState.flying);
+        Assertions.assertTrue(enemy.state.flying);
     }
 
     @Test
     public void getVelocityTest(){
         PVector vel = enemy.getVelocity();
-        Assert.assertEquals(vel.x,enemy.velocity.x);
-        Assert.assertEquals(vel.y,enemy.velocity.y);
-        Assert.assertEquals(vel.z,enemy.velocity.z);
-        Assert.assertNotSame(vel,enemy.velocity);
+        Assertions.assertEquals(vel.x,enemy.velocity.x);
+        Assertions.assertEquals(vel.y,enemy.velocity.y);
+        Assertions.assertEquals(vel.z,enemy.velocity.z);
+        Assertions.assertNotSame(vel,enemy.velocity);
     }
 
     @Test
     public void getStateTest(){
-        Assert.assertEquals(enemy.enemyState,enemy.getState());
+        Assertions.assertEquals(enemy.state,enemy.getState());
     }
 
     // Note: Enemy Collision Variables
@@ -87,49 +88,49 @@ public class EnemyTest {
     public void checkEnemyCollisionTestIgnoresSelf(){
         enemy.velocity.set(5f,5f);
         objectList.add(enemy);
-        enemy.checkEnemyCollision();
-        Assert.assertEquals(5f, enemy.velocity.x);
-        Assert.assertEquals(5f, enemy.velocity.y);
+        enemy.checkForCollision();
+        Assertions.assertEquals(5f, enemy.velocity.x);
+        Assertions.assertEquals(5f, enemy.velocity.y);
     }
 
     @Test
     public void checkEnemyCollisionTestDashingXCollision(){
         enemy.position.set(0,0);
         enemy.velocity.set(50f,0f);
-        enemy.enemyState.dashing = true;
+        enemy.state.dashing = true;
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,160,100,100,0);
         objectList.add(collisionObject);
-        enemy.checkEnemyCollision();
-        Assert.assertEquals(enemy.velocity.x,0f);
-        Assert.assertFalse(enemy.enemyState.dashing);
-        Assert.assertEquals(collisionObject.position.x-collisionObject.width/2-enemy.width/2,enemy.position.x);
+        enemy.checkForCollision();
+        Assertions.assertEquals(enemy.velocity.x,0f);
+        Assertions.assertFalse(enemy.state.dashing);
+        Assertions.assertEquals(collisionObject.position.x-collisionObject.width/2-enemy.width/2,enemy.position.x);
     }
 
     @Test
     public void checkEnemyCollisionTestFlyingYCollision(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,50f);
-        enemy.enemyState.flying = true;
+        enemy.state.flying = true;
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,160,100,0,100);
         objectList.add(collisionObject);
-        enemy.checkEnemyCollision();
-        Assert.assertEquals(enemy.velocity.y,0f);
-        Assert.assertFalse(enemy.enemyState.flying);
-        Assert.assertTrue(enemy.enemyState.landing);
-        Assert.assertEquals(collisionObject.position.y-collisionObject.height/2-enemy.height/2,enemy.position.y);
+        enemy.checkForCollision();
+        Assertions.assertEquals(enemy.velocity.y,0f);
+        Assertions.assertFalse(enemy.state.flying);
+        Assertions.assertTrue(enemy.state.landing);
+        Assertions.assertEquals(collisionObject.position.y-collisionObject.height/2-enemy.height/2,enemy.position.y);
     }
 
     @Test
     public void checkEnemyCollisionTestJumpingYCollision(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,-50f);
-        enemy.enemyState.jumping = true;
+        enemy.state.jumping = true;
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,160,100,0,-100);
         objectList.add(collisionObject);
-        enemy.checkEnemyCollision();
-        Assert.assertEquals(enemy.velocity.y,0f);
-        Assert.assertFalse(enemy.enemyState.jumping);
-        Assert.assertEquals(collisionObject.position.y+collisionObject.height/2+enemy.height/2,enemy.position.y);
+        enemy.checkForCollision();
+        Assertions.assertEquals(enemy.velocity.y,0f);
+        Assertions.assertFalse(enemy.state.jumping);
+        Assertions.assertEquals(collisionObject.position.y+collisionObject.height/2+enemy.height/2,enemy.position.y);
     }
 
     @Test
@@ -137,7 +138,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,33,0);
-        Assert.assertFalse(enemy.collidesFuturX(collisionObject));
+        Assertions.assertFalse(enemy.collidesFutureX(collisionObject));
     }
 
     @Test
@@ -145,7 +146,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(5f,0f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,33,0);
-        Assert.assertTrue(enemy.collidesFuturX(collisionObject));
+        Assertions.assertTrue(enemy.collidesFutureX(collisionObject));
     }
 
     @Test
@@ -153,7 +154,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(-5f,0f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,-33,0);
-        Assert.assertTrue(enemy.collidesFuturX(collisionObject));
+        Assertions.assertTrue(enemy.collidesFutureX(collisionObject));
     }
 
     @Test
@@ -161,14 +162,14 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,32,0);
-        Assert.assertTrue(enemy.collidesFuturX(collisionObject));
+        Assertions.assertTrue(enemy.collidesFutureX(collisionObject));
     }
     @Test
     public void collidesFuturYNoCollision(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,25);
-        Assert.assertFalse(enemy.collidesFuturY(collisionObject));
+        Assertions.assertFalse(enemy.collidesFutureY(collisionObject));
     }
 
     @Test
@@ -176,7 +177,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(0f,5f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,25);
-        Assert.assertTrue(enemy.collidesFuturY(collisionObject));
+        Assertions.assertTrue(enemy.collidesFutureY(collisionObject));
     }
 
     @Test
@@ -184,7 +185,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(0f,-5f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,-25);
-        Assert.assertTrue(enemy.collidesFuturY(collisionObject));
+        Assertions.assertTrue(enemy.collidesFutureY(collisionObject));
     }
 
     @Test
@@ -192,7 +193,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
         CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,24);
-        Assert.assertTrue(enemy.collidesFuturY(collisionObject));
+        Assertions.assertTrue(enemy.collidesFutureY(collisionObject));
     }
 
 }

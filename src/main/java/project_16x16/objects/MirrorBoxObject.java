@@ -141,11 +141,17 @@ public class MirrorBoxObject extends GameObject {
 	}
 
 	public boolean collidesWithSwing(Swing swing) {
-		return (swing.position.x + swing.width / 2 > position.x - width / 2 && swing.position.x - swing.width / 2 < position.x + width / 2) && (swing.position.y + swing.height / 2 > position.y - height / 2 && swing.position.y - swing.height / 2 < position.y + height / 2);
+		return (swing.position.x + swing.width / 2 > position.x - width / 2
+				&& swing.position.x - swing.width / 2 < position.x + width / 2)
+				&& (swing.position.y + swing.height / 2 > position.y - height / 2
+				&& swing.position.y - swing.height / 2 < position.y + height / 2);
 	}
 
 	public boolean collidesWithProjectile(ProjectileObject swing) {
-		return (swing.position.x + swing.width / 2 > position.x - width / 2 && swing.position.x - swing.width / 2 < position.x + width / 2) && (swing.position.y + swing.height / 2 > position.y - height / 2 && swing.position.y - swing.height / 2 < position.y + height / 2);
+		return (swing.position.x + swing.width / 2 > position.x - width / 2
+				&& swing.position.x - swing.width / 2 < position.x + width / 2)
+				&& (swing.position.y + swing.height / 2 > position.y - height / 2
+				&& swing.position.y - swing.height / 2 < position.y + height / 2);
 	}
 
 	public void setMirrorBox(float rotate) {
