@@ -72,7 +72,7 @@ class CollidableObjectTest {
         coll=new CollidableObject(sideScroller, gameplayScene);
         assertEquals(0,coll.position.x);
         assertEquals(0, coll.position.y);
-        assertEquals(coll.type.COLLISION,coll.type);
+        assertEquals(ObjectType.COLLISION,coll.type);
         assertEquals("",coll.flag);
     }
 
@@ -81,7 +81,7 @@ class CollidableObjectTest {
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
         assertEquals(20,coll.position.x);
         assertEquals(20, coll.position.y);
-        assertEquals(coll.type.COLLISION,coll.type);
+        assertEquals(ObjectType.COLLISION,coll.type);
         assertEquals("",coll.flag);
         assertEquals(20,coll.width);
         assertEquals(20,coll.height);
@@ -92,7 +92,7 @@ class CollidableObjectTest {
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS, CHILD);
         assertEquals(20,coll.position.x);
         assertEquals(20, coll.position.y);
-        assertEquals(coll.type.COLLISION,coll.type);
+        assertEquals(ObjectType.COLLISION,coll.type);
         assertEquals("",coll.flag);
         assertEquals(20,coll.width);
         assertEquals(20,coll.height);
@@ -104,7 +104,7 @@ class CollidableObjectTest {
         coll=new CollidableObject(sideScroller, gameplayScene, LEVEL_STRING, DIRECTIONS,DIRECTIONS);
         assertEquals(20,coll.position.x);
         assertEquals(20, coll.position.y);
-        assertEquals(coll.type.COLLISION,coll.type);
+        assertEquals(ObjectType.COLLISION,coll.type);
         assertEquals("",coll.flag);
         assertEquals(LEVEL_STRING,coll.id);
     }

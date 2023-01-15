@@ -20,11 +20,7 @@ public abstract class EditableObject extends PClass {
     // Image data
     public String id;
 
-    enum type {
-        COLLISION, BACKGROUND, OBJECT
-    }
-
-    protected type type;
+    protected ObjectType type;
 
     // Focus
     private boolean focus;

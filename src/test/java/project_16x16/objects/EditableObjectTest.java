@@ -210,7 +210,7 @@ class EditableObjectTest {
         when(sideScroller.getMouseY()).thenReturn(100);
         when(sideScroller.isKeyPressEvent()).thenReturn(true);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS_HALF,DIRECTIONS_HALF,DIRECTIONS,DIRECTIONS, CHILD_FALSE);
-        coll.type= coll.type.COLLISION;
+        coll.type= ObjectType.COLLISION;
         coll.focus();
         coll.updateEdit();
         assertNotNull(coll.gameplayScene.objects);
@@ -242,7 +242,7 @@ class EditableObjectTest {
         when(sideScroller.getMouseY()).thenReturn(100);
         when(sideScroller.isKeyPressEvent()).thenReturn(true);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS_HALF,DIRECTIONS_HALF,DIRECTIONS,DIRECTIONS, CHILD_FALSE);
-        coll.type= coll.type.BACKGROUND;
+        coll.type= ObjectType.BACKGROUND;
         coll.focus();
         coll.updateEdit();
         assertFalse(coll.isFocused());

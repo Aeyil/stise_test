@@ -68,7 +68,7 @@ class BackgroundObjectTest {
     @Test
     void testConstructor(){
         backgroundObject=new BackgroundObject(sideScroller,gameplayScene);
-        assertEquals(backgroundObject.type.BACKGROUND, backgroundObject.type);
+        assertEquals(ObjectType.BACKGROUND, backgroundObject.type);
     }
 
     @Test

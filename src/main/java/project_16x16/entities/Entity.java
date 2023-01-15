@@ -91,7 +91,7 @@ public abstract class Entity extends CollidableObject {
 
 
     public PVector getVelocity() {
-        return velocity;
+        return velocity.copy();
     }
 
     public PVector getPosition() {

@@ -80,7 +80,7 @@ class MagicSourceObjectTest {
     @Test
     void constructor() {
         gameObject=new MagicSourceObject(sideScroller,gameplayScene);
-        assertEquals(gameObject.type.OBJECT,gameObject.type);
+        assertEquals(ObjectType.OBJECT,gameObject.type);
         assertEquals("MAGIC_SOURCE",gameObject.id);
         assertEquals(48,gameObject.width);
         assertEquals(48,gameObject.height);

@@ -88,7 +88,7 @@ class MirrorBoxObjectTest {
         gameplayScene.objects = new ArrayList<>();
         gameObject = new MirrorBoxObject(sideScroller, gameplayScene);
         assertEquals(0, gameObject.direction);
-        assertEquals(gameObject.type.OBJECT, gameObject.type);
+        assertEquals(ObjectType.OBJECT, gameObject.type);
         assertEquals("MIRROR_BOX", gameObject.id);
         assertEquals(64, gameObject.width);
         assertEquals(64, gameObject.height);
