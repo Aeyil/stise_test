@@ -28,7 +28,7 @@ public class Tileset {
 	private static final String DATAPATH = "tileData.json";
 	private static final int SCALE = 4;
 	
-	private static SideScroller applet;
+	private static ISideScroller applet;
 	private static PImage graphicsSheet;
 	
 	private static int loadedTiles = 0;
@@ -37,7 +37,7 @@ public class Tileset {
 	
 	private static JSONArray JSONanimations;
 	
-	public static void load(SideScroller app){
+	public static void load(ISideScroller app){
 		applet = app;
 		graphicsSheet = applet.loadImage(TILESHEETPATH);
 		tiles = new Tile[TILESETWIDTH * TILESETHEIGHT];

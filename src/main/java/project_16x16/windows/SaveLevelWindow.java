@@ -2,7 +2,6 @@ package project_16x16.windows;
 
 import project_16x16.ISideScroller;
 import project_16x16.PClass;
-import project_16x16.SideScroller;
 import project_16x16.scene.GameplayScene;
 import project_16x16.scene.GameplayScene.GameModes;
 import project_16x16.ui.Button;

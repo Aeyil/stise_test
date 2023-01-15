@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 import processing.core.PImage;
 import processing.core.PVector;
 import project_16x16.ISideScroller;
-import project_16x16.SideScroller;
 
 /**
  * Particle

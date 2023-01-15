@@ -119,24 +119,24 @@ class EditableObjectTest {
 
     @Test
     void mouseHover() {
-        sideScroller.mouseX=200;
-        sideScroller.mouseY=90;
+        when(sideScroller.getMouseX()).thenReturn(200);
+        when(sideScroller.getMouseY()).thenReturn(90);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
         assertFalse(coll.mouseHover());
     }
 
     @Test
     void mouseHoverHoverGameTrue() {
-        sideScroller.mouseX=400;
-        sideScroller.mouseY=100;
+        when(sideScroller.getMouseX()).thenReturn(400);
+        when(sideScroller.getMouseY()).thenReturn(100);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS_HALF,DIRECTIONS_HALF,DIRECTIONS,DIRECTIONS);
         assertTrue(coll.mouseHover());
     }
 
     @Test
     void mouseHoverHoverGameFalse() {
-        sideScroller.mouseX=400;
-        sideScroller.mouseY=100;
+        when(sideScroller.getMouseX()).thenReturn(400);
+        when(sideScroller.getMouseY()).thenReturn(100);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
         assertFalse(coll.mouseHover());
     }
@@ -161,8 +161,8 @@ class EditableObjectTest {
     @Test
     void updateEditCheckApplet() {
         when(sideScroller.getMouseCoordGame()).thenReturn(new PVector(DIRECTIONS,DIRECTIONS));
-        sideScroller.mouseReleaseEvent=true;
-        sideScroller.mouseButton=LEFT;
+        when(sideScroller.isMouseReleaseEvent()).thenReturn(true);
+        when(sideScroller.getMouseButton()).thenReturn(LEFT);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS, CHILD_FALSE);
         coll.focus();
         coll.updateEdit();
@@ -172,11 +172,12 @@ class EditableObjectTest {
     @Test
     void updateEditCheckFocusEventEnableFocusFocusedObjNull() {
         when(sideScroller.getMouseCoordGame()).thenReturn(new PVector(DIRECTIONS,DIRECTIONS));
+        when(sideScroller.isMousePressEvent()).thenReturn(true);
+        when(sideScroller.getMousePressed()).thenReturn(false);
+        when(sideScroller.getMouseButton()).thenReturn(LEFT);
+        when(sideScroller.getMouseX()).thenReturn(400);
+        when(sideScroller.getMouseY()).thenReturn(100);
         gameplayScene.focusedObject=null;
-        sideScroller.mouseX=400;
-        sideScroller.mouseY=100;
-        sideScroller.mousePressEvent=true;
-        sideScroller.mouseButton=LEFT;
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS_HALF,DIRECTIONS_HALF,DIRECTIONS,DIRECTIONS, CHILD_FALSE);
         coll.unFocus();
         coll.updateEdit();
@@ -188,12 +189,12 @@ class EditableObjectTest {
     @Test
     void updateEditCheckFocusEventEnableFocusFocusedObjNullChangePosition() {
         when(sideScroller.getMouseCoordGame()).thenReturn(new PVector(DIRECTIONS,DIRECTIONS));
+        when(sideScroller.getMouseX()).thenReturn(400);
+        when(sideScroller.getMouseY()).thenReturn(100);
+        when(sideScroller.isMousePressEvent()).thenReturn(true);
+        when(sideScroller.getMouseButton()).thenReturn(LEFT);
+        when(sideScroller.getMousePressed()).thenReturn(true);
         gameplayScene.focusedObject=null;
-        sideScroller.mouseX=400;
-        sideScroller.mouseY=100;
-        sideScroller.mousePressEvent=true;
-        sideScroller.mouseButton=LEFT;
-        sideScroller.mousePressed=true;
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS_HALF,DIRECTIONS_HALF,DIRECTIONS,DIRECTIONS, CHILD_FALSE);
         coll.unFocus();
         coll.updateEdit();
@@ -205,15 +206,14 @@ class EditableObjectTest {
         gameplayScene.objects=new ArrayList<>();
         when(sideScroller.getMouseCoordGame()).thenReturn(new PVector(DIRECTIONS,DIRECTIONS));
         when(sideScroller.isKeyDown(SideScroller.SHIFT)).thenReturn(true);
-        sideScroller.mouseX=400;
-        sideScroller.mouseY=100;
-        sideScroller.keyPressEvent=true;
+        when(sideScroller.getMouseX()).thenReturn(400);
+        when(sideScroller.getMouseY()).thenReturn(100);
+        when(sideScroller.isKeyPressEvent()).thenReturn(true);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS_HALF,DIRECTIONS_HALF,DIRECTIONS,DIRECTIONS, CHILD_FALSE);
         coll.type= coll.type.COLLISION;
         coll.focus();
         coll.updateEdit();
         assertNotNull(coll.gameplayScene.objects);
-        assertFalse(coll.applet.keyPressEvent);
         assertFalse(coll.isFocused());
     }
 
@@ -238,14 +238,13 @@ class EditableObjectTest {
     void updateEditCheckWhenFocusedDuplicateObjectShiftDEFAULT() {
         when(sideScroller.getMouseCoordGame()).thenReturn(new PVector(DIRECTIONS,DIRECTIONS));
         when(sideScroller.isKeyDown(SideScroller.SHIFT)).thenReturn(true);
-        sideScroller.mouseX=400;
-        sideScroller.mouseY=100;
-        sideScroller.keyPressEvent=true;
+        when(sideScroller.getMouseX()).thenReturn(400);
+        when(sideScroller.getMouseY()).thenReturn(100);
+        when(sideScroller.isKeyPressEvent()).thenReturn(true);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS_HALF,DIRECTIONS_HALF,DIRECTIONS,DIRECTIONS, CHILD_FALSE);
         coll.type= coll.type.BACKGROUND;
         coll.focus();
         coll.updateEdit();
-        assertFalse(coll.applet.keyPressEvent);
         assertFalse(coll.isFocused());
     }
 

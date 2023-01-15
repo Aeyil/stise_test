@@ -2,7 +2,6 @@ package project_16x16.ui;
 
 import project_16x16.ISideScroller;
 import project_16x16.PClass;
-import project_16x16.SideScroller;
 
 public class Tab extends PClass {
 

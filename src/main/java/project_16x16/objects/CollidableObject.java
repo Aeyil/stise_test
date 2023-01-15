@@ -5,7 +5,6 @@ import processing.core.PVector;
 import processing.data.JSONObject;
 import project_16x16.DebugType;
 import project_16x16.ISideScroller;
-import project_16x16.SideScroller;
 import project_16x16.Tileset;
 import project_16x16.scene.GameplayScene;
 

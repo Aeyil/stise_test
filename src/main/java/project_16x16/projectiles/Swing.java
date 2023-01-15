@@ -4,7 +4,6 @@ import project_16x16.ISideScroller;
 import project_16x16.components.AnimationComponent;
 import processing.core.PVector;
 import project_16x16.scene.GameplayScene;
-import project_16x16.SideScroller;
 import project_16x16.Tileset;
 
 public class Swing extends ProjectileObject { // PClass

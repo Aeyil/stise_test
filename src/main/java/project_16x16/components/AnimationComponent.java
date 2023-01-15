@@ -8,14 +8,14 @@ import org.apache.commons.collections.map.MultiValueMap;
 import processing.core.PImage;
 import project_16x16.Audio;
 import project_16x16.Audio.SFX;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 
 /**
  * The Animation Class
  */
 public class AnimationComponent {
 
-	private static SideScroller applet;
+	private static ISideScroller applet;
 	private ArrayList<PImage> frames;
 	private boolean loop;
 	private int length;
@@ -31,7 +31,7 @@ public class AnimationComponent {
 		sounds = new MultiValueMap();
 	}
 
-	public static void assignApplet(SideScroller applet) {
+	public static void assignApplet(ISideScroller applet) {
 		AnimationComponent.applet = applet;
 	}
 
@@ -62,7 +62,7 @@ public class AnimationComponent {
 		this.length = length;
 		start = 0;
 		currentFrame = start;
-		firstFrame = applet.frameCount;
+		firstFrame = applet.getFrameCount();
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class AnimationComponent {
 	@SuppressWarnings("unchecked")
 	public PImage animate() {
 		PImage frame = frames.get((int) currentFrame);
-		if ((applet.frameCount - firstFrame) % rate == 0) {
+		if ((applet.getFrameCount() - firstFrame) % rate == 0) {
 			currentFrame++;
 			if (currentFrame > length) {
 				if (!loop) {
