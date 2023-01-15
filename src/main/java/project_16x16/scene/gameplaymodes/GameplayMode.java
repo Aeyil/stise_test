@@ -27,32 +27,6 @@ public class GameplayMode extends GameMode {
 
 	@Override
 	public void updateEditableObject(EditableObject object) {
-/* Merge conflict, due to renaming -> belongs to GameMode
-	}
-
-	public void displayDestination() {
-	}
-
-	public void updateLocalPlayer(Player localPlayer) {
-	}
-
-	public void displayGUISlots() {
-		scene.displayGUISlots();
-	}
-
-	public void updateGUIButton(int xAnchor, PImage activeIcon, PImage inactiveIcon, GameModes mode, boolean isHighlighted) {
-		if (getModeType().equals(mode)) {
-			drawGUIButton(activeIcon, xAnchor, 120);
-		}
-		else if (isNotInvalidGUIButtonMode() && isHighlighted) {
-			if (scene.applet.isMousePressEvent()) {
-				scene.changeMode(mode);
-			}
-			drawGUIButton(activeIcon, xAnchor, 120);
-		}
-		else {
-			drawGUIButton(inactiveIcon, xAnchor, 120);
-/*
 		if (object instanceof GameObject) {
 			((GameObject) object).update();
 		}
