@@ -194,7 +194,10 @@ public final class Utility {
 	 * @see #hoverScreen(float, float, float, float) hoverScreen()
 	 */
 	public static boolean hoverGame(float x, float y, float w, float h) {
-		return (applet.getMouseCoordGame().x > x - w / 2 && applet.getMouseCoordGame().x < x + w / 2 && applet.getMouseCoordGame().y > y - h / 2 && applet.getMouseCoordGame().y < y + h / 2);
+		return (applet.getMouseCoordGame().x > x - w / 2
+				&& applet.getMouseCoordGame().x < x + w / 2
+				&& applet.getMouseCoordGame().y > y - h / 2
+				&& applet.getMouseCoordGame().y < y + h / 2);
 	}
 
 	/**
