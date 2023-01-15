@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import processing.core.PImage;
 import processing.data.JSONObject;
+import project_16x16.DebugType;
 import project_16x16.PClass;
 import project_16x16.SideScroller;
 import project_16x16.Tileset;
@@ -16,6 +17,7 @@ import project_16x16.scene.GameplayScene;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class CollidableObjectTest {
     private CollidableObject coll;
@@ -112,12 +114,12 @@ class CollidableObjectTest {
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
         coll.display();
         assertNotNull(coll.applet);
-        assertNull(coll.applet.debug);
+        assertNull(coll.applet.getDebug());
     }
 
     @Test
     void displayDEBUG() {
-        sideScroller.debug= SideScroller.DebugType.ALL;
+        when(sideScroller.getDebug()).thenReturn(DebugType.ALL);
         coll=new CollidableObject(sideScroller, gameplayScene, DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
         coll.display();
         verify(sideScroller).noFill();
