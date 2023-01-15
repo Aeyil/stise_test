@@ -18,11 +18,8 @@ import project_16x16.components.Tile;
 import project_16x16.components.Tile.TileType;
 import project_16x16.entities.Player;
 import project_16x16.multiplayer.Multiplayer;
-import project_16x16.objects.BackgroundObject;
-import project_16x16.objects.CollidableObject;
-import project_16x16.objects.EditableObject;
-import project_16x16.objects.EditorItem;
-import project_16x16.objects.GameObject;
+import project_16x16.objects.*;
+import project_16x16.objects.AnimatedObject;
 import project_16x16.projectiles.ProjectileObject;
 import project_16x16.scene.gameplaymodes.GameMode;
 import project_16x16.scene.gameplaymodes.ImportGameMode;
@@ -636,7 +633,7 @@ public class GameplayScene extends PScene {
 			}
 			switch (type) { // Read Main
 				case "COLLISION":
-					CollidableObject collision = new CollidableObject(applet, this);
+					GameObject collision = new GameObject(applet, this);
 					try {
 						collision.setGraphic(item.getString("id"));
 					}
@@ -659,13 +656,13 @@ public class GameplayScene extends PScene {
 					break;
 				case "OBJECT":
 					try {
-						Class<? extends GameObject> gameObjectClass = Tileset.getObjectClass(item.getString("id"));
+						Class<? extends AnimatedObject> gameObjectClass = Tileset.getObjectClass(item.getString("id"));
 						Constructor<?> ctor = gameObjectClass.getDeclaredConstructors()[0];
-						GameObject gameObject = (GameObject) ctor.newInstance(new Object[] { applet, this });
-						gameObject.position.x = item.getInt("x");
-						gameObject.position.y = item.getInt("y");
+						AnimatedObject animatedObject = (AnimatedObject) ctor.newInstance(new Object[] { applet, this });
+						animatedObject.position.x = item.getInt("x");
+						animatedObject.position.y = item.getInt("y");
 
-						objects.add(gameObject); // SideScrollerend To Level
+						objects.add(animatedObject); // SideScrollerend To Level
 						break;
 					}
 					catch (Exception e) {

@@ -8,7 +8,7 @@ import project_16x16.projectiles.ProjectileObject;
 import project_16x16.projectiles.Swing;
 import project_16x16.scene.GameplayScene;
 
-public class MirrorBoxObject extends GameObject {
+public class MirrorBoxObject extends AnimatedObject {
 
 	public int direction;
 	public boolean rotating;
@@ -26,7 +26,7 @@ public class MirrorBoxObject extends GameObject {
 
 		direction = 0;
 
-		type = type.OBJECT;
+		type = ObjectType.OBJECT;
 
 		id = "MIRROR_BOX";
 		image = Tileset.getTile("MIRROR_BOX");
@@ -34,7 +34,7 @@ public class MirrorBoxObject extends GameObject {
 		width = BOX_W;
 		height = BOX_H;
 
-		collision = new CollidableObject(applet, gameplayScene, BOX_W, BOX_H, 0, 0, true);
+		collision = new GameObject(applet, gameplayScene, BOX_W, BOX_H, 0, 0, true);
 		collision.flag = "TRANSPARENT_BULLET";
 		gameplayScene.objects.add(collision);
 	}
@@ -65,7 +65,7 @@ public class MirrorBoxObject extends GameObject {
 		// Change Mirror Box Axis
 		for (int i = 0; i < gameplayScene.getPlayer().swings.size(); i++) {
 			Swing swing = gameplayScene.getPlayer().swings.get(i);
-			if (collidesWithSwing(swing)) {
+			if (collidesWith(swing)) {
 				if (!swing.activated) {
 					rotating = true;
 					// Setup Animation
@@ -80,7 +80,7 @@ public class MirrorBoxObject extends GameObject {
 			ProjectileObject projectile = gameplayScene.projectileObjects.get(i);
 			activated = false;
 			if (projectile.id.equals("MAGIC")) {
-				if (collidesWithProjectile(projectile) && !projectile.hit) {
+				if (collidesWith(projectile) && !projectile.hit) {
 					activated = true;
 					projectileDirection(projectile);
 				}
@@ -138,14 +138,6 @@ public class MirrorBoxObject extends GameObject {
 				bounceProjectile(projectile, DOWN, LEFT, 'y');
 				return;
 		}
-	}
-
-	public boolean collidesWithSwing(Swing swing) {
-		return (swing.position.x + swing.width / 2 > position.x - width / 2 && swing.position.x - swing.width / 2 < position.x + width / 2) && (swing.position.y + swing.height / 2 > position.y - height / 2 && swing.position.y - swing.height / 2 < position.y + height / 2);
-	}
-
-	public boolean collidesWithProjectile(ProjectileObject swing) {
-		return (swing.position.x + swing.width / 2 > position.x - width / 2 && swing.position.x - swing.width / 2 < position.x + width / 2) && (swing.position.y + swing.height / 2 > position.y - height / 2 && swing.position.y - swing.height / 2 < position.y + height / 2);
 	}
 
 	public void setMirrorBox(float rotate) {

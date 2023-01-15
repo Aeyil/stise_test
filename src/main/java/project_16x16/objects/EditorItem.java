@@ -52,7 +52,7 @@ public class EditorItem extends PClass {
 					EditableObject c = null;
 					switch (type) {
 						case COLLISION:
-							c = new CollidableObject(applet, gameplayScene, id, 0, 0);
+							c = new GameObject(applet, gameplayScene, id, 0, 0);
 							c.position.set(realPos);
 							break;
 						case BACKGROUND:
@@ -60,9 +60,9 @@ public class EditorItem extends PClass {
 							break;
 						case OBJECT:
 							try {
-								Class<? extends GameObject> gameObjectClass = Tileset.getObjectClass(id);
+								Class<? extends AnimatedObject> gameObjectClass = Tileset.getObjectClass(id);
 								Constructor<?> ctor = gameObjectClass.getDeclaredConstructors()[0];
-								c = (GameObject) ctor.newInstance(new Object[] { applet, gameplayScene });
+								c = (AnimatedObject) ctor.newInstance(new Object[] { applet, gameplayScene });
 								break;
 							}
 							catch (Exception e) {

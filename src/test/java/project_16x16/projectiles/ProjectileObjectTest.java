@@ -7,7 +7,6 @@ import processing.core.PImage;
 import processing.core.PVector;
 import project_16x16.SideScroller;
 import project_16x16.Tileset;
-import project_16x16.objects.CollidableObject;
 import project_16x16.objects.GameObject;
 import project_16x16.scene.GameplayScene;
 
@@ -82,12 +81,12 @@ class ProjectileObjectTest {
         projectileObject.height=0;
         projectileObject.position.x=0;
         projectileObject.position.y=0;
-        CollidableObject coll= new CollidableObject(sideScroller,gameplayScene,DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
+        GameObject coll= new GameObject(sideScroller,gameplayScene,DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
         coll.width=0;
         coll.height=0;
         coll.position.x=0;
         coll.position.y=0;
-        assertFalse(projectileObject.collides(coll));
+        assertFalse(projectileObject.collidesWith(coll));
     }
 
     @Test
@@ -97,12 +96,12 @@ class ProjectileObjectTest {
         projectileObject.height=0;
         projectileObject.position.x=1;
         projectileObject.position.y=1;
-        CollidableObject coll= new CollidableObject(sideScroller,gameplayScene,DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
+        GameObject coll= new GameObject(sideScroller,gameplayScene,DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
         coll.width=1;
         coll.height=1;
         coll.position.x=0;
         coll.position.y=0;
-        assertFalse(projectileObject.collides(coll));
+        assertFalse(projectileObject.collidesWith(coll));
     }
 
     @Test

@@ -8,7 +8,7 @@ import processing.core.PVector;
 import project_16x16.ISideScroller;
 import project_16x16.Tileset;
 import project_16x16.Utility;
-import project_16x16.objects.CollidableObject;
+import project_16x16.objects.GameObject;
 import project_16x16.objects.EditableObject;
 import project_16x16.particleSystem.ParticleSystem;
 import project_16x16.particleSystem.emissions.AreaEmission;
@@ -76,9 +76,9 @@ public class MagicProjectile extends ProjectileObject {
 
 	public void destroyProjectile() {
 		for (EditableObject editableObject : gameplayScene.objects) {
-			if (editableObject instanceof CollidableObject) {
-				CollidableObject collidable = (CollidableObject) editableObject;
-				if (collides(collidable) && collidable.flag.equals("TRANSPARENT_BULLET")) {
+			if (editableObject instanceof GameObject) {
+				GameObject collidable = (GameObject) editableObject;
+				if (collidesWith(collidable) && collidable.flag.equals("TRANSPARENT_BULLET")) {
 					hit = true;
 					trail.spawn = false;
 				}
@@ -103,7 +103,7 @@ public class MagicProjectile extends ProjectileObject {
 		}
 	}
 
-	public void hit(CollidableObject collision) {
+	public void hit(GameObject collision) {
 		hit = true;
 		trail.spawn = false;
 	}

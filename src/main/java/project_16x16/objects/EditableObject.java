@@ -20,11 +20,7 @@ public abstract class EditableObject extends PClass {
     // Image data
     public String id;
 
-    enum type {
-        COLLISION, BACKGROUND, OBJECT
-    }
-
-    protected type type;
+    protected ObjectType type;
 
     // Focus
     private boolean focus;
@@ -51,7 +47,14 @@ public abstract class EditableObject extends PClass {
 
     public abstract void debug();
 
-    public abstract JSONObject exportToJSON();
+    public JSONObject exportToJSON(){
+        JSONObject item = new JSONObject();
+        item.setString("id", id);
+        item.setString("type", type.toString());
+        item.setInt("x", (int) position.x);
+        item.setInt("y", (int) position.y);
+        return item;
+    }
 
     /**
      * Draws position edit arrows and bounding box if the object is selected
@@ -119,9 +122,9 @@ public abstract class EditableObject extends PClass {
     private void handleObject() {
         EditableObject copy;
         try {
-            Class<? extends GameObject> gameObjectClass = Tileset.getObjectClass(id);
+            Class<? extends AnimatedObject> gameObjectClass = Tileset.getObjectClass(id);
             Constructor<?> ctor = gameObjectClass.getDeclaredConstructors()[0];
-            copy = (GameObject) ctor.newInstance(new Object[]{applet, this});
+            copy = (AnimatedObject) ctor.newInstance(new Object[]{applet, this});
             copy.focus = true;
             copy.position = position.copy();
             copy.editOffset = editOffset.copy();
@@ -137,7 +140,7 @@ public abstract class EditableObject extends PClass {
 
     private void handleCollision() {
         EditableObject copy;
-        copy = new CollidableObject(applet, gameplayScene, id, 0, 0);
+        copy = new GameObject(applet, gameplayScene, id, 0, 0);
         copy.focus = true;
         copy.position = position.copy();
         copy.editOffset = editOffset.copy();

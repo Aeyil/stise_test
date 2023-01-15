@@ -51,11 +51,11 @@ public class CleanerRobot extends Enemy {
 		}
 		else if (position.x > target.x) {
 			velocity.x = -speedWalk;
-			enemyState.facingDir = LEFT;
+			state.facingDir = LEFT;
 		}
 		else if (position.x < target.x) {
 			velocity.x = speedWalk;
-			enemyState.facingDir = RIGHT;
+			state.facingDir = RIGHT;
 		}
 	}
 

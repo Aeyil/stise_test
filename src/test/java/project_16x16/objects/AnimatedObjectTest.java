@@ -15,17 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 
-class BackgroundObjectTest {
-
-    private BackgroundObject backgroundObject;
+class AnimatedObjectTest {
+    private AnimatedObject animatedObject;
     private SideScroller sideScroller;
     private GameplayScene gameplayScene;
     private static PImage image;
     private static MockedStatic<Tileset> tileset;
 
     private final static String LEVEL_STRING = "Level1";
-    private final static int DIRECTIONS = 20;
-
 
     @BeforeAll
     static void overallSetUp(){
@@ -54,7 +51,7 @@ class BackgroundObjectTest {
 
     @AfterEach
     void tearDown() {
-        backgroundObject = null;
+        animatedObject = null;
         sideScroller = null;
         gameplayScene = null;
     }
@@ -66,82 +63,45 @@ class BackgroundObjectTest {
     }
 
     @Test
-    void testConstructor(){
-        backgroundObject=new BackgroundObject(sideScroller,gameplayScene);
-        assertEquals(ObjectType.BACKGROUND, backgroundObject.type);
+    void constructor() {
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertNotNull(animatedObject.animation);
     }
 
     @Test
-    void testConstructorSideScrollerGameplaySceneDirectionsString(){
-        backgroundObject=new BackgroundObject(sideScroller, gameplayScene, LEVEL_STRING, DIRECTIONS,DIRECTIONS);
-        assertEquals(20,backgroundObject.position.x);
-        assertEquals(20,backgroundObject.position.y);
-        assertNotNull(backgroundObject.image);
+    void getAnimation() {
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertEquals(new ArrayList<>(), animatedObject.getAnimation(LEVEL_STRING));
     }
 
     @Test
-    void testConstructorSideScrollerGameplaySceneString(){
-        backgroundObject=new BackgroundObject(sideScroller, gameplayScene, LEVEL_STRING);
-        assertEquals(0,backgroundObject.position.x);
-        assertEquals(0,backgroundObject.position.y);
-        assertNotNull(backgroundObject.image);
+    void g4() {
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertEquals(image, animatedObject.g(307, 291, 9, 9));
     }
 
     @Test
-    void display() {
-        backgroundObject=new BackgroundObject(sideScroller, gameplayScene);
-        backgroundObject.display();
-        assertNotNull(backgroundObject.applet);
-    }
-
-    @Test
-    void displayPosition() {
-        backgroundObject=new BackgroundObject(sideScroller, gameplayScene);
-        backgroundObject.width=9;
-        backgroundObject.height=9;
-        backgroundObject.display();
-        assertNotNull(backgroundObject.applet);
-    }
-
-    @Test
-    void setGraphic() {
-        backgroundObject=new BackgroundObject(sideScroller, gameplayScene);
-        backgroundObject.setGraphic(LEVEL_STRING);
-        assertEquals(LEVEL_STRING,backgroundObject.id);
-        assertEquals(0,backgroundObject.width);
-        assertEquals(0,backgroundObject.height);
-    }
-
-    @Test
-    void setImageWidth() {
-        backgroundObject=new BackgroundObject(sideScroller,gameplayScene);
-        backgroundObject.setImageWidth(10);
-        assertEquals(10,backgroundObject.width);
-    }
-
-    @Test
-    void setImageHeight() {
-        backgroundObject=new BackgroundObject(sideScroller,gameplayScene);
-        backgroundObject.setImageHeight(10);
-        assertEquals(10,backgroundObject.height);
+    void g5() {
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertEquals(image, animatedObject.g(307, 291, 9, 9, 4));
     }
 
     @Test
     void debug() {
-        backgroundObject=new BackgroundObject(sideScroller,gameplayScene);
-        backgroundObject.debug();
-        verify(sideScroller).stroke(50,255,120);
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        animatedObject.debug();
+        verify(sideScroller).stroke(255,190,200);
         verify(sideScroller).noFill();
         verify(sideScroller).rect(0,0,0,0);
     }
 
     @Test
     void exportToJSON() {
-        backgroundObject=new BackgroundObject(sideScroller,gameplayScene);
-        JSONObject obj =backgroundObject.exportToJSON();
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        JSONObject obj = animatedObject.exportToJSON();
         JSONObject exp =new JSONObject();
         exp.setString("id", null);
-        exp.setString("type", "BACKGROUND");
+        exp.setString("type", "OBJECT");
         exp.setInt("x", 0);
         exp.setInt("y", 0);
         assertEquals(exp.toString(),obj.toString());

@@ -43,13 +43,13 @@ public class CleanerRobotTest {
 
     @Test
     public void constructorTest(){
-        Assert.assertNotNull(robot);
+        Assertions.assertNotNull(robot);
     }
 
     @Test
     public void updateTestVelocity(){
         robot.update();
-        Assert.assertEquals((float)robot.speedWalk, robot.velocity.x);
+        Assertions.assertEquals((float)robot.speedWalk, robot.velocity.x);
     }
 
     @Test
@@ -58,28 +58,28 @@ public class CleanerRobotTest {
         robot.position.x = distance;
         robot.update(); // Change target
         robot.update(); // change direction
-        Assert.assertEquals(PConstants.LEFT,robot.enemyState.facingDir);
+        Assertions.assertEquals(PConstants.LEFT,robot.state.facingDir);
     }
 
     @Test
     public void getDistanceTestFirstDimension(){
         PVector v1 = new PVector(1,0);
         PVector v2 = new PVector(5,0);
-        Assert.assertEquals(4d, robot.getDistance(v1,v2));
+        Assertions.assertEquals(4d, robot.getDistance(v1,v2));
     }
 
     @Test
     public void getDistanceTestSecondDimension(){
         PVector v1 = new PVector(0,1);
         PVector v2 = new PVector(0,5);
-        Assert.assertEquals(4d, robot.getDistance(v1,v2));
+        Assertions.assertEquals(4d, robot.getDistance(v1,v2));
     }
 
     @Test
     public void getDistanceTestBothDimensions(){
         PVector v1 = new PVector(1,1);
         PVector v2 = new PVector(5,5);
-        Assert.assertEquals(4*Math.sqrt(2), robot.getDistance(v1,v2));
+        Assertions.assertEquals(4*Math.sqrt(2), robot.getDistance(v1,v2));
     }
 
     @Test
@@ -88,21 +88,21 @@ public class CleanerRobotTest {
         PVector v2 = new PVector(5,5,3);
         PVector v3 = new PVector(1,1,2);
         PVector v4 = new PVector(5,5,3);
-        Assert.assertEquals(robot.getDistance(v1,v2), robot.getDistance(v3,v4));
+        Assertions.assertEquals(robot.getDistance(v1,v2), robot.getDistance(v3,v4));
     }
 
     @Test
     public void getDistanceTestWithNegative(){
         PVector v1 = new PVector(-1,-2);
         PVector v2 = new PVector(3,2);
-        Assert.assertEquals(4*Math.sqrt(2),robot.getDistance(v1,v2));
+        Assertions.assertEquals(4*Math.sqrt(2),robot.getDistance(v1,v2));
     }
 
     @Test
     public void getDistanceTestWith0(){
         PVector v1 = new PVector(4,4);
         PVector v2 = new PVector(0,0);
-        Assert.assertEquals(4*Math.sqrt(2),robot.getDistance(v1,v2));
+        Assertions.assertEquals(4*Math.sqrt(2),robot.getDistance(v1,v2));
     }
 
     @Test

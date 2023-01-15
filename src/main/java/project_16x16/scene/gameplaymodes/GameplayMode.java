@@ -2,7 +2,7 @@ package project_16x16.scene.gameplaymodes;
 
 import project_16x16.entities.Player;
 import project_16x16.objects.EditableObject;
-import project_16x16.objects.GameObject;
+import project_16x16.objects.AnimatedObject;
 import project_16x16.scene.GameplayScene;
 import project_16x16.scene.GameplayScene.GameModes;
 
@@ -27,8 +27,8 @@ public class GameplayMode extends GameMode {
 
 	@Override
 	public void updateEditableObject(EditableObject object) {
-		if (object instanceof GameObject) {
-			((GameObject) object).update();
+		if (object instanceof AnimatedObject) {
+			((AnimatedObject) object).update();
 		}
 	}
 	

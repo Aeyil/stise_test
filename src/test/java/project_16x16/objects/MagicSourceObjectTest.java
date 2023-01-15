@@ -80,7 +80,7 @@ class MagicSourceObjectTest {
     @Test
     void constructor() {
         gameObject=new MagicSourceObject(sideScroller,gameplayScene);
-        assertEquals(gameObject.type.OBJECT,gameObject.type);
+        assertEquals(ObjectType.OBJECT,gameObject.type);
         assertEquals("MAGIC_SOURCE",gameObject.id);
         assertEquals(48,gameObject.width);
         assertEquals(48,gameObject.height);
@@ -121,15 +121,14 @@ class MagicSourceObjectTest {
         Player p = new Player(sideScroller,null,false);
         when(gameplayScene.getPlayer()).thenReturn(p);
         gameObject=new MagicSourceObject(sideScroller,gameplayScene);
-        assertFalse(gameObject.collidesWithSwing(new Swing(sideScroller,gameplayScene, DIRECTIONS,DIRECTIONS,37)));
+        assertFalse(gameObject.collidesWith(new Swing(sideScroller,gameplayScene, DIRECTIONS,DIRECTIONS,37)));
     }
 
     @Test
     void collidesWithPlayerFALSE() {
         AnimationComponent.assignApplet(sideScroller);
         Player p = new Player(sideScroller,null,false);
-        when(gameplayScene.getPlayer()).thenReturn(p);
         gameObject=new MagicSourceObject(sideScroller,gameplayScene);
-        assertFalse(gameObject.collidesWithPlayer());
+        assertFalse(gameObject.collidesWith(p));
     }
 }

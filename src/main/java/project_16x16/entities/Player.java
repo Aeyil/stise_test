@@ -10,8 +10,6 @@ import project_16x16.*;
 import project_16x16.Audio.SFX;
 import project_16x16.DebugType;
 import project_16x16.components.AnimationComponent;
-import project_16x16.objects.CollidableObject;
-import project_16x16.objects.EditableObject;
 import project_16x16.projectiles.Swing;
 import project_16x16.scene.GameplayScene;
 
@@ -22,7 +20,7 @@ import project_16x16.scene.GameplayScene;
  * displaying, and updating the character.
  * </p>
  */
-public final class Player extends EditableObject {
+public final class Player extends Entity{
 	/**
 	 * Current player sprite
 	 */
@@ -30,14 +28,7 @@ public final class Player extends EditableObject {
 
 	private final PImage lifeOn;
 	private final PImage lifeOff;
-
-	private final PVector velocity = new PVector(0, 0);
-
-	private static final int COLLISION_RANGE = 145;
 	private static final float DASH_MULTIPLIER = 1.5f; // Movement multiplier from holding dash key
-
-	private final int speedWalk;
-	private final int speedJump;
 
 	private final boolean isMultiplayerPlayer;
 
@@ -58,8 +49,6 @@ public final class Player extends EditableObject {
 	private enum ACTION {
 		WALK, IDLE, JUMP, LAND, FALL, ATTACK, DASH, DASH_ATTACK
 	}
-
-	private EntityState state;
 
 	static {
 		playerAnimationSequences = new HashMap<ACTION, ArrayList<PImage>>();
@@ -94,13 +83,13 @@ public final class Player extends EditableObject {
 		lifeCapacity = 6;
 		life = 3;
 
+		gravity = Constants.GAME_GRAVITY;
 		speedWalk = 7;
 		speedJump = 18;
+		collisionRange = 145;
 
 		width = 14 * 4;
 		height = 16 * 4;
-
-		state = new EntityState();
 
 		setAnimation(ACTION.IDLE);
 		this.isMultiplayerPlayer = isMultiplayerPlayer;
@@ -143,19 +132,19 @@ public final class Player extends EditableObject {
 	 * The update method handles updating the character.
 	 */
 	public void update() {
-		velocity.set(0, velocity.y + Constants.GAME_GRAVITY);
+		velocity.set(0, velocity.y + gravity);
 
 		handleKeyboardInput();
 		handleMouseInput();
 
-		checkPlayerCollision();
+		checkForCollision();
 		if (velocity.y != 0) {
 			state.flying = true;
 		}
 		position.add(velocity);
 
 		chooseAnimation();
-		if (position.y > 2000) { // out of bounds check
+		if (position.y > OUT_OF_BOUNDS_DISTANCE) { // out of bounds check
 			position.set(0, -100); // TODO set to spawn loc PVector
 			velocity.mult(0);
 		}
@@ -163,7 +152,7 @@ public final class Player extends EditableObject {
 			applet.noFill();
 			applet.stroke(255, 0, 0);
 			applet.strokeWeight(1);
-			applet.ellipse(position.x, position.y, COLLISION_RANGE * 2, COLLISION_RANGE * 2);
+			applet.ellipse(position.x, position.y, collisionRange * 2, collisionRange * 2);
 		}
 	}
 
@@ -182,14 +171,6 @@ public final class Player extends EditableObject {
 				image(lifeOn, 50 + 40 * i, applet.getGameResolution().y - 50);
 			}
 		}
-	}
-
-	public PVector getVelocity() {
-		return velocity.copy();
-	}
-
-	public EntityState getState() {
-		return state;
 	}
 
 	private void handleKeyboardInput() {
@@ -224,51 +205,6 @@ public final class Player extends EditableObject {
 		}
 		for (int i = 0; i < swings.size(); i++) { // Update Swing Projectiles
 			swings.get(i).update();
-		}
-	}
-
-	private void checkPlayerCollision() {
-		for (EditableObject o : gameplayScene.objects) {
-			if (o instanceof CollidableObject) {
-				CollidableObject collision = (CollidableObject) o;
-				if (Utility.fastInRange(position, collision.position, COLLISION_RANGE)) { // In Player Range
-					if (applet.getDebug() == DebugType.ALL) {
-						applet.strokeWeight(2);
-						applet.rect(collision.position.x, collision.position.y, collision.width, collision.height);
-						applet.fill(255, 0, 0);
-						applet.ellipse(collision.position.x, collision.position.y, 5, 5);
-						applet.noFill();
-					}
-					if (collidesFuturX(collision)) {
-						// player left of collision
-						if (position.x < collision.position.x) {
-							position.x = collision.position.x - collision.width / 2 - width / 2;
-							// player right of collision
-						}
-						else {
-							position.x = collision.position.x + collision.width / 2 + width / 2;
-						}
-						velocity.x = 0;
-						state.dashing = false;
-					}
-					if (collidesFuturY(collision)) {
-						// player above collision
-						if (position.y < collision.position.y) {
-							if (state.flying) {
-								state.landing = true;
-							}
-							position.y = collision.position.y - collision.height / 2 - height / 2;
-							state.flying = false;
-							// player below collision
-						}
-						else {
-							position.y = collision.position.y + collision.height / 2 + height / 2;
-							state.jumping = false;
-						}
-						velocity.y = 0;
-					}
-				}
-			}
 		}
 	}
 
@@ -323,49 +259,6 @@ public final class Player extends EditableObject {
 		else {
 			setAnimation(ACTION.IDLE);
 		}
-	}
-
-	/**
-	 * 
-	 * Determines is the character has collided with an object of type Collision.
-	 * 
-	 * @param collision The other object
-	 * @return boolean if it has or has not collided with the object.
-	 */
-	private boolean collides(CollidableObject collision) {
-		return (position.x + width / 2 > collision.position.x - collision.width / 2
-				&& position.x - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + height / 2 > collision.position.y - collision.height / 2
-						&& position.y - height / 2 < collision.position.y + collision.height / 2);
-	}
-
-	// TODO: optimize these (unused)
-	private boolean collidesEqual(CollidableObject collision) {
-		return (position.x + width / 2 >= collision.position.x - collision.width / 2
-				&& position.x - width / 2 <= collision.position.x + collision.width / 2)
-				&& (position.y + height / 2 >= collision.position.y - collision.height / 2
-						&& position.y - height / 2 <= collision.position.y + collision.height / 2);
-	}
-
-	private boolean collidesFutur(CollidableObject collision) {
-		return (position.x + velocity.x + width / 2 > collision.position.x - collision.width / 2
-				&& position.x + velocity.x - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + velocity.y + height / 2 > collision.position.y - collision.height / 2
-						&& position.y + velocity.y - height / 2 < collision.position.y + collision.height / 2);
-	}
-
-	private boolean collidesFuturX(CollidableObject collision) {
-		return (position.x + velocity.x + width / 2 > collision.position.x - collision.width / 2
-				&& position.x + velocity.x - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + 0 + height / 2 > collision.position.y - collision.height / 2
-						&& position.y + 0 - height / 2 < collision.position.y + collision.height / 2);
-	}
-
-	private boolean collidesFuturY(CollidableObject collision) {
-		return (position.x + 0 + width / 2 > collision.position.x - collision.width / 2
-				&& position.x + 0 - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + velocity.y + height / 2 > collision.position.y - collision.height / 2
-						&& position.y + velocity.y - height / 2 < collision.position.y + collision.height / 2);
 	}
 
 	public void setAnimation(String anim) {

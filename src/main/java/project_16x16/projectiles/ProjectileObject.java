@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import project_16x16.ISideScroller;
 import project_16x16.components.AnimationComponent;
 import project_16x16.objects.CollidableObject;
-import project_16x16.objects.EditableObject;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
 import project_16x16.scene.GameplayScene;
 import project_16x16.Tileset;
 
-public class ProjectileObject extends EditableObject {
+public class ProjectileObject extends CollidableObject {
 
 	public AnimationComponent animation;
 
@@ -46,14 +45,6 @@ public class ProjectileObject extends EditableObject {
 	public void display() {
 	}
 	public void update() {
-	}
-
-	public boolean collides(CollidableObject collision) {
-		return (position.x + width / 2 > collision.position.x - collision.width / 2
-				&& position.x - width / 2 < collision.position.x + collision.width / 2)
-				&& (position.y + height / 2 > collision.position.y - collision.height / 2
-						&& position.y - height / 2 < collision.position.y
-								+ collision.height / 2);
 	}
 
 	protected ArrayList<PImage> getAnimation(String name) {
