@@ -2,6 +2,7 @@ package project_16x16.objects;
 
 import java.util.ArrayList;
 
+import project_16x16.ISideScroller;
 import project_16x16.components.AnimationComponent;
 import processing.core.PImage;
 import processing.data.JSONObject;
@@ -22,7 +23,7 @@ public class GameObject extends EditableObject {
 
 	public PImage image;
 
-	public GameObject(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public GameObject(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller, gameplayScene);
 
 		animation = new AnimationComponent();

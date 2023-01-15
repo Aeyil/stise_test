@@ -3,8 +3,8 @@ package project_16x16.scene;
 import processing.core.PConstants;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
-import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
+import project_16x16.ISideScroller;
+import project_16x16.GameScene;
 import project_16x16.ui.Button;
 import project_16x16.ui.Notifications;
 import project_16x16.ui.NumberInputField;
@@ -17,8 +17,8 @@ import project_16x16.ui.NumberInputField;
  */
 public class Settings extends PScene {
 	// Window
-	private final int WINDOW_X_POS = (int) applet.gameResolution.x / 2;
-	private final int WINDOW_Y_POS = (int) applet.gameResolution.y / 2;
+	private final int WINDOW_X_POS = (int) applet.getGameResolution().x / 2;
+	private final int WINDOW_Y_POS = (int) applet.getGameResolution().y / 2;
 	// Buttons
 	private final int GRAPHICS_Y_OFFSET = 10;
 	private final int SOUND_Y_OFFSET = 50;
@@ -37,9 +37,9 @@ public class Settings extends PScene {
 
 	private NumberInputField windowSizeX;
 
-	private SideScroller game;
+	private ISideScroller game;
 
-	public Settings(SideScroller sideScroller) {
+	public Settings(ISideScroller sideScroller) {
 		super(sideScroller);
 		game = sideScroller;
 
@@ -74,7 +74,7 @@ public class Settings extends PScene {
 		applet.fill(255);
 		applet.textSize(60);
 		applet.textAlign(CENTER, TOP);
-		applet.text("Options", applet.gameResolution.x / 2, 20);
+		applet.text("Options", applet.getGameResolution().x / 2, 20);
 
 		quit.display();
 		apply.display();
@@ -110,7 +110,7 @@ public class Settings extends PScene {
 			return;
 		}
 		if (pressSoundOptions.hover()) {
-			game.swapToScene(GameScenes.AUDIO_SETTINGS);
+			game.swapToScene(GameScene.AUDIO_SETTINGS);
 		}
 	}
 
@@ -120,7 +120,7 @@ public class Settings extends PScene {
 		applet.fill(29, 33, 45);
 		applet.stroke(47, 54, 73);
 		applet.strokeWeight(8);
-		applet.rect(WINDOW_X_POS, WINDOW_Y_POS, applet.gameResolution.x * 0.66f - 8, applet.gameResolution.y - 8);
+		applet.rect(WINDOW_X_POS, WINDOW_Y_POS, applet.getGameResolution().x * 0.66f - 8, applet.getGameResolution().y - 8);
 	}
 
 	private void OptionText(String toDisplay, int x, int y) { // Display the text at the bottom

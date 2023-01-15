@@ -35,24 +35,10 @@ import project_16x16.ui.Notifications;
  * and is the heart of the game.
  * </p>
  */
-public class SideScroller extends PApplet {
+public class SideScroller extends PApplet implements ISideScroller {
 
 	// Game Dev
 	public static final String LEVEL = "Storage/Game/Maps/tiledMap.dat";
-
-	public enum DebugType {
-		OFF, ALL, INFO_ONLY;
-
-		private static DebugType[] vals = values();
-
-		public DebugType next() {
-			return vals[(this.ordinal() + 1) % vals.length];
-		}
-
-		public static DebugType get(int value) {
-			return values()[value];
-		}
-	}
 
 	public DebugType debug = DebugType.get(Options.debugMode);
 
@@ -67,39 +53,27 @@ public class SideScroller extends PApplet {
 	private static PFont font_pixel;
 
 	// Scenes	
-	private ArrayDeque<GameScenes> sceneHistory;
+	private ArrayDeque<GameScene> sceneHistory;
 	private int sceneSwapTime = 0;
 
-	private static MainMenu menu;
-	private static GameplayScene game;
-	private static PauseMenu pmenu;
-	private static Settings settings;
-	private static MultiplayerMenu mMenu;
-	private static MultiplayerHostMenu mHostMenu;
-	private static MultiplayerClientMenu mClientMenu;
-	private static AudioSettings audioSettings;
-
-	public enum GameScenes {
-		MAIN_MENU(menu), GAME(game), PAUSE_MENU(pmenu), SETTINGS_MENU(settings), MULTIPLAYER_MENU(mMenu),
-		HOST_MENU(mHostMenu), CLIENT_MENU(mClientMenu), AUDIO_SETTINGS(audioSettings);
-
-		PScene scene;
-
-		private GameScenes(PScene scene) {
-			this.scene = scene;
-		}
-
-		public PScene getScene() {
-			return scene;
-		}
-	}
+	//CTiSE-Larissa: changed from private to protected because of extraction of enum GameScene
+	protected static MainMenu menu;
+	protected static GameplayScene game;
+	protected static PauseMenu pmenu;
+	protected static Settings settings;
+	protected static MultiplayerMenu mMenu;
+	protected static MultiplayerHostMenu mHostMenu;
+	protected static MultiplayerClientMenu mClientMenu;
+	protected static AudioSettings audioSettings;
 
 	// Events
-	private HashSet<Integer> keysDown;
-	public boolean keyPressEvent; //     TODO remove -- override keyPressed() instead
-	public boolean keyReleaseEvent; //   TODO remove -- override mouseReleased() instead
-	public boolean mousePressEvent; //   TODO remove -- override mousePressed() instead
-	public boolean mouseReleaseEvent; // TODO remove -- override mouseReleased() instead
+	//CTiSE-Larissa: made boolean variables (keyPressEvent, mousePressEvent, keyReleaseEvent, mouseReleaseEvent) private because of encapsulation.
+	//CTiSE-Larissa: made keysDown protected, because of testing
+	protected HashSet<Integer> keysDown;
+	private boolean keyPressEvent; //     TODO remove -- override keyPressed() instead
+	private boolean keyReleaseEvent; //   TODO remove -- override mouseReleased() instead
+	private boolean mousePressEvent; //   TODO remove -- override mousePressed() instead
+	private boolean mouseReleaseEvent; // TODO remove -- override mouseReleased() instead
 
 	// Camera Variables
 	public Camera camera; // TODO encapsulate in gamePlayScene
@@ -193,6 +167,24 @@ public class SideScroller extends PApplet {
 		Audio.assignApplet(this);
 
 		// Create scene
+		createScene();
+		swapToScene(GameScene.MAIN_MENU);
+
+		// Camera
+		configureCamera();
+
+		scaleResolution();
+		launchIntoMultiplayer();
+	}
+	//CTiSE-Larissa: extract configuration of the camera in its own method
+	private void configureCamera() {
+		camera = new Camera(this);
+		camera.setMouseMask(CONTROL);
+		camera.setMinZoomScale(Constants.CAMERA_ZOOM_MIN);
+		camera.setMaxZoomScale(Constants.CAMERA_ZOOM_MAX);
+	}
+	//CTiSE-Larissa: extract creation of the game scene in its own method
+	private void createScene() {
 		sceneHistory = new ArrayDeque<>();
 		game = new GameplayScene(this, Constants.DEV_LEVEL);
 		menu = new MainMenu(this);
@@ -202,16 +194,6 @@ public class SideScroller extends PApplet {
 		mHostMenu = new MultiplayerHostMenu(this);
 		mClientMenu = new MultiplayerClientMenu(this);
 		audioSettings = new AudioSettings(this);
-		swapToScene(GameScenes.MAIN_MENU);
-
-		// Camera
-		camera = new Camera(this);
-		camera.setMouseMask(CONTROL);
-		camera.setMinZoomScale(Constants.CAMERA_ZOOM_MIN);
-		camera.setMaxZoomScale(Constants.CAMERA_ZOOM_MAX);
-
-		scaleResolution();
-		launchIntoMultiplayer();
 	}
 
 	/**
@@ -230,7 +212,7 @@ public class SideScroller extends PApplet {
 	 * @param newScene
 	 * @see #returnScene()
 	 */
-	public void swapToScene(GameScenes newScene) {
+	public void swapToScene(GameScene newScene) {
 		if (frameCount - sceneSwapTime > 6 || frameCount == 0) {
 			if (!newScene.equals(sceneHistory.peek())) { // if different
 				if (!sceneHistory.isEmpty()) {
@@ -496,60 +478,16 @@ public class SideScroller extends PApplet {
 		textAlign(LEFT, TOP);
 		
 		fill(255, 0, 0);
-		text("Player Pos:", width - labelPadding, lineOffset * 0 + yOffset);
-		text("Player Speed:", width - labelPadding, lineOffset * 1 + yOffset);
-		text("Anim #:", width - labelPadding, lineOffset * 2 + yOffset);
-		text("Anim Frame:", width - labelPadding, lineOffset * 3 + yOffset);
-		text("Camera Pos:", width - labelPadding, lineOffset * 4 + yOffset);
-		text("Camera Zoom:", width - labelPadding, lineOffset * 5 + yOffset);
-		text("Camera Rot:", width - labelPadding, lineOffset * 6 + yOffset);
-		text("World Mouse:", width - labelPadding, lineOffset * 7 + yOffset);
-		text("Projectiles:", width - labelPadding, lineOffset * 8 + yOffset);
-		text("Framerate:", width - labelPadding, lineOffset * 9 + yOffset);
-		
+		displayDebugInfo_TextBlock_Left_Top(lineOffset, yOffset, labelPadding);
+
 		fill(55, 155, 255);
-		text("Framerate HIGH:", width - labelPadding, lineOffset * 12 + yOffset);
-		text("Framerate LOW:", width - labelPadding, lineOffset * 13 + yOffset);
-		text("Toggle Deadzone:", width - labelPadding, lineOffset * 14 + yOffset);
-		text("Camera->Mouse:", width - labelPadding, lineOffset * 15 + yOffset);
-		text("Camera->Player:", width - labelPadding, lineOffset * 16 + yOffset);
-		text("Shake Camera:", width - labelPadding, lineOffset * 17 + yOffset);
-		text("Notification:", width - labelPadding, lineOffset * 18 + yOffset);
-		text("Life cap++:", width - labelPadding, lineOffset * 19 + yOffset);
-		text("Life cap--:", width - labelPadding, lineOffset * 20 + yOffset);
-		text("Life++:", width - labelPadding, lineOffset * 21 + yOffset);
-		text("Life--:", width - labelPadding, lineOffset * 22 + yOffset);
-		text("Fullscreen:", width - labelPadding, lineOffset * 23 + yOffset);
-		text("Toggle Debug:", width - labelPadding, lineOffset * 24 + yOffset);
+		displayDebugInfo_TextBlock_Left_Bottom(lineOffset, yOffset, labelPadding);
 
 		fill(255,255,0);
 		textAlign(RIGHT, TOP);
-		text("[" + round(player.position.x) + ", " + round(player.position.y) + "]", width - ip, lineOffset * 0 + yOffset);
-		text("[" + round(velocity.x) + ", " + round(velocity.y) + "]", width - ip, lineOffset * 1 + yOffset);
-		text("[" + player.animation.name + "]", width - ip, lineOffset * 2 + yOffset);
-		text("[" + round(player.animation.getFrameID()) + " / " + player.animation.getAnimLength() + "]", width - ip,
-				lineOffset * 3 + yOffset);
-		text("[" + PApplet.round(camera.getPosition().x) + ", " + PApplet.round(camera.getPosition().y) + "]",
-				width - ip, lineOffset * 4 + yOffset);
-		text("[" + String.format("%.2f", camera.getZoomScale()) + "]", width - ip, lineOffset * 5 + yOffset);
-		text("[" + round(degrees(camera.getCameraRotation())) + "]", width - ip, lineOffset * 6 + yOffset);
-		text("[" + round(camera.getMouseCoord().x) + ", " + round(camera.getMouseCoord().y) + "]", width - ip,
-				lineOffset * 7 + yOffset);
-		text("[" + "?" + "]", width - ip, lineOffset * 8 + yOffset); // TODO expose
-		
-		text("['" + (char) Options.frameRateHigh + "']", width - ip, lineOffset * 12 + yOffset);
-		text("['" + (char) Options.frameRateLow + "']", width - ip, lineOffset * 13 + yOffset);
-		text("['" + (char) Options.toggleDeadzone + "']", width - ip, lineOffset * 14 + yOffset);
-		text("['" + (char) Options.cameraToMouse + "']", width - ip, lineOffset * 15 + yOffset);
-		text("['" + (char) Options.cameraToPlayer + "']", width - ip, lineOffset * 16 + yOffset);
-		text("['" + (char) Options.shake + "']", width - ip, lineOffset * 17 + yOffset);
-		text("['" + (char) Options.notify + "']", width - ip, lineOffset * 18 + yOffset);
-		text("['" + (char) Options.lifeCapInc + "']", width - ip, lineOffset * 19 + yOffset);
-		text("['" + (char) Options.lifeCapDec + "']", width - ip, lineOffset * 20 + yOffset);
-		text("['" + (char) Options.lifeInc + "']", width - ip, lineOffset * 21 + yOffset);
-		text("['" + (char) Options.lifeDec + "']", width - ip, lineOffset * 22 + yOffset);
-		text("['F11']", width - ip, lineOffset * 23 + yOffset);
-		text("['TAB']", width - ip, lineOffset * 24 + yOffset);
+		displayDebugInfo_ValueBlock_Right_Top(lineOffset, yOffset, ip, player, velocity);
+
+		displayDebugInfo_ValueBlock_Right_Bottom(lineOffset, yOffset, ip);
 
 		if (frameRate >= 59.5) {
 			fill(0, 255, 0);
@@ -559,6 +497,73 @@ public class SideScroller extends PApplet {
 		}
 		text("[" + round(frameRate) + "]", width - ip, lineOffset * 9 + yOffset);
 	}
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_TextBlock_Left_Top(int lineOffset, int yOffset, int labelPadding) {
+		int lineOffsetFactor = 0;
+		text("Player Pos:", width - labelPadding, lineOffset * lineOffsetFactor + yOffset);
+		text("Player Speed:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Anim #:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Anim Frame:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera Pos:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera Zoom:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera Rot:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("World Mouse:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Projectiles:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Framerate:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+	}
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_TextBlock_Left_Bottom(int lineOffset, int yOffset, int labelPadding) {
+		int lineOffsetFactor = 12;
+		text("Framerate HIGH:", width - labelPadding, lineOffset * lineOffsetFactor + yOffset);
+		text("Framerate LOW:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Toggle Deadzone:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera->Mouse:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Camera->Player:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Shake Camera:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Notification:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life cap++:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life cap--:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life++:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Life--:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Fullscreen:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+		text("Toggle Debug:", width - labelPadding, lineOffset * ++lineOffsetFactor + yOffset);
+	}
+
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_ValueBlock_Right_Top(int lineOffset, int yOffset, int ip, Player player, PVector velocity) {
+		int lineOffsetFactor = 0;
+		text("[" + round(player.position.x) + ", " + round(player.position.y) + "]", width - ip, lineOffset * lineOffsetFactor + yOffset);
+		text("[" + round(velocity.x) + ", " + round(velocity.y) + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + player.animation.name + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + round(player.animation.getFrameID()) + " / " + player.animation.getAnimLength() + "]", width - ip,
+				lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + PApplet.round(camera.getPosition().x) + ", " + PApplet.round(camera.getPosition().y) + "]",
+				width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + String.format("%.2f", camera.getZoomScale()) + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + round(degrees(camera.getCameraRotation())) + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + round(camera.getMouseCoord().x) + ", " + round(camera.getMouseCoord().y) + "]", width - ip,
+				lineOffset * ++lineOffsetFactor + yOffset);
+		text("[" + "?" + "]", width - ip, lineOffset * ++lineOffsetFactor + yOffset); // TODO expose
+	}
+	//CTiSE-Larissa: extract method from long method
+	private void displayDebugInfo_ValueBlock_Right_Bottom(int lineOffset, int yOffset, int ip) {
+		int lineOffsetFactor = 12;
+		text("['" + (char) Options.frameRateHigh + "']", width - ip, lineOffset * lineOffsetFactor + yOffset);
+		text("['" + (char) Options.frameRateLow + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.toggleDeadzone + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.cameraToMouse + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.cameraToPlayer + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.shake + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.notify + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeCapInc + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeCapDec + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeInc + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['" + (char) Options.lifeDec + "']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['F11']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+		text("['TAB']", width - ip, lineOffset * ++lineOffsetFactor + yOffset);
+	}
+
+
 
 	/**
 	 * Launch into multiplayer mode instantly bases upon program args. Used in
@@ -570,9 +575,9 @@ public class SideScroller extends PApplet {
 			if (args[0].equals("host")) {
 				try {
 					m = new MultiplayerServer(this);
-					((GameplayScene) GameScenes.GAME.getScene()).setupMultiplayer(m);
-					swapToScene(GameScenes.GAME);
-					((GameplayScene) GameScenes.GAME.getScene()).changeMode(GameModes.PLAY);
+					((GameplayScene) GameScene.GAME.getScene()).setupMultiplayer(m);
+					swapToScene(GameScene.GAME);
+					((GameplayScene) GameScene.GAME.getScene()).changeMode(GameModes.PLAY);
 					stage.setTitle("host");
 					System.out.println("~HOST~");
 				} catch (Exception e) {
@@ -582,9 +587,9 @@ public class SideScroller extends PApplet {
 				System.out.println("client path");
 				try {
 					m = new MultiplayerClient(this);
-					((GameplayScene) (GameScenes.GAME.getScene())).setupMultiplayer(m);
-					swapToScene(GameScenes.GAME);
-					((GameplayScene) GameScenes.GAME.getScene()).changeMode(GameModes.PLAY);
+					((GameplayScene) (GameScene.GAME.getScene())).setupMultiplayer(m);
+					swapToScene(GameScene.GAME);
+					((GameplayScene) GameScene.GAME.getScene()).changeMode(GameModes.PLAY);
 					stage.setTitle("client");
 					System.out.println("~CLIENT~");
 				} catch (Exception e) {
@@ -601,5 +606,67 @@ public class SideScroller extends PApplet {
 	// Main
 	public static void main(String args[]) {
 		PApplet.main(SideScroller.class, args);
+	}
+
+	//CTiSE-Larissa: made boolean variables (keyPressEvent, mousePressEvent, keyReleaseEvent, mouseReleaseEvent) private because of encapsulation.
+	// Added Getter Methods for accessing value in other classes.
+	public boolean isKeyPressEvent() {
+		return keyPressEvent;
+	}
+
+	public void setKeyPressEvent(boolean keyPressEvent) {
+		this.keyPressEvent = keyPressEvent;
+	}
+
+	public boolean isMousePressEvent() {
+		return mousePressEvent;
+	}
+
+	public boolean isMouseReleaseEvent() {
+		return mouseReleaseEvent;
+	}
+	//CTiSE-Larissa: because of problems in MultiplayerMenu (instead of applet.width --> applet.getWidth?
+	public int getWidth(){
+		return width;
+	}
+	//CTiSE-Larissa: because of problems in MultiplayerMenu (instead of applet.height --> applet.getHeight?
+	public int getHeight(){
+		return height;
+	}
+	//CTiSE-Larissa: because of problems in Slider (instead of applet.mouseX --> applet.getMouseX() )
+	public int getMouseX(){
+		return mouseX;
+	}
+	//CTiSE-Larissa: because of problems in Slider (instead of applet.mouseY --> applet.getMouseY() )
+	public int getMouseY(){
+		return mouseY;
+	}
+	//CTiSE-Larissa: because of problems in Settings (instead of applet.gameResolution --> applet.getGameResolution)
+	public PVector getGameResolution() {
+		return gameResolution;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField (instead of applet.frameCount --> applet.getFrameCount)
+	public int getFrameCount(){
+		return frameCount;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.key --> applet.getKey)
+	public char getKey(){
+		return key;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.camera --> applet.getCamera)
+	public Camera getCamera() {
+		return camera;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.debug --> applet.getDebug)
+	public DebugType getDebug() {
+		return debug;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.mouseButton --> applet.getMouseButton)
+	public int getMouseButton(){
+		return mouseButton;
+	}
+	//CTiSE-Larissa: because of problems in TextInputField and NumberInputField (instead of applet.mousePressed --> applet.getMousePressed)
+	public boolean getMousePressed(){
+		return mousePressed;
 	}
 }

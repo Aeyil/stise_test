@@ -9,7 +9,7 @@ import project_16x16.objects.EditorItem;
 import project_16x16.scene.GameplayScene;
 import project_16x16.scene.GameplayScene.GameModes;
 
-public class ModifyGameMode extends GameplayMode {
+public class ModifyGameMode extends GameMode {
 
 	private EditorItem editorItem;
 
@@ -59,7 +59,7 @@ public class ModifyGameMode extends GameplayMode {
 	@Override
 	public void mouseDraggedEvent(MouseEvent event, PVector origPos, PVector mouseDown) {
 		if (event.getButton() == PConstants.CENTER) { // pan on MMB; TODO fix when zoom != 1.00
-			scene.applet.camera.setCameraPositionNoLerp(
+			scene.applet.getCamera().setCameraPositionNoLerp(
 					PVector.add(origPos, PVector.sub(mouseDown, scene.applet.getMouseCoordScreen())));
 		}
 	}

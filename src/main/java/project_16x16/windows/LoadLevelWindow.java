@@ -8,6 +8,7 @@ import java.util.Arrays;
 import processing.core.PApplet;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
+import project_16x16.ISideScroller;
 import project_16x16.PClass;
 import project_16x16.SideScroller;
 import project_16x16.Utility;
@@ -29,7 +30,7 @@ public class LoadLevelWindow extends PClass {
 	public List list;
 	File f;
 
-	public LoadLevelWindow(SideScroller sideScroller, GameplayScene scene) {
+	public LoadLevelWindow(ISideScroller sideScroller, GameplayScene scene) {
 		super(sideScroller);
 		collidableObjects = new ArrayList<CollidableObject>();
 		backgroundObjects = new ArrayList<BackgroundObject>();
@@ -47,31 +48,38 @@ public class LoadLevelWindow extends PClass {
 
 		list = new List(sideScroller, Arrays.stream(files).map(File::getName).toArray(String[]::new), 30);
 		list.setSizeH(200);
-		list.setPosition(applet.width / 2 + 400, 325);
-		list.setConfirmButton("Confirm", applet.width / 2 + 400, 500);
-		list.setCancelButton("Cancel", applet.width / 2 + 400, 550);
+		list.setPosition(applet.getWidth() / 2 + 400, 325);
+		list.setConfirmButton("Confirm", applet.getWidth() / 2 + 400, 500);
+		list.setCancelButton("Cancel", applet.getWidth() / 2 + 400, 550);
+//		list.setPosition(applet.width / 2 + 400, 325);
+//		list.setConfirmButton("Confirm", applet.width / 2 + 400, 500);
+//		list.setCancelButton("Cancel", applet.width / 2 + 400, 550);
 	}
 
 	public void display() {
 		// Display Privacy Area
 		applet.fill(0, 100);
 		applet.noStroke();
-		applet.rect(applet.width / 2, applet.height / 2, applet.width, applet.height);
+//		applet.rect(applet.width / 2, applet.height / 2, applet.width, applet.height);
+		applet.rect(applet.getWidth() / 2, applet.getHeight() / 2, applet.getWidth(), applet.getHeight());
 
 		// Display Window
 		applet.fill(29, 33, 45);
 		applet.stroke(47, 54, 73);
 		applet.strokeWeight(8);
-		applet.rect(applet.width / 2, applet.height / 2, applet.width, applet.height);
+//		applet.rect(applet.width / 2, applet.height / 2, applet.width, applet.height);
+		applet.rect(applet.getWidth() / 2, applet.getHeight() / 2, applet.getWidth(), applet.getHeight());
 		applet.stroke(255, 255, 255);
-		applet.rect(500, applet.height / 2, 800, 600);
+//		applet.rect(500, applet.height / 2, 800, 600);
+		applet.rect(500, applet.getHeight() / 2, 800, 600);
 
 		// Display Window Title
 		applet.pushMatrix();
 		applet.fill(255);
 		applet.textSize(30);
 		applet.textAlign(CENTER, CENTER);
-		applet.text("Load Level", applet.width / 2 + 400, applet.height / 2 - 200);
+//		applet.text("Load Level", applet.width / 2 + 400, applet.height / 2 - 200);
+		applet.text("Load Level", applet.getWidth() / 2 + 400, applet.getHeight() / 2 - 200);
 		applet.popMatrix();
 		// Display Load Press
 		list.display();

@@ -44,15 +44,15 @@ public class ScrollBarVertical extends PClass {
 	}
 	
 	public void update() {
-		if (applet.mousePressEvent && container.hover()) {
+		if (applet.isMousePressEvent() && container.hover()) {
 			barSelected = true;
 		}
-		if (applet.mouseReleaseEvent) {
+		if (applet.isMouseReleaseEvent()) {
 			barSelected = false;
 		}
 		if (barSelected)
 		{
-			barLocation = (float) PApplet.map(applet.mouseY, container.Y() + container.Height() - (barAnchor.localHeight/2), container.Y() + (barAnchor.localHeight/2), 1, 0);
+			barLocation = (float) PApplet.map(applet.getMouseY(), container.Y() + container.Height() - (barAnchor.localHeight/2), container.Y() + (barAnchor.localHeight/2), 1, 0);
 			barLocation = Utility.clamp(barLocation, 0, 1);
 		}
 	}

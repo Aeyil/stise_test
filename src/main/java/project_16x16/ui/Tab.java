@@ -1,5 +1,6 @@
 package project_16x16.ui;
 
+import project_16x16.ISideScroller;
 import project_16x16.PClass;
 import project_16x16.SideScroller;
 
@@ -14,7 +15,7 @@ public class Tab extends PClass {
 	private float incrementSpeed;
 
 	// Basic constructor for tab
-	public Tab(SideScroller sideScroller, String[] texts, int tabs) {
+	public Tab(ISideScroller sideScroller, String[] texts, int tabs) {
 		super(sideScroller);
 		tabCount = tabs;
 		buttons = new Button[tabCount];
@@ -24,10 +25,10 @@ public class Tab extends PClass {
 			buttons[i] = new Button(sideScroller);
 			buttons[i].setText(texts[i]);
 			if (i == 0) {
-				buttons[i].setPosition((applet.width / 2) - 155, (applet.height / 2) - 265);
+				buttons[i].setPosition((applet.getWidth() / 2) - 155, (applet.getHeight() / 2) - 265);
 			}
 			else {
-				buttons[i].setPosition(buttons[i - 1].getX() + ((buttons[i - 1].getW() + buttons[i].getW()) / 2), (applet.height / 2) - 265);
+				buttons[i].setPosition(buttons[i - 1].getX() + ((buttons[i - 1].getW() + buttons[i].getW()) / 2), (applet.getHeight() / 2) - 265);
 			}
 		}
 	}
@@ -36,10 +37,10 @@ public class Tab extends PClass {
 	public void update() {
 		for (int j = 0; j < tabCount; j++) {
 			if (j == 0) {
-				buttons[j].setPosition((applet.width / 2) - 155, (applet.height / 2) - 265);
+				buttons[j].setPosition((applet.getWidth() / 2) - 155, (applet.getHeight() / 2) - 265);
 			}
 			else {
-				buttons[j].setPosition(buttons[j - 1].getX() + ((buttons[j - 1].getW() + buttons[j].getW()) / 2), (applet.height / 2) - 265);
+				buttons[j].setPosition(buttons[j - 1].getX() + ((buttons[j - 1].getW() + buttons[j].getW()) / 2), (applet.getHeight() / 2) - 265);
 			}
 		}
 		for (int i = 0; i < tabCount; i++) {

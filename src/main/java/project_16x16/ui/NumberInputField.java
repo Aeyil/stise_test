@@ -3,7 +3,7 @@ package project_16x16.ui;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 import project_16x16.Utility;
 
 /**
@@ -22,7 +22,7 @@ public class NumberInputField extends TextInputField {
 	 * @param a This a reference to the game //TODO: having variable names that are
 	 *          just letters can be confusing to new contributors
 	 */
-	public NumberInputField(SideScroller sideScroller) {
+	public NumberInputField(ISideScroller sideScroller) {
 		super(sideScroller);
 	}
 
@@ -34,13 +34,13 @@ public class NumberInputField extends TextInputField {
 		// Focus Event
 		if (Utility.hoverScreen(x, y, width, height)) {
 			mouseOver = true;
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				focus = true;
 			}
 		}
 		else {
 			mouseOver = false;
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				focus = false;
 			}
 		}
@@ -48,16 +48,16 @@ public class NumberInputField extends TextInputField {
 		// Typing
 		if (focus) {
 			applet.textSize(20);
-			if (applet.keyPressEvent) {
-				if (applet.key == '\u0008') { // backspace
+			if (applet.isKeyPressEvent()) {
+				if (applet.getKey() == '\u0008') { // backspace
 					if (text.length() > 0) {
 						text = text.substring(0, text.length() - 1);
 					}
 				}
-				else if (keys.contains(applet.key)) {
+				else if (keys.contains(applet.getKey())) {
 					if (applet.textWidth(text) < width - 20) {
-						if (applet.key != '\uFFFF' && applet.key != '\n') {
-							text += applet.key;
+						if (applet.getKey() != '\uFFFF' && applet.getKey() != '\n') {
+							text += applet.getKey();
 						}
 					}
 				}
