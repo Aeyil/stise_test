@@ -88,7 +88,7 @@ public abstract class EditableObject extends PClass {
 					gameplayScene.focusedObject = this;
 				}
 			}
-			else {
+			else { //Franziska: never reachable or need focus=false and then focus true/ oder hier weil different threads?
 				if (focus) { // Focus Disable
 					gameplayScene.focusedObject = null;
 					focus = false;
