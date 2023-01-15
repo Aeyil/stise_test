@@ -29,7 +29,6 @@ class MirrorBoxObjectTest {
     private GameplayScene gameplayScene;
     private static PImage image;
     private static MockedStatic<Tileset> tileset;
-    private static MockedStatic<Utility> utility;
 
     private final static int DIRECTIONS = 20;
     private final static int RIGHT = 0;
@@ -58,10 +57,7 @@ class MirrorBoxObjectTest {
         ArrayList<PImage> list = new ArrayList<>();
         list.add(image);
         tileset.when(() -> Tileset.getAnimation(anyString())).thenReturn(list);
-        utility = Mockito.mockStatic(Utility.class);
-        utility.when(() -> Utility.rotateImage(any(PImage.class), anyFloat())).thenReturn(image);
-        utility.when(() -> Utility.resizeImage(any(PImage.class), anyFloat())).thenReturn(image);
-    }
+     }
 
     @BeforeEach
     void setUp() {
@@ -79,7 +75,6 @@ class MirrorBoxObjectTest {
     @AfterAll
     static void overallTearDown() {
         tileset.close();
-        utility.close();
         image = null;
     }
 
