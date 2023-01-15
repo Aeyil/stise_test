@@ -6,7 +6,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.DebugType;
+import project_16x16.DebugType;
 import project_16x16.Tileset;
 import project_16x16.Utility;
 import project_16x16.objects.CollidableObject;
@@ -68,7 +68,7 @@ public class Enemy extends CollidableObject {
 		applet.image(image, 0, 0);
 		applet.noTint();
 		applet.popMatrix();
-		if (applet.debug == DebugType.ALL) {
+		if (applet.getDebug() == DebugType.ALL) {
 			applet.strokeWeight(1);
 			applet.stroke(0, 255, 200);
 			applet.noFill();
@@ -90,7 +90,7 @@ public class Enemy extends CollidableObject {
 		if (position.y > OUT_OF_BOUNDS_DISTANCE) { // out of bounds check
 			// Destroy(gameObject);
 		}
-		if (applet.debug == DebugType.ALL) {
+		if (applet.getDebug() == DebugType.ALL) {
 			applet.noFill();
 			applet.stroke(255, 0, 0);
 			applet.strokeWeight(1);
@@ -114,7 +114,7 @@ public class Enemy extends CollidableObject {
 			if (o instanceof CollidableObject) {
 				CollidableObject collision = (CollidableObject) o;
 				if (Utility.fastInRange(position, collision.position, collisionRange)) { // In Player Range
-					if (applet.debug == DebugType.ALL) {
+					if (applet.getDebug() == DebugType.ALL) {
 						applet.strokeWeight(2);
 						applet.rect(collision.position.x, collision.position.y, collision.width, collision.height);
 						applet.fill(255, 0, 0);

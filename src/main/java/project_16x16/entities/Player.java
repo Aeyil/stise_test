@@ -6,14 +6,9 @@ import java.util.HashMap;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
-import project_16x16.Audio;
+import project_16x16.*;
 import project_16x16.Audio.SFX;
-import project_16x16.Constants;
-import project_16x16.Options;
-import project_16x16.SideScroller;
-import project_16x16.SideScroller.DebugType;
-import project_16x16.Tileset;
-import project_16x16.Utility;
+import project_16x16.DebugType;
 import project_16x16.components.AnimationComponent;
 import project_16x16.objects.CollidableObject;
 import project_16x16.objects.EditableObject;
@@ -83,7 +78,7 @@ public final class Player extends EditableObject {
 	 * 
 	 * @param sideScroller SideScroller game controller.
 	 */
-	public Player(SideScroller sideScroller, GameplayScene gameplayScene, boolean isMultiplayerPlayer) {
+	public Player(ISideScroller sideScroller, GameplayScene gameplayScene, boolean isMultiplayerPlayer) {
 		super(sideScroller, gameplayScene);
 
 		position = new PVector(100, 300); // Spawn LOC. TODO get from current level
@@ -136,7 +131,7 @@ public final class Player extends EditableObject {
 		applet.image(image, 0, 0);
 		applet.noTint();
 		applet.popMatrix();
-		if (applet.debug == DebugType.ALL) {
+		if (applet.getDebug() == DebugType.ALL) {
 			applet.strokeWeight(1);
 			applet.stroke(0, 255, 200);
 			applet.noFill();
@@ -164,7 +159,7 @@ public final class Player extends EditableObject {
 			position.set(0, -100); // TODO set to spawn loc PVector
 			velocity.mult(0);
 		}
-		if (applet.debug == DebugType.ALL) {
+		if (applet.getDebug() == DebugType.ALL) {
 			applet.noFill();
 			applet.stroke(255, 0, 0);
 			applet.strokeWeight(1);
@@ -179,12 +174,12 @@ public final class Player extends EditableObject {
 		applet.noStroke();
 		applet.fill(100, 130, 145, 100);
 		applet.rectMode(CORNER);
-		applet.rect(50 - 20, applet.gameResolution.y - 50 - 20, 40 * lifeCapacity, 40);
+		applet.rect(50 - 20, applet.getGameResolution().y - 50 - 20, 40 * lifeCapacity, 40);
 		applet.rectMode(CENTER);
 		for (int i = 0; i < lifeCapacity; i++) {
-			image(lifeOff, 50 + 40 * i, applet.gameResolution.y - 50);
+			image(lifeOff, 50 + 40 * i, applet.getGameResolution().y - 50);
 			if (i < life) {
-				image(lifeOn, 50 + 40 * i, applet.gameResolution.y - 50);
+				image(lifeOn, 50 + 40 * i, applet.getGameResolution().y - 50);
 			}
 		}
 	}
@@ -222,7 +217,7 @@ public final class Player extends EditableObject {
 	}
 
 	private void handleMouseInput() {
-		if (applet.mousePressed && applet.mouseButton == LEFT && !state.attacking) { // Attack
+		if (applet.getMousePressed() && applet.getMouseButton() == LEFT && !state.attacking) { // Attack
 			state.attacking = true;
 			// Create Swing Projectile
 			swings.add(new Swing(applet, gameplayScene, (int) position.x, (int) position.y, state.facingDir));
@@ -237,7 +232,7 @@ public final class Player extends EditableObject {
 			if (o instanceof CollidableObject) {
 				CollidableObject collision = (CollidableObject) o;
 				if (Utility.fastInRange(position, collision.position, COLLISION_RANGE)) { // In Player Range
-					if (applet.debug == DebugType.ALL) {
+					if (applet.getDebug() == DebugType.ALL) {
 						applet.strokeWeight(2);
 						applet.rect(collision.position.x, collision.position.y, collision.width, collision.height);
 						applet.fill(255, 0, 0);

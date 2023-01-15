@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import project_16x16.ISideScroller;
 import project_16x16.SideScroller;
 import project_16x16.Tileset;
 import project_16x16.Utility;
@@ -22,7 +23,7 @@ public class MagicSourceObject extends GameObject {
 	private static ArrayList<PImage> particleAnimation;
 	private ParticleSystem trail;
 
-	public MagicSourceObject(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public MagicSourceObject(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller, gameplayScene);
 
 		type = type.OBJECT;
@@ -80,7 +81,7 @@ public class MagicSourceObject extends GameObject {
 				&& (gameplayScene.getPlayer().position.y + gameplayScene.getPlayer().height / 2 > position.y - height / 2 && gameplayScene.getPlayer().position.y - gameplayScene.getPlayer().height / 2 < position.y + height / 2);
 	}
 
-	private void setParticleAnimation(SideScroller a) {
+	private void setParticleAnimation(ISideScroller a) {
 		particleAnimation = new ArrayList<PImage>();
 		PImage image = Tileset.getTile("MAGIC_SOURCE");
 		float scale = 0.12f;

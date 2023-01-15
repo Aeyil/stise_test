@@ -6,8 +6,8 @@ import processing.core.PConstants;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
 import project_16x16.Constants;
+import project_16x16.GameScene;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
 import project_16x16.multiplayer.Multiplayer;
 import project_16x16.multiplayer.MultiplayerServer;
 import project_16x16.ui.Button;
@@ -36,16 +36,19 @@ public class MultiplayerHostMenu extends PScene {
 		ipInput = new TextInputField(sideScroller);
 		pressHost = new Button(sideScroller);
 
-		ipInput.setPosition(applet.width / 2, applet.height / 2 - 240);
+//		ipInput.setPosition(applet.width / 2, applet.height / 2 - 240);
+		ipInput.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 240);
 		ipInput.setWidth(300);
 
 		pressHost.setText("Host");
-		pressHost.setPosition(applet.width / 2, applet.height / 2 - 80);
+//		pressHost.setPosition(applet.width / 2, applet.height / 2 - 80);
+		pressHost.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 80);
 		pressHost.setTextSize(40);
 		pressHost.setSize(300, 100);
 
 		pressMenu.setText("Back to menu");
-		pressMenu.setPosition(applet.width / 2, applet.height / 2 + 240);
+//		pressMenu.setPosition(applet.width / 2, applet.height / 2 + 240);
+		pressMenu.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 + 240);
 		pressMenu.setTextSize(40);
 		pressMenu.setSize(300, 100);
 	}
@@ -66,7 +69,7 @@ public class MultiplayerHostMenu extends PScene {
 	public void update() {
 		pressMenu.update();
 		if (pressMenu.hover()) {
-			game.swapToScene(GameScenes.MAIN_MENU);
+			game.swapToScene(GameScene.MAIN_MENU);
 		}
 		if (pressHost.hover()) {
 			if (pattern.matcher(ipInput.getText()).matches()) {
@@ -74,8 +77,8 @@ public class MultiplayerHostMenu extends PScene {
 				int port = Integer.valueOf(ipInput.getText().split(":")[1]);
 				try {
 					Multiplayer m = new MultiplayerServer(game, port);
-					((GameplayScene) GameScenes.GAME.getScene()).setupMultiplayer(m);
-					game.swapToScene(GameScenes.GAME);
+					((GameplayScene) GameScene.GAME.getScene()).setupMultiplayer(m);
+					game.swapToScene(GameScene.GAME);
 				}
 				catch (Exception e) {
 					Notifications.addNotification("ERROR", "todo"); // TODO

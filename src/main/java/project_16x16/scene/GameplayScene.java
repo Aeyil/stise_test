@@ -12,13 +12,8 @@ import processing.core.PVector;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 import processing.event.MouseEvent;
-import project_16x16.Audio;
+import project_16x16.*;
 import project_16x16.Audio.BGM;
-import project_16x16.Options;
-import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
-import project_16x16.Tileset;
-import project_16x16.Utility;
 import project_16x16.components.Tile;
 import project_16x16.components.Tile.TileType;
 import project_16x16.entities.Player;
@@ -124,7 +119,7 @@ public class GameplayScene extends PScene {
 
 	private SelectionBox selectionBox;
 
-	public GameplayScene(SideScroller sideScroller, String levelString) {
+	public GameplayScene(ISideScroller sideScroller, String levelString) {
 		super(sideScroller);
 		this.levelString = levelString;
 		setup();
@@ -201,7 +196,7 @@ public class GameplayScene extends PScene {
 	@Override
 	public void switchTo() {
 		super.switchTo();
-		((PauseMenu) GameScenes.PAUSE_MENU.getScene()).switched = false;
+		((PauseMenu) GameScene.PAUSE_MENU.getScene()).switched = false;
 		Audio.play(BGM.TEST1);
 	}
 
@@ -221,7 +216,7 @@ public class GameplayScene extends PScene {
 		Iterator<ProjectileObject> i = projectileObjects.iterator();
 		while (i.hasNext()) {
 			ProjectileObject o = i.next();
-			if (applet.frameCount - o.spawnTime > 600) {
+			if (applet.getFrameCount() - o.spawnTime > 600) {
 				i.remove(); // kill projectile after 10s
 			}
 			else {
@@ -241,7 +236,7 @@ public class GameplayScene extends PScene {
 	 */
 	public void setupMultiplayer(Multiplayer multiplayer) {
 		this.multiplayer = multiplayer;
-		onlinePlayer = new Player(applet, (GameplayScene) GameScenes.GAME.getScene(), true);
+		onlinePlayer = new Player(applet, (GameplayScene) GameScene.GAME.getScene(), true);
 		isSingleplayer = false;
 	}
 
@@ -326,7 +321,7 @@ public class GameplayScene extends PScene {
 		// Display Background
 		applet.stroke(50);
 		applet.fill(0, 100);
-		applet.rect(applet.width / 2, applet.height / 2, applet.width, applet.height);
+		applet.rect(applet.getWidth() / 2, applet.getHeight() / 2, applet.getWidth(), applet.getHeight());
 
 		// Display Editor Mode Items
 		int x = 0;
@@ -357,14 +352,14 @@ public class GameplayScene extends PScene {
 			if (applet.getMouseCoordScreen().y > 100) {
 				if (applet.getMouseCoordScreen().x > xx - (20 * 4) / 2 && applet.getMouseCoordScreen().x < xx + (20 * 4) / 2 && applet.getMouseCoordScreen().y > yy - (20 * 4) / 2 && applet.getMouseCoordScreen().y < yy + (20 * 4) / 2) {
 					// Grab Item
-					if (applet.mousePressEvent) {
+					if (applet.isMousePressEvent()) {
 						editorItem.focus = true;
 						editorItem.setTile(tile.getName());
 					}
 					// Display item name
 					applet.textSize(20);
 					applet.fill(255);
-					applet.text(tile.getName(), applet.mouseX, applet.mouseY);
+					applet.text(tile.getName(), applet.getMouseX(), applet.getMouseY());
 				}
 			}
 			index++;
@@ -373,7 +368,7 @@ public class GameplayScene extends PScene {
 		// Display ScrollBar
 		scrollBar.display();
 		scrollBar.update();
-		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.height - 8, 0);
+		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.getHeight() - 8, 0);
 
 		// Display Top Bar TODO
 //		applet.noStroke();
@@ -383,7 +378,7 @@ public class GameplayScene extends PScene {
 		// Display Line Separator
 		applet.strokeWeight(4);
 		applet.stroke(74, 81, 99);
-		applet.line(0, 100, applet.width, 100);
+		applet.line(0, 100, applet.getWidth(), 100);
 
 		// Display Inventory Slots
 		for (int i = 0; i < 6; i++) {
@@ -395,7 +390,7 @@ public class GameplayScene extends PScene {
 			applet.image(img, 20 * 4 / 2 + 10 + i * (20 * 4 + 10), 20 * 4 / 2 + 10, img.width * (float) 0.5, img.height * (float) 0.5);
 
 			// Focus Event
-			if (applet.mouseReleaseEvent) {
+			if (applet.isMouseReleaseEvent()) {
 				float xx = 20 * 4 / 2 + 10 + i * (20 * 4 + 10);
 				float yy = 20 * 4 / 2 + 10;
 				if (editorItem.focus && applet.getMouseCoordScreen().x > xx - (20 * 4) / 2 && applet.getMouseCoordScreen().x < xx + (20 * 4) / 2 && applet.getMouseCoordScreen().y > yy - (20 * 4) / 2 && applet.getMouseCoordScreen().y < yy + (20 * 4) / 2) {
@@ -466,7 +461,7 @@ public class GameplayScene extends PScene {
 
 	@Override
 	void mousePressed(MouseEvent e) {
-		origPos = applet.camera.getPosition(); // used for camera panning
+		origPos = applet.getCamera().getPosition(); // used for camera panning
 		mouseDown = applet.getMouseCoordScreen();
 		switch (e.getButton()) {
 			case LEFT:
@@ -526,7 +521,7 @@ public class GameplayScene extends PScene {
 	protected void keyReleased(processing.event.KeyEvent e) {
 		switch (e.getKeyCode()) { // Global gameplay hotkeys
 			case PConstants.ESC: // Pause
-				applet.swapToScene(GameScenes.PAUSE_MENU);
+				applet.swapToScene(GameScene.PAUSE_MENU);
 				break;
 			case Options.lifeCapInc:
 				localPlayer.lifeCapacity++;
@@ -560,7 +555,7 @@ public class GameplayScene extends PScene {
 				break;
 			case 51: // 3
 				changeMode(GameModes.PLAY);
-				applet.camera.setFollowObject(localPlayer);
+				applet.getCamera().setFollowObject(localPlayer);
 				break;
 			case 52: // 4
 				changeMode(GameModes.SAVE);
@@ -685,7 +680,7 @@ public class GameplayScene extends PScene {
 
 	public void displayWorldEdit() {
 		displayGrid();
-		if (applet.mousePressEvent && focusedObject != null) {
+		if (applet.isMousePressEvent() && focusedObject != null) {
 			focusedObject.updateEdit(); // enforce one item selected at once
 		}
 	}
@@ -700,7 +695,7 @@ public class GameplayScene extends PScene {
 			applet.image(img, 20 * 4 / 2 + 10 + i * (20 * 4 + 10), 20 * 4 / 2 + 10, img.width * (float) 0.5, img.height * (float) 0.5);
 
 			// Focus Event
-			if (applet.mousePressEvent) {
+			if (applet.isMousePressEvent()) {
 				float x = 20 * 4 / 2 + 10 + i * (20 * 4 + 10);
 				float y = 20 * 4 / 2 + 10;
 				if (applet.getMouseCoordScreen().x > x - (20 * 4) / 2 && applet.getMouseCoordScreen().x < x + (20 * 4) / 2 && applet.getMouseCoordScreen().y > y - (20 * 4) / 2 && applet.getMouseCoordScreen().y < y + (20 * 4) / 2) {
@@ -739,7 +734,7 @@ public class GameplayScene extends PScene {
 
 	public void scrollInventoryBar(MouseEvent event) {
 		scrollBar.mouseWheel(event);
-		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.height - 8, 0);
+		scrollInventory = (int) PApplet.map(scrollBar.barLocation, 1, 0, -getInventorySize() + applet.getHeight() - 8, 0);
 	}
 
 	/**
@@ -753,7 +748,7 @@ public class GameplayScene extends PScene {
 
 		private SelectionBox(PVector startPos) {
 			startPosScreen = startPos;
-			startPosGame = applet.camera.getDispToCoord(startPosScreen);
+			startPosGame = applet.getCamera().getDispToCoord(startPosScreen);
 		}
 
 		private void draw() {

@@ -4,6 +4,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
 
+import project_16x16.ISideScroller;
 import project_16x16.scene.GameplayScene;
 import project_16x16.SideScroller;
 import project_16x16.Tileset;
@@ -12,18 +13,18 @@ public class BackgroundObject extends EditableObject {
 
 	public PImage image;
 
-	public BackgroundObject(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public BackgroundObject(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller, gameplayScene);
 
 		type = type.BACKGROUND;
 	}
 
-	public BackgroundObject(SideScroller sideScroller, GameplayScene gameplayScene, String id) {
+	public BackgroundObject(ISideScroller sideScroller, GameplayScene gameplayScene, String id) {
 		this(sideScroller, gameplayScene);
 		setGraphic(id);
 	}
 
-	public BackgroundObject(SideScroller sideScroller, GameplayScene gameplayScene, String id, int x, int y) {
+	public BackgroundObject(ISideScroller sideScroller, GameplayScene gameplayScene, String id, int x, int y) {
 		this(sideScroller, gameplayScene);
 
 		position = new PVector(x, y);

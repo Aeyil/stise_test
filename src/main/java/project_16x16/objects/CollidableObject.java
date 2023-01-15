@@ -3,8 +3,9 @@ package project_16x16.objects;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
+import project_16x16.DebugType;
+import project_16x16.ISideScroller;
 import project_16x16.SideScroller;
-import project_16x16.SideScroller.DebugType;
 import project_16x16.Tileset;
 import project_16x16.scene.GameplayScene;
 
@@ -17,7 +18,7 @@ public class CollidableObject extends EditableObject {
 	private float pixelOffsetX = 0;
 	private float pixelOffsetY = 0;
 
-	public CollidableObject(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public CollidableObject(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller, gameplayScene);
 
 		flag = "";
@@ -25,13 +26,13 @@ public class CollidableObject extends EditableObject {
 		position = new PVector(0, 0);
 	}
 
-	public CollidableObject(SideScroller sideScroller, GameplayScene gameplayScene, int w, int h, int x, int y, boolean child) {
+	public CollidableObject(ISideScroller sideScroller, GameplayScene gameplayScene, int w, int h, int x, int y, boolean child) {
 		this(sideScroller, gameplayScene, w, h, x, y);
 
 		super.child = child;
 	}
 
-	public CollidableObject(SideScroller sideScroller, GameplayScene gameplayScene, int w, int h, int x, int y) {
+	public CollidableObject(ISideScroller sideScroller, GameplayScene gameplayScene, int w, int h, int x, int y) {
 		this(sideScroller, gameplayScene);
 
 		// Get From Game Graphics Image
@@ -40,7 +41,7 @@ public class CollidableObject extends EditableObject {
 		height = h;
 	}
 
-	public CollidableObject(SideScroller sideScroller, GameplayScene gameplayScene, String t, int x, int y) {
+	public CollidableObject(ISideScroller sideScroller, GameplayScene gameplayScene, String t, int x, int y) {
 		this(sideScroller, gameplayScene);
 
 		// Get From Game Graphics Image
@@ -56,7 +57,7 @@ public class CollidableObject extends EditableObject {
 			pixelOffsetX = 2;
 		}
 		if (id == null) {
-			if (applet.debug == DebugType.ALL) {
+			if (applet.getDebug() == DebugType.ALL) {
 				applet.noFill();
 				applet.strokeWeight(1);
 				applet.stroke(0, 255, 200);

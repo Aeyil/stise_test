@@ -7,8 +7,8 @@ import processing.core.PConstants;
 import processing.core.PImage;
 import processing.event.KeyEvent;
 import processing.event.MouseEvent;
-import project_16x16.SideScroller;
-import project_16x16.SideScroller.GameScenes;
+import project_16x16.GameScene;
+import project_16x16.ISideScroller;
 import project_16x16.Utility;
 import project_16x16.ui.Button;
 
@@ -22,12 +22,12 @@ public class PauseMenu extends PScene {
 	public Button pressMenu; // Retruns to main menu
 	public Button pressSettings; // TODO add settings menu
 
-	private SideScroller game;
+	private ISideScroller game;
 	private PImage cache;
 
 	protected boolean switched = false;
 
-	public PauseMenu(SideScroller sideScroller) {
+	public PauseMenu(ISideScroller sideScroller) {
 		super(sideScroller);
 		game = sideScroller;
 
@@ -36,17 +36,20 @@ public class PauseMenu extends PScene {
 		pressMenu = new Button(sideScroller);
 
 		pressResume.setText("Resume Game");
-		pressResume.setPosition(applet.width / 2, applet.height / 2 - 150);
+//		pressResume.setPosition(applet.width / 2, applet.height / 2 - 150);
+		pressResume.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 - 150);
 		pressResume.setTextSize(40);
 		pressResume.setSize(300, 100);
 
 		pressSettings.setText("Settings");
-		pressSettings.setPosition(applet.width / 2, applet.height / 2);
+//		pressSettings.setPosition(applet.width / 2, applet.height / 2);
+		pressSettings.setPosition(applet.getWidth() / 2, applet.getHeight() / 2);
 		pressSettings.setTextSize(40);
 		pressSettings.setSize(300, 100);
 
 		pressMenu.setText("Main Menu");
-		pressMenu.setPosition(applet.width / 2, applet.height / 2 + 150);
+//		pressMenu.setPosition(applet.width / 2, applet.height / 2 + 150);
+		pressMenu.setPosition(applet.getWidth() / 2, applet.getHeight() / 2 + 150);
 		pressMenu.setTextSize(40);
 		pressMenu.setSize(300, 100);
 	}
@@ -63,7 +66,8 @@ public class PauseMenu extends PScene {
 
 	@Override
 	public void drawUI() {
-		applet.image(cache, applet.width / 2, applet.height / 2); // draw cached & blurred game
+//		applet.image(cache, applet.width / 2, applet.height / 2); // draw cached & blurred game
+		applet.image(cache, applet.getWidth() / 2, applet.getHeight() / 2); // draw cached & blurred game
 		pressResume.manDisplay();
 		pressSettings.manDisplay();
 		pressMenu.manDisplay();
@@ -77,12 +81,12 @@ public class PauseMenu extends PScene {
 
 		pressSettings.update();
 		if (pressSettings.hover()) {
-			game.swapToScene(GameScenes.SETTINGS_MENU);
+			game.swapToScene(GameScene.SETTINGS_MENU);
 		}
 
 		pressMenu.update();
 		if (pressMenu.hover()) {
-			game.swapToScene(GameScenes.MAIN_MENU);
+			game.swapToScene(GameScene.MAIN_MENU);
 		}
 	}
 

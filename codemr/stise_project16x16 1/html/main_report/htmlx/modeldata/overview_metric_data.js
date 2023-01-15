@@ -1,0 +1,1 @@
+var CodeMR_ProjectMetrics = {"Project Name":"stise_project16x16", "Number of Highly Problematic Classes":2, "Number of Entities":89, "Number of Problematic Classes":3, "Class Lines of Code":4797, "Number of External Packages":34, "Number of Packages":13, "Number of External Entities":120};var EQ_COLOR_OF_LEVELS = ["#1F77B4","#007F24","#62BF18","#FFC800","#FF5B13","#E50000"];

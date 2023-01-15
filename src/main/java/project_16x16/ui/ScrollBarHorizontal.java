@@ -47,15 +47,15 @@ public class ScrollBarHorizontal extends PClass {
 	}
 	
 	public void update() {
-		if (applet.mousePressEvent && container.hover()) {
+		if (applet.isMousePressEvent() && container.hover()) {
 			barSelected = true;
 		}
-		if (applet.mouseReleaseEvent) {
+		if (applet.isMouseReleaseEvent()) {
 			barSelected = false;
 		}
 		if (barSelected)
 		{
-			barLocation = (float) PApplet.map(applet.mouseX, container.X() + container.Width() - (barAnchor.localWidth/2), container.X() + (barAnchor.localWidth/2), 1, 0);
+			barLocation = (float) PApplet.map(applet.getMouseX(), container.X() + container.Width() - (barAnchor.localWidth/2), container.X() + (barAnchor.localWidth/2), 1, 0);
 			barLocation = Utility.clamp(barLocation, 0, 1);
 		}
 	}

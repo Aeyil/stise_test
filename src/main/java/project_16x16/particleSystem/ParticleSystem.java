@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import processing.core.PImage;
 import processing.core.PVector;
+import project_16x16.ISideScroller;
 import project_16x16.SideScroller;
 import project_16x16.Tileset;
 import project_16x16.particleSystem.emissions.*;
@@ -22,7 +23,7 @@ public class ParticleSystem {
 
 	public static final int FRAMERATE = 60;
 	
-	private SideScroller applet;
+	private ISideScroller applet;
 	public PImage image;
 	public ParticleEmission emission;
 	public Particles particles;
@@ -44,7 +45,7 @@ public class ParticleSystem {
      * @param spawnAmount  How many particles will be spawned
      * @param lifespan     How long will the particle be displayed (seconds)
      */
-	public ParticleSystem(SideScroller applet, String imageName, int spawnRate, int spawnAmount, float lifespan) {
+	public ParticleSystem(ISideScroller applet, String imageName, int spawnRate, int spawnAmount, float lifespan) {
 		this(applet, Tileset.getTile(imageName), spawnRate, spawnAmount, lifespan);
 	}
 	
@@ -58,7 +59,7 @@ public class ParticleSystem {
      * @param spawnAmount  How many particles will be spawned
      * @param lifespan     How long will the particle be displayed (seconds)
      */
-	public ParticleSystem(SideScroller applet, PImage image, int spawnRate, int spawnAmount, float lifespan) {
+	public ParticleSystem(ISideScroller applet, PImage image, int spawnRate, int spawnAmount, float lifespan) {
 		this.applet = applet;
 		this.spawnRate = spawnRate;
 		this.spawnAmount = spawnAmount;

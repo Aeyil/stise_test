@@ -14,7 +14,7 @@ import processing.core.PImage;
  * </p>
  */
 public abstract class PClass {
-	public SideScroller applet;
+	public ISideScroller applet;
 
 	public static final int CENTER = PConstants.CENTER;
 	public static final int CORNER = PConstants.CORNER;
@@ -36,7 +36,7 @@ public abstract class PClass {
 	 * 
 	 * @param a The SideScroller game controller.
 	 */
-	public PClass(SideScroller sideScroller) {
+	public PClass(ISideScroller sideScroller) {
 		applet = sideScroller;
 	}
 

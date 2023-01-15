@@ -41,13 +41,14 @@ public abstract class GameMode {
 			drawGUIButton(activeIcon, xAnchor, 120);
 		}
 		else if (isNotInvalidGUIButtonMode() && isHighlighted) {
-			if (scene.applet.mousePressEvent) {
+			if (scene.applet.isMousePressEvent()) {
 				scene.changeMode(mode);
 			}
 			drawGUIButton(activeIcon, xAnchor, 120);
 		}
 		else {
 			drawGUIButton(inactiveIcon, xAnchor, 120);
+
 		}
 	}
 

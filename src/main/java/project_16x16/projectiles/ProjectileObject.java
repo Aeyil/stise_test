@@ -2,6 +2,7 @@ package project_16x16.projectiles;
 
 import java.util.ArrayList;
 
+import project_16x16.ISideScroller;
 import project_16x16.components.AnimationComponent;
 import project_16x16.objects.CollidableObject;
 import project_16x16.objects.EditableObject;
@@ -34,11 +35,11 @@ public class ProjectileObject extends EditableObject {
 
 	public boolean hit;
 
-	public ProjectileObject(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public ProjectileObject(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller, gameplayScene);
 
 		id = "";
-		spawnTime = applet.frameCount;
+		spawnTime = applet.getFrameCount();
 		animation = new AnimationComponent();
 		position = new PVector(0, 0);
 	}
