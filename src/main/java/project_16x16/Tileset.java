@@ -2,16 +2,14 @@ package project_16x16;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import project_16x16.components.Tile;
 import project_16x16.components.Tile.TileType;
-import project_16x16.objects.GameObject;
+import project_16x16.objects.AnimatedObject;
 import project_16x16.objects.MagicSourceObject;
 import project_16x16.objects.MirrorBoxObject;
 
 import processing.core.PApplet;
-import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.data.JSONObject;
 import processing.data.JSONArray;
@@ -183,14 +181,14 @@ public class Tileset {
 	 * 
 	 * @author micycle1
 	 */
-	public static Class<? extends GameObject> getObjectClass(String name) {
+	public static Class<? extends AnimatedObject> getObjectClass(String name) {
 		switch (name) {
 			case "MAGIC_SOURCE" :
 				return MagicSourceObject.class;
 			case "MIRROR_BOX" :
 				return MirrorBoxObject.class;
 			default :
-				return GameObject.class;
+				return AnimatedObject.class;
 		}
 	}
 	

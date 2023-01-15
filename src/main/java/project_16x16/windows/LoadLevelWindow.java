@@ -12,7 +12,7 @@ import project_16x16.ISideScroller;
 import project_16x16.PClass;
 import project_16x16.Utility;
 import project_16x16.objects.BackgroundObject;
-import project_16x16.objects.CollidableObject;
+import project_16x16.objects.GameObject;
 import project_16x16.scene.GameplayScene;
 import project_16x16.scene.GameplayScene.GameModes;
 import project_16x16.ui.List;
@@ -20,7 +20,7 @@ import project_16x16.ui.Notifications;
 
 public class LoadLevelWindow extends PClass {
 
-	ArrayList<CollidableObject> collidableObjects;
+	ArrayList<GameObject> gameObjects;
 	ArrayList<BackgroundObject> backgroundObjects;
 	final String path = "src/main/resources/Storage/Game/Maps/save/";
 	String picked;
@@ -31,7 +31,7 @@ public class LoadLevelWindow extends PClass {
 
 	public LoadLevelWindow(ISideScroller sideScroller, GameplayScene scene) {
 		super(sideScroller);
-		collidableObjects = new ArrayList<CollidableObject>();
+		gameObjects = new ArrayList<GameObject>();
 		backgroundObjects = new ArrayList<BackgroundObject>();
 		picked = "";
 		this.scene = scene;
@@ -129,7 +129,7 @@ public class LoadLevelWindow extends PClass {
 		int minY = Integer.MAX_VALUE;
 		int maxY = Integer.MIN_VALUE;
 		int maxX = Integer.MIN_VALUE;
-		collidableObjects.clear();
+		gameObjects.clear();
 		backgroundObjects.clear();
 		// check for boundaries
 		for (int i = 0; i < data.size(); i++) {
@@ -152,7 +152,7 @@ public class LoadLevelWindow extends PClass {
 			}
 			switch (type) { // Read Main
 				case "COLLISION":
-					CollidableObject collision = new CollidableObject(applet, scene);
+					GameObject collision = new GameObject(applet, scene);
 					try {
 						collision.setGraphic(item.getString("id"));
 					}
@@ -165,7 +165,7 @@ public class LoadLevelWindow extends PClass {
 					collision.position.x = PApplet.map(item.getInt("x"), minX + 100, maxX - 100, 300, 600);
 					collision.position.y = PApplet.map(item.getInt("y"), minY + 100, maxY - 100, 300, 600);
 
-					collidableObjects.add(collision); // SideScrollerend To Level
+					gameObjects.add(collision); // SideScrollerend To Level
 					break;
 				case "BACKGROUND":
 					BackgroundObject backgroundObject = new BackgroundObject(applet, scene);
@@ -183,8 +183,8 @@ public class LoadLevelWindow extends PClass {
 	}
 
 	public void showLevelPreviewWindow() {
-		for (int i = 0; i < collidableObjects.size(); i++) {
-			collidableObjects.get(i).display();
+		for (int i = 0; i < gameObjects.size(); i++) {
+			gameObjects.get(i).display();
 		}
 		for (int i = 0; i < backgroundObjects.size(); i++) {
 			backgroundObjects.get(i).display();

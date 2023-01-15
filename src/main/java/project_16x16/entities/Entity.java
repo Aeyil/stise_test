@@ -5,11 +5,11 @@ import project_16x16.DebugType;
 import project_16x16.ISideScroller;
 import project_16x16.Utility;
 import project_16x16.objects.Collidable;
-import project_16x16.objects.CollidableObject;
+import project_16x16.objects.GameObject;
 import project_16x16.objects.EditableObject;
 import project_16x16.scene.GameplayScene;
 
-public abstract class Entity extends CollidableObject {
+public abstract class Entity extends GameObject {
 
     static final int OUT_OF_BOUNDS_DISTANCE = 2000;
     EntityState state;

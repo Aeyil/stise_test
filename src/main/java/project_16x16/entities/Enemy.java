@@ -1,16 +1,10 @@
 package project_16x16.entities;
 
-import java.awt.event.KeyEvent;
-
 import processing.core.PImage;
-import processing.core.PVector;
 import processing.data.JSONObject;
 import project_16x16.ISideScroller;
 import project_16x16.DebugType;
 import project_16x16.Tileset;
-import project_16x16.Utility;
-import project_16x16.objects.CollidableObject;
-import project_16x16.objects.EditableObject;
 import project_16x16.scene.GameplayScene;
 
 /**

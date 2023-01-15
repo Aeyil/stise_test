@@ -11,7 +11,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 import project_16x16.SideScroller;
 import project_16x16.Tileset;
-import project_16x16.objects.CollidableObject;
+import project_16x16.objects.GameObject;
 import project_16x16.objects.EditableObject;
 import project_16x16.scene.GameplayScene;
 
@@ -98,7 +98,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(50f,0f);
         enemy.state.dashing = true;
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,160,100,100,0);
+        GameObject collisionObject = new GameObject(sideScroller,scene,160,100,100,0);
         objectList.add(collisionObject);
         enemy.checkForCollision();
         Assertions.assertEquals(enemy.velocity.x,0f);
@@ -111,7 +111,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(0f,50f);
         enemy.state.flying = true;
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,160,100,0,100);
+        GameObject collisionObject = new GameObject(sideScroller,scene,160,100,0,100);
         objectList.add(collisionObject);
         enemy.checkForCollision();
         Assertions.assertEquals(enemy.velocity.y,0f);
@@ -125,7 +125,7 @@ public class EnemyTest {
         enemy.position.set(0,0);
         enemy.velocity.set(0f,-50f);
         enemy.state.jumping = true;
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,160,100,0,-100);
+        GameObject collisionObject = new GameObject(sideScroller,scene,160,100,0,-100);
         objectList.add(collisionObject);
         enemy.checkForCollision();
         Assertions.assertEquals(enemy.velocity.y,0f);
@@ -137,7 +137,7 @@ public class EnemyTest {
     public void collidesFuturXNoCollision(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,33,0);
+        GameObject collisionObject = new GameObject(sideScroller,scene,10,40,33,0);
         Assertions.assertFalse(enemy.collidesFutureX(collisionObject));
     }
 
@@ -145,7 +145,7 @@ public class EnemyTest {
     public void collidesFuturXCollisionThroughPositiveVelocity(){
         enemy.position.set(0,0);
         enemy.velocity.set(5f,0f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,33,0);
+        GameObject collisionObject = new GameObject(sideScroller,scene,10,40,33,0);
         Assertions.assertTrue(enemy.collidesFutureX(collisionObject));
     }
 
@@ -153,7 +153,7 @@ public class EnemyTest {
     public void collidesFuturXCollisionThroughNegativeVelocity(){
         enemy.position.set(0,0);
         enemy.velocity.set(-5f,0f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,-33,0);
+        GameObject collisionObject = new GameObject(sideScroller,scene,10,40,-33,0);
         Assertions.assertTrue(enemy.collidesFutureX(collisionObject));
     }
 
@@ -161,14 +161,14 @@ public class EnemyTest {
     public void collidesFuturXCollisionThroughPosition(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,10,40,32,0);
+        GameObject collisionObject = new GameObject(sideScroller,scene,10,40,32,0);
         Assertions.assertTrue(enemy.collidesFutureX(collisionObject));
     }
     @Test
     public void collidesFuturYNoCollision(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,25);
+        GameObject collisionObject = new GameObject(sideScroller,scene,56,10,0,25);
         Assertions.assertFalse(enemy.collidesFutureY(collisionObject));
     }
 
@@ -176,7 +176,7 @@ public class EnemyTest {
     public void collidesFuturYCollisionThroughPositiveVelocity(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,5f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,25);
+        GameObject collisionObject = new GameObject(sideScroller,scene,56,10,0,25);
         Assertions.assertTrue(enemy.collidesFutureY(collisionObject));
     }
 
@@ -184,7 +184,7 @@ public class EnemyTest {
     public void collidesFuturYCollisionThroughNegativeVelocity(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,-5f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,-25);
+        GameObject collisionObject = new GameObject(sideScroller,scene,56,10,0,-25);
         Assertions.assertTrue(enemy.collidesFutureY(collisionObject));
     }
 
@@ -192,7 +192,7 @@ public class EnemyTest {
     public void collidesFuturYCollisionThroughPosition(){
         enemy.position.set(0,0);
         enemy.velocity.set(0f,0f);
-        CollidableObject collisionObject = new CollidableObject(sideScroller,scene,56,10,0,24);
+        GameObject collisionObject = new GameObject(sideScroller,scene,56,10,0,24);
         Assertions.assertTrue(enemy.collidesFutureY(collisionObject));
     }
 

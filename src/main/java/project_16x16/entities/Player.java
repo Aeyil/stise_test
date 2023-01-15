@@ -3,7 +3,6 @@ package project_16x16.entities;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
@@ -11,9 +10,6 @@ import project_16x16.*;
 import project_16x16.Audio.SFX;
 import project_16x16.DebugType;
 import project_16x16.components.AnimationComponent;
-import project_16x16.objects.Collidable;
-import project_16x16.objects.CollidableObject;
-import project_16x16.objects.EditableObject;
 import project_16x16.projectiles.Swing;
 import project_16x16.scene.GameplayScene;
 

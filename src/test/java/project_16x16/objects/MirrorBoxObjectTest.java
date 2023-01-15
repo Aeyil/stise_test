@@ -265,7 +265,7 @@ class MirrorBoxObjectTest {
         gameplayScene.objects = new ArrayList<>();
         when(gameplayScene.getPlayer()).thenReturn(p);
         gameObject = new MirrorBoxObject(sideScroller, gameplayScene);
-        assertTrue(gameObject.collidesWithSwing(new Swing(sideScroller, gameplayScene, DIRECTIONS, DIRECTIONS, 37)));
+        assertTrue(gameObject.collidesWith(new Swing(sideScroller, gameplayScene, DIRECTIONS, DIRECTIONS, 37)));
     }
 
     @Test
@@ -275,7 +275,7 @@ class MirrorBoxObjectTest {
         gameplayScene.objects = new ArrayList<>();
         when(gameplayScene.getPlayer()).thenReturn(p);
         gameObject = new MirrorBoxObject(sideScroller, gameplayScene);
-        assertTrue(gameObject.collidesWithProjectile(new ProjectileObject(sideScroller, gameplayScene)));
+        assertTrue(gameObject.collidesWith(new ProjectileObject(sideScroller, gameplayScene)));
     }
 
     @Test

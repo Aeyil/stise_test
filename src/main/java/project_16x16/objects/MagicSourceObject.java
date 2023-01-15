@@ -15,9 +15,9 @@ import project_16x16.projectiles.Swing;
 import project_16x16.scene.GameplayScene;
 
 /**
- * Extends {@link GameObject}.
+ * Extends {@link AnimatedObject}.
  */
-public class MagicSourceObject extends GameObject {
+public class MagicSourceObject extends AnimatedObject {
 
 	private static ArrayList<PImage> particleAnimation;
 	private ParticleSystem trail;
@@ -57,7 +57,7 @@ public class MagicSourceObject extends GameObject {
 		// Create new Magic Projectiles
 		for (int i = 0; i < gameplayScene.getPlayer().swings.size(); i++) {
 			Swing swing = gameplayScene.getPlayer().swings.get(i);
-			if (collidesWithSwing(swing)) {
+			if (collidesWith(swing)) {
 				if (!swing.activated) {
 					if (applet.millis() > oldMillis + shotDelay) {
 						oldMillis = applet.millis();
@@ -69,18 +69,6 @@ public class MagicSourceObject extends GameObject {
 				}
 			}
 		}
-	}
-
-	public boolean collidesWithSwing(Swing swing) {
-		return (swing.position.x + swing.width / 2 > position.x - width / 2
-				&& swing.position.x - swing.width / 2 < position.x + width / 2)
-				&& (swing.position.y + swing.height / 2 > position.y - height / 2
-				&& swing.position.y - swing.height / 2 < position.y + height / 2);
-	}
-
-	public boolean collidesWithPlayer() {
-		return (gameplayScene.getPlayer().position.x + gameplayScene.getPlayer().width / 2 > position.x - width / 2 && gameplayScene.getPlayer().position.x - gameplayScene.getPlayer().width / 2 < position.x + width / 2)
-				&& (gameplayScene.getPlayer().position.y + gameplayScene.getPlayer().height / 2 > position.y - height / 2 && gameplayScene.getPlayer().position.y - gameplayScene.getPlayer().height / 2 < position.y + height / 2);
 	}
 
 	private void setParticleAnimation(ISideScroller a) {

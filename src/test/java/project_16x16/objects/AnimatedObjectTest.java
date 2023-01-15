@@ -1,31 +1,28 @@
-package project_16x16.projectiles;
+package project_16x16.objects;
 
 import org.junit.jupiter.api.*;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import processing.core.PImage;
-import processing.core.PVector;
+import processing.data.JSONObject;
 import project_16x16.SideScroller;
 import project_16x16.Tileset;
-import project_16x16.objects.GameObject;
 import project_16x16.scene.GameplayScene;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 
-class ProjectileObjectTest {
-
-    private ProjectileObject projectileObject;
+class AnimatedObjectTest {
+    private AnimatedObject animatedObject;
     private SideScroller sideScroller;
     private GameplayScene gameplayScene;
     private static PImage image;
     private static MockedStatic<Tileset> tileset;
 
     private final static String LEVEL_STRING = "Level1";
-
-    private final static int DIRECTIONS = 20;
 
     @BeforeAll
     static void overallSetUp(){
@@ -54,7 +51,7 @@ class ProjectileObjectTest {
 
     @AfterEach
     void tearDown() {
-        projectileObject = null;
+        animatedObject = null;
         sideScroller = null;
         gameplayScene = null;
     }
@@ -67,52 +64,46 @@ class ProjectileObjectTest {
 
     @Test
     void constructor() {
-        projectileObject =new ProjectileObject(sideScroller,gameplayScene);
-        assertEquals("",projectileObject.id);
-        assertEquals(0,projectileObject.spawnTime);
-        assertNotNull(projectileObject.animation);
-        assertEquals(new PVector(0,0),projectileObject.position);
-    }
-
-    @Test
-    void collidesFalse() {
-        projectileObject =new ProjectileObject(sideScroller,gameplayScene);
-        projectileObject.width=0;
-        projectileObject.height=0;
-        projectileObject.position.x=0;
-        projectileObject.position.y=0;
-        GameObject coll= new GameObject(sideScroller,gameplayScene,DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
-        coll.width=0;
-        coll.height=0;
-        coll.position.x=0;
-        coll.position.y=0;
-        assertFalse(projectileObject.collidesWith(coll));
-    }
-
-    @Test
-    void collidesTrue() {
-        projectileObject =new ProjectileObject(sideScroller,gameplayScene);
-        projectileObject.width=0;
-        projectileObject.height=0;
-        projectileObject.position.x=1;
-        projectileObject.position.y=1;
-        GameObject coll= new GameObject(sideScroller,gameplayScene,DIRECTIONS,DIRECTIONS,DIRECTIONS,DIRECTIONS);
-        coll.width=1;
-        coll.height=1;
-        coll.position.x=0;
-        coll.position.y=0;
-        assertFalse(projectileObject.collidesWith(coll));
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertNotNull(animatedObject.animation);
     }
 
     @Test
     void getAnimation() {
-        projectileObject=new ProjectileObject(sideScroller,gameplayScene);
-        assertEquals(new ArrayList<>(),projectileObject.getAnimation(LEVEL_STRING));
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertEquals(new ArrayList<>(), animatedObject.getAnimation(LEVEL_STRING));
+    }
+
+    @Test
+    void g4() {
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertEquals(image, animatedObject.g(307, 291, 9, 9));
+    }
+
+    @Test
+    void g5() {
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        assertEquals(image, animatedObject.g(307, 291, 9, 9, 4));
+    }
+
+    @Test
+    void debug() {
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        animatedObject.debug();
+        verify(sideScroller).stroke(255,190,200);
+        verify(sideScroller).noFill();
+        verify(sideScroller).rect(0,0,0,0);
     }
 
     @Test
     void exportToJSON() {
-        projectileObject =new ProjectileObject(sideScroller,gameplayScene);
-        assertNull(projectileObject.exportToJSON());
+        animatedObject =new AnimatedObject(sideScroller,gameplayScene);
+        JSONObject obj = animatedObject.exportToJSON();
+        JSONObject exp =new JSONObject();
+        exp.setString("id", null);
+        exp.setString("type", "OBJECT");
+        exp.setInt("x", 0);
+        exp.setInt("y", 0);
+        assertEquals(exp.toString(),obj.toString());
     }
 }

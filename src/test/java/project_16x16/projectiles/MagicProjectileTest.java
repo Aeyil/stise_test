@@ -8,7 +8,7 @@ import project_16x16.SideScroller;
 import project_16x16.Tileset;
 import project_16x16.Utility;
 import project_16x16.components.AnimationComponent;
-import project_16x16.objects.CollidableObject;
+import project_16x16.objects.GameObject;
 import project_16x16.scene.GameplayScene;
 
 import java.util.ArrayList;
@@ -140,7 +140,7 @@ class MagicProjectileTest {
     @Test
     void hit() {
         magic=new MagicProjectile(sideScroller,gameplayScene, DIRECTIONS,DIRECTIONS,40);
-        magic.hit(new CollidableObject(sideScroller,gameplayScene));
+        magic.hit(new GameObject(sideScroller,gameplayScene));
         assertTrue(magic.hit);
     }
 }
