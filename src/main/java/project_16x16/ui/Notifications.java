@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 import project_16x16.Utility;
 
 /**
@@ -24,15 +24,15 @@ public class Notifications {
 
 	private static final int notificationWidth = 275, notificationHeight = 125, notificationTextPadding = 10, notificationLifetime = 240, notificationLifetimeFast = 150, notificationLifetimeVeryFast = 60;
 
-	private final PVector position = new PVector(game.width - notificationWidth, game.height);
+	private final PVector position = new PVector(game.getWidth() - notificationWidth, game.getHeight());
 	private final String title, message;
 	private int lifetime, startTime, alpha = 255;
 
-	private static SideScroller game;
+	private static ISideScroller game;
 
-	public static void assignApplet(SideScroller sideScroller) {
+	public static void assignApplet(ISideScroller sideScroller) {
 		game = sideScroller;
-		positionTarget = new PVector(game.gameResolution.x - notificationWidth, game.gameResolution.y - notificationHeight);
+		positionTarget = new PVector(game.getGameResolution().x - notificationWidth, game.getGameResolution().y - notificationHeight);
 		background = game.createImage(notificationWidth, notificationHeight, PApplet.ARGB);
 		for (int i = 0; i < background.pixels.length; i++) {
 			float a = PApplet.map(i, 0, background.pixels.length, 255, 0);
@@ -72,7 +72,7 @@ public class Notifications {
 	}
 
 	public static void stageResized() {
-		positionTarget = new PVector(game.width - notificationWidth, game.height - notificationHeight);
+		positionTarget = new PVector(game.getWidth() - notificationWidth, game.getHeight() - notificationHeight);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class Notifications {
 	private void draw() {
 		if (startTime == 0) {
 			game.tint(255, 255);
-			startTime = game.frameCount;
+			startTime = game.getFrameCount();
 			if (notifications.size() > 2) {
 				if (notifications.size() < 6) {
 					lifetime = notificationLifetimeFast;
@@ -97,7 +97,7 @@ public class Notifications {
 		if (position.y > positionTarget.y) {
 			position.y -= 10;
 		}
-		if ((game.frameCount - startTime) >= lifetime) {
+		if ((game.getFrameCount() - startTime) >= lifetime) {
 			game.tint(255, alpha);
 			alpha -= 10;
 			if (alpha < 0) {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PImage;
 import project_16x16.ISideScroller;
-import project_16x16.SideScroller;
 import project_16x16.Tileset;
 import project_16x16.Utility;
 import project_16x16.particleSystem.ParticleSystem;

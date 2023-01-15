@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.JSONObject;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 import project_16x16.DebugType;
 import project_16x16.Tileset;
 import project_16x16.Utility;
@@ -41,7 +41,7 @@ public class Enemy extends CollidableObject {
 	 * 
 	 * @param sideScroller SideScroller game controller.
 	 */
-	public Enemy(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public Enemy(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller, gameplayScene);
 		gravity = 1;
 		image = Tileset.getTile(0, 258, 14, 14, 4);

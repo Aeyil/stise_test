@@ -66,7 +66,7 @@ public final class Audio {
 	 * 
 	 * @param s
 	 */
-	public static void assignApplet(SideScroller sideScroller) {
+	public static void assignApplet(ISideScroller sideScroller) {
 		minim = new Minim(sideScroller);
 		for (SFX sfx : SFX.values()) {
 			AudioSample sample = minim.loadSample(sfx.getPath());

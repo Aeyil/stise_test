@@ -1,7 +1,7 @@
 package project_16x16.entities;
 
 import processing.core.PVector;
-import project_16x16.SideScroller;
+import project_16x16.ISideScroller;
 import project_16x16.scene.GameplayScene;
 
 /**
@@ -15,11 +15,11 @@ public class CleanerRobot extends Enemy {
 	private PVector posA, posB;
 	private PVector target;
 
-	public CleanerRobot(SideScroller sideScroller, GameplayScene gameplayScene) {
+	public CleanerRobot(ISideScroller sideScroller, GameplayScene gameplayScene) {
 		super(sideScroller, gameplayScene);
 	}
 
-	public CleanerRobot(SideScroller sideScroller, GameplayScene gameplayScene, PVector x1, PVector x2) {
+	public CleanerRobot(ISideScroller sideScroller, GameplayScene gameplayScene, PVector x1, PVector x2) {
 		this(sideScroller, gameplayScene);
 		posA = x1;
 		posB = x2;

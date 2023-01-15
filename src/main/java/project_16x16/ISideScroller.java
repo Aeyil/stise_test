@@ -4,27 +4,27 @@ import processing.core.PVector;
 
 public interface ISideScroller extends IPApplet{
 
-    public void swapToScene(GameScene newScene);
-    public void returnScene();
+    void swapToScene(GameScene newScene);
+    void returnScene();
 
-    public boolean isMousePressEvent();
-    public boolean isMouseReleaseEvent();
-    public boolean isKeyPressEvent();
-    public void setKeyPressEvent(boolean keyPressEvent);
-    public boolean isKeyDown(int k);
+    boolean isMousePressEvent();
+    boolean isMouseReleaseEvent();
+    boolean isKeyPressEvent();
+    void setKeyPressEvent(boolean keyPressEvent);
+    boolean isKeyDown(int k);
 
-    public int getWidth();
-    public int getHeight();
-    public int getMouseX();
-    public int getMouseY();
-    public PVector getGameResolution();
-    public int getFrameCount();
-    public char getKey();
-    public Camera getCamera();
-    public DebugType getDebug();
-    public int getMouseButton();
-    public boolean getMousePressed();
+    int getWidth();
+    int getHeight();
+    int getMouseX();
+    int getMouseY();
+    PVector getGameResolution();
+    int getFrameCount();
+    char getKey();
+    Camera getCamera();
+    DebugType getDebug();
+    int getMouseButton();
+    boolean getMousePressed();
 
-    public PVector getMouseCoordScreen();
-    public PVector getMouseCoordGame();
+    PVector getMouseCoordScreen();
+    PVector getMouseCoordGame();
 }
