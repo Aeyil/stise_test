@@ -3,7 +3,6 @@ package project_16x16.ui;
 import processing.core.PApplet;
 import project_16x16.ISideScroller;
 import project_16x16.PClass;
-import project_16x16.SideScroller;
 
 public class List extends PClass {
 

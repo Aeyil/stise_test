@@ -3,7 +3,6 @@ package project_16x16.particleSystem;
 import java.util.ArrayList;
 
 import project_16x16.ISideScroller;
-import project_16x16.SideScroller;
 
 /**
  * Particles

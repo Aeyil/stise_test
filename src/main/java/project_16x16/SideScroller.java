@@ -669,4 +669,13 @@ public class SideScroller extends PApplet implements ISideScroller {
 	public boolean getMousePressed(){
 		return mousePressed;
 	}
+	//CTiSE-Larissa: added setter for Tests in EditableObjectTest
+	public void setMouseReleaseEvent(boolean mouseReleaseEvent) {
+		this.mouseReleaseEvent = mouseReleaseEvent;
+	}
+
+	public void setMousePressEvent(boolean mousePressEvent) {
+		this.mousePressEvent = mousePressEvent;
+	}
+
 }

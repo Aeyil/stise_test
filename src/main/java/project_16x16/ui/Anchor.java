@@ -2,7 +2,6 @@ package project_16x16.ui;
 
 import processing.core.PApplet;
 import project_16x16.ISideScroller;
-import project_16x16.SideScroller;
 
 public class Anchor {
 	
@@ -59,7 +58,7 @@ public class Anchor {
 		else				return applet;
 	}
 	
-	public void setPApplet(SideScroller applet) {
+	public void setPApplet(ISideScroller applet) {
 		this.applet = applet;
 	}
 	

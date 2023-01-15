@@ -39,7 +39,7 @@ public abstract class EditableObject extends PClass {
 
     protected PVector editOffset;
 
-    public EditableObject(SideScroller sideScroller, GameplayScene gameplayScene) {
+    public EditableObject(ISideScroller sideScroller, GameplayScene gameplayScene) {
         super(sideScroller);
 
         position = new PVector(0, 0);
@@ -75,7 +75,7 @@ public abstract class EditableObject extends PClass {
         if (child) {
             return;
         }
-        if (applet.mouseReleaseEvent && applet.mouseButton == LEFT) {
+        if (applet.isMouseReleaseEvent() && applet.getMouseButton() == LEFT) {
             focus = false;
             return;
         }
@@ -86,21 +86,21 @@ public abstract class EditableObject extends PClass {
     private void focusEvent() {
         focusOnMouseIfLeftClick();
         if (focus) { // When Focused
-            if (applet.mousePressEvent && mouseHover()) {
+            if (applet.isMousePressEvent() && mouseHover()) {
                 focus = true;
                 editOffset = PVector.sub(position, applet.getMouseCoordGame());
             }
             // Duplicate Object Shift
             duplicateObjectShift();
 
-            if (focus && applet.mousePressed && applet.mouseButton == LEFT) {
+            if (focus && applet.getMousePressed() && applet.getMouseButton() == LEFT) {
                 position = new PVector(Utility.roundToNearest(applet.getMouseCoordGame().x + editOffset.x, SideScroller.snapSize), Utility.roundToNearest(applet.getMouseCoordGame().y + editOffset.y, SideScroller.snapSize));
             }
         }
     }
 
     private void duplicateObjectShift() {
-        if (applet.keyPressEvent && applet.isKeyDown(SideScroller.SHIFT)) {
+        if (applet.isKeyPressEvent() && applet.isKeyDown(SideScroller.SHIFT)) {
             switch (type) {
                 case COLLISION:
                     handleCollision();
@@ -111,7 +111,7 @@ public abstract class EditableObject extends PClass {
                 default:
                     break;
             }
-            applet.keyPressEvent = false;
+            applet.setKeyPressEvent(false);
             focus = false;
         }
     }
@@ -145,7 +145,7 @@ public abstract class EditableObject extends PClass {
     }
 
     private void focusOnMouseIfLeftClick() {
-        if (applet.mousePressEvent && applet.mouseButton == LEFT && !focus && mouseHover()) {
+        if (applet.isMousePressEvent() && applet.getMouseButton() == LEFT && !focus && mouseHover()) {
             // Focus Enable
             if (gameplayScene.focusedObject == null) {
                 focus = true;
@@ -169,7 +169,7 @@ public abstract class EditableObject extends PClass {
     }
 
     public boolean mouseHover() {
-        if (applet.mouseX < 400 && applet.mouseY < 100) { // Over Inventory Bar -- rough approximation
+        if (applet.getMouseX() < 400 && applet.getMouseY() < 100) { // Over Inventory Bar -- rough approximation
             return false;
         }
         return Utility.hoverGame(position.x, position.y, width, height);
